@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'rating.apps.RatingConfig',
 
     'debug_toolbar',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [

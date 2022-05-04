@@ -5,6 +5,7 @@ import tutorhunt.settings as settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("auth/", include("users.urls")),
 ]
 
 if settings.DEBUG:

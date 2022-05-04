@@ -1,27 +1,64 @@
-from typing import Iterable, List, Union
+from typing import Any, Dict, Iterable, List, Tuple, Union
 from django.db import models
+
+from .formfields import DayTimelineFormField
+
 
 class DayTimeline:
     """Расписание дня"""
     timeline: List[bool]
 
-    def __init__(self, timeline: Iterable[bool] = None):
+    def __init__(self, timeline: Tuple[bool, ...] = None):
         if timeline is None:
-            self.timeline = (False, ) * 24
-        else:
-            self.timeline = list(timeline)
+            timeline = (False, ) * 24
 
-        if len(self.timeline) != 24:
+        if not isinstance(timeline, tuple):
+            raise TypeError("timeline должен быть кортежем")
+
+        if len(timeline) != 24:
             raise ValueError("Количество часов должно быть равно 24")
 
-        if any(map(lambda x: not isinstance(x, bool), self.timeline)):
+        if any(map(lambda x: not isinstance(x, bool), timeline)):
             raise TypeError("В timeline могут быть только bool")
 
+        self.timeline = timeline
+
+        # print("obj.__init__" + ' ' + str(id(self)) + ' ' + str(self))
+        # c = input("y/n: ") == "y"
+        # if c:
+        #     raise Exception("SOME EXCEPTION")
+
     def __str__(self) -> str:
-        return str(map(lambda x: 1 if x else 0, self.timeline))
+        return "".join(map(lambda x: "1" if x else "0", self.timeline))
+
+    def __repr__(self) -> str:
+        return str(self)
+
+    def __len__(self):
+        return 24
+
+    def deconstruct(self) -> Tuple[str, Iterable[str], Dict[str, Any]]:
+        """Функция деконструкции для сериализации"""
+        name, args, kwargs = (
+            "graphics.fields.DayTimeline", 
+            (),
+            {"timeline": self.timeline}
+        ) 
+
+        return name, args, kwargs
+
+    def get_form_initial(self) -> List[str]:
+        """Возвращает initial для DayTimelineFormField (список номеров часов)"""
+        busy_hours = list(
+            map(
+                lambda x: x[0] + 1, # выдаёт номер часа
+                filter(lambda x: x[1], enumerate(self.timeline))
+            )
+        )
+        return busy_hours
 
     @classmethod
-    def parse_timeline(value: str) -> "DayTimeline":
+    def parse_timeline(cls, value: str) -> "DayTimeline":
         """
         Обработка строкового представления расписания. 
         
@@ -33,12 +70,28 @@ class DayTimeline:
         return DayTimeline(timeline=tuple(map(lambda x: x == "1", value)))
 
 
-class DayTimelineField(models.Charfield):
+    @classmethod
+    def parse_formfield(cls, busy_hours: List[str]):
+        """
+        Обработка значений с формы.
+
+        Параметры:
+        busy_hours -- список с занятыми часами (получается с DayTimelineFormField)
+
+        Возвращает соответствующий DayTimeline
+        """
+        timeline = [False] * 24
+        for hour in busy_hours:
+            timeline[int(hour) - 1] = True
+
+        return DayTimeline(timeline=tuple(timeline))
+
+
+class DayTimelineField(models.CharField):
     """Поле, обозначающее расписание в рамках одного дня"""
     description = "Поле, обозначающее расписание в рамках одного дня"
     initial = {
         "null": False,
-        "default": DayTimeline(),
         "help_text": "Обозначьте часы, в которые вы заняты",
         "max_length": 24
     }
@@ -57,3 +110,10 @@ class DayTimelineField(models.Charfield):
         if isinstance(value, DayTimeline):
             return value
         return DayTimeline.parse_timeline(value)
+
+    def formfield(self, **kwargs):
+        defaults = {
+            "form_class": DayTimelineFormField,
+        }
+        defaults.update(kwargs)
+        return super().formfield(**defaults)

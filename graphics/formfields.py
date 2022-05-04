@@ -1,15 +1,14 @@
 from typing import List
 from django.forms import CheckboxSelectMultiple, MultipleChoiceField
-from .fields import DayTimeline
 
 
 class DayTimelineFormField(MultipleChoiceField):
     """Поле для выбора расписания в форме"""
+    from graphics.fields import DayTimeline
+    
     _choices = [(i, i) for i in range(1, 25)]
 
     def __init__(self, *args, **kwargs):
-        print(kwargs)
-
         if "max_length" in kwargs:
             del kwargs["max_length"]
 
@@ -22,4 +21,4 @@ class DayTimelineFormField(MultipleChoiceField):
         super().__init__(*args, **kwargs)
 
     def clean(self, value: List[str]) -> DayTimeline:
-        return DayTimeline.parse_formfield(value)
+        return self.DayTimeline.parse_formfield(value)

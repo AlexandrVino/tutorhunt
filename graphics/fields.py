@@ -1,7 +1,6 @@
 from typing import Any, Dict, Iterable, List, Tuple, Union
 from django.db import models
 
-from .formfields import DayTimelineFormField
 
 
 class DayTimeline:
@@ -22,11 +21,6 @@ class DayTimeline:
             raise TypeError("В timeline могут быть только bool")
 
         self.timeline = timeline
-
-        # print("obj.__init__" + ' ' + str(id(self)) + ' ' + str(self))
-        # c = input("y/n: ") == "y"
-        # if c:
-        #     raise Exception("SOME EXCEPTION")
 
     def __str__(self) -> str:
         return "".join(map(lambda x: "1" if x else "0", self.timeline))
@@ -89,6 +83,8 @@ class DayTimeline:
 
 class DayTimelineField(models.CharField):
     """Поле, обозначающее расписание в рамках одного дня"""
+    from .formfields import DayTimelineFormField
+    
     description = "Поле, обозначающее расписание в рамках одного дня"
     initial = {
         "null": False,
@@ -113,7 +109,7 @@ class DayTimelineField(models.CharField):
 
     def formfield(self, **kwargs):
         defaults = {
-            "form_class": DayTimelineFormField,
+            "form_class": self.DayTimelineFormField,
         }
         defaults.update(kwargs)
         return super().formfield(**defaults)

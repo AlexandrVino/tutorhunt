@@ -25,8 +25,17 @@ body {
     filter: drop-shadow(0 0 5px #ffffff);
 }
 
+.card-row {
+    padding: 50px 20px;
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
+    width: 1000px;
+    justify-content: space-evenly;
+    margin: 0 auto;
+}
+
 .widget {
-    background-color: #272627;
+    background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 10px;
@@ -38,7 +47,21 @@ body {
 }
 
 .content {
-    min-height: calc(100vh - 130px);
-    max-width: 760px;
+    min-height: calc(100vh - 120px);
     margin: 0 auto;
+}
+
+.avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 5px;
+}
+
+.img-wrapper img {
+    display: block;
+    margin: auto;
+}
+
+.card-text {
+    border-top: 1px solid #CCC; padding-top: 5px; margin-top: 10px;
 }

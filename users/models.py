@@ -1,7 +1,5 @@
 from django.contrib.auth.models import AbstractUser
-from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import Q
 from django.utils.safestring import mark_safe
 
 from users.managers import AppUserManager, BunchManager, FollowManager

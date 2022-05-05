@@ -13,7 +13,7 @@ from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, FormView, ModelFormMixin
 
 from .backends import EmailAuthBackend, EmailUniqueFailed
@@ -24,6 +24,36 @@ SIGNUP_TEMPLATE = "users/signup.html"
 LOGIN_WITH_USERNAME_TEMPLATE = "users/login_with_username.html"
 LOGIN_WITH_EMAIL_TEMPLATE = "users/login_with_email.html"
 PROFILE_TEMPLATE = "users/profile.html"
+USER_LIST_TEMPLATE = "users/user_list.html"
+CUR_USER_TEMPLATE = "users/user_detail.html"
+
+
+class UserListView(ListView):
+    """Возвращает страничку Списка пользователей"""
+
+    template_name = USER_LIST_TEMPLATE
+    queryset = User.objects.all()
+    context_object_name = "users"
+
+
+class UserDetailView(DetailView):
+    """Возвращает страничку конкретного пользователя"""
+
+    template_name = CUR_USER_TEMPLATE
+    model = User
+    context_object_name = "user"
+    pk_url_kwarg = "user_id"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_user'] = self.current_user
+        context["follows"] = Follow.manager.get_followers(
+            None, 'user_from__first_name', 'user_from__photo', user_to=self.object)
+        return context
+
+    def get(self, request, *args, **kwargs):
+        self.current_user = request.user.id
+        return super(UserDetailView, self).get(request, *args, **kwargs)
 
 
 class LoginWithEmailView(FormView):
@@ -133,7 +163,7 @@ class ActivateView(View):
 class ProfileView(TemplateView):
     """Возвращает страничку профиля пользователя"""
 
-    template_name = PROFILE_TEMPLATE
+    template_name = CUR_USER_TEMPLATE
     context_object_name = "user"
     model = User
 
@@ -143,8 +173,10 @@ class ProfileView(TemplateView):
                                                           'user_from__first_name',
                                                           'user_from__photo',
                                                           user_to=self.object)
+        context['current_user'] = self.object.id
         return context
 
     def get(self, request, *args, **kwargs):
         self.object = request.user
         return super().get(request, *args, **kwargs)
+

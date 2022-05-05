@@ -9,7 +9,7 @@ from django.contrib.auth.views import (
 )
 from django.urls import path
 
-from users.views import ActivateView, LoginWithEmailView, ProfileView, SignupView
+from users.views import ActivateView, LoginWithEmailView, ProfileView, SignupView, UserDetailView, UserListView
 
 urlpatterns = [
 
@@ -66,5 +66,6 @@ urlpatterns = [
         name="password_reset_complete",
     ),
     path("profile/", ProfileView.as_view(), name="profile"),
-
+    path("users/", UserListView.as_view(), name="users"),
+    path("users/<int:user_id>/", UserDetailView.as_view(), name="user_detail"),
 ]

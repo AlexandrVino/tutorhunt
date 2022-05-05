@@ -11,7 +11,7 @@
       </a>
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0">
         <li>
-          <a class="nav-link px-2 text-white" href="#">Users</a>
+          <a class="nav-link px-2 text-white" href="{% url 'users' %}">Users</a>
         </li>
         {% if user.is_authenticated %}
           <li>

@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 
 from users.models import Role, User
 
@@ -123,3 +124,4 @@ class RegisterForm(UserCreationForm):
             'username', 'email', 'password1', 'password2',
             'role', 'first_name', "last_name", 'photo',
         )
+

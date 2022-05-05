@@ -46,22 +46,22 @@
     max-width: 220px;
 }
 
-.avatar {
-    width: 200px;
-    height: 200px;
-    border-radius: 5px;
-}
+
 
 .edit {
     width: 200px;
     height: 30px;
-    background-color: #343235;
+    background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
     color: #ffffff;
     border-radius: 10px;
     border: none;
     padding: 0;
     margin-top: 10px;
     cursor: pointer;
+}
+
+.edit:hover {
+    box-shadow: 0 0 10px #fff;
 }
 
 .friend_item {
@@ -86,13 +86,13 @@ h6 {
 .friend_name {
     display: block;
     width: 100%;
-    margin: 10px auto 0 auto;
+    margin: 0 auto;
     text-align: center;
     font-size: 13px;
     color: #ff0000 !important;
 }
 
-.friend_name:hover {
+.friend_item:hover .friend_name {
     text-decoration: underline;
 }
 
@@ -112,10 +112,6 @@ h6 {
     justify-content: space-around;
 }
 
-
-.img-wrapper img {
-    display: block;
-    margin: auto;
+.content {
+    max-width: 760px;
 }
-
-

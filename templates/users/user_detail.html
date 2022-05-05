@@ -11,26 +11,29 @@
   <div class="col col-profile">
     <div class="profile widget">
       <img class="avatar" src="{{ user.photo.url }}" alt="avatar"/>
-      <button class="edit">Edit</button>
+      {% if current_user is user.id %}
+        <button class="edit">Редактировать</button>
+      {% else %}
+        <button class="edit">Подписаться</button>
+      {% endif %}
     </div>
-    <div class="friends widget">
+    {% if follows %}
+      <div class="friends widget">
+
       <h6>
         Подписчики
       </h6>
       <div class="friends_wrapper">
         {% for follow in follows|slice:":6" %}
-
-          <a class="friend_item" href="#">
+          <a class="friend_item" href="{% url 'user_detail' follow.user_from.id %}">
             <div class="img-wrapper">
-            {{ follow.user_from.photo_tmb }}</div>
+              {{ follow.user_from.photo_tmb }}</div>
             <span class="friend_name">{{ follow.user_from.first_name }}</span>
           </a>
-
-
-
         {% endfor %}
-      </div>
-    </div>
+      </div></div>
+    {% endif %}
+
   </div>
 
   <div class="data">

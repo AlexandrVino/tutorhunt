@@ -1,0 +1,121 @@
+.data {
+    width: 530px;
+    margin-left: 10px;
+}
+
+.name {
+    font-size: 19px;
+}
+
+.status {
+    font-size: 13px;
+    padding: 0;
+}
+
+.info {
+    padding: 10px 0;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.info_item {
+    display: block;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    line-height: normal;
+}
+
+.info_item:link {
+    text-decoration: none;
+    color: #fff;
+}
+
+.info_item:visited {
+    text-decoration: none;
+    color: #fff;
+}
+
+
+.profile {
+    width: 220px;
+}
+
+.col-profile {
+    max-width: 220px;
+}
+
+.avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 5px;
+}
+
+.edit {
+    width: 200px;
+    height: 30px;
+    background-color: #343235;
+    color: #ffffff;
+    border-radius: 10px;
+    border: none;
+    padding: 0;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.friend_item {
+    width: 60px;
+    margin-top: 10px;
+    text-decoration: none;
+}
+h6 {
+    text-align: center;
+}
+
+.friend_photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: #999999;
+    display: block;
+    margin: 0 auto;
+
+}
+
+.friend_name {
+    display: block;
+    width: 100%;
+    margin: 10px auto 0 auto;
+    text-align: center;
+    font-size: 13px;
+    color: #ff0000 !important;
+}
+
+.friend_name:hover {
+    text-decoration: underline;
+}
+
+.friends {
+    width: 220px;
+}
+
+.count {
+    height: 20px;
+    line-height: 20px;
+    margin-left: 10px;
+}
+
+.friends_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+
+.img-wrapper img {
+    display: block;
+    margin: auto;
+}
+
+

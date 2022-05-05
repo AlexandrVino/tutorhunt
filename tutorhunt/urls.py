@@ -1,7 +1,11 @@
+import mimetypes
+
 from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.static import static
 import tutorhunt.settings as settings
+
+mimetypes.add_type("application/javascript", ".js", True)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

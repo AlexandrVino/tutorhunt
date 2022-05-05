@@ -28,7 +28,7 @@ class User(AbstractUser):
 
     def photo_tmb(self):
         if self.photo:
-            return mark_safe(f'<img src="{self.photo.url}" width="50">')
+            return mark_safe(f'<img src="{self.photo.url}" class="friend_photo" width="50">')
         return "Нет изображения"
 
 

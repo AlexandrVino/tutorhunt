@@ -2,3 +2,43 @@
     display: flex;
     justify-content: space-between;
 }
+
+header {
+    height: 60px;
+    --bs-bg-opacity: .7 !important;
+}
+
+footer {
+    height: 60px;
+    --bs-bg-opacity: .7 !important;
+    margin-top: 0 !important;
+
+}
+
+body {
+    --bs-bg-opacity: .7 !important;
+}
+
+.nav-link:hover {
+    color: #fff;
+    text-decoration: none;
+    filter: drop-shadow(0 0 5px #ffffff);
+}
+
+.widget {
+    background-color: #272627;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.widget-row {
+    margin-top: 10px;
+    display: flex;
+}
+
+.content {
+    min-height: calc(100vh - 130px);
+    max-width: 760px;
+    margin: 0 auto;
+}

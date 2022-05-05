@@ -8,9 +8,22 @@ h1 {
 }
 
 .form-wrapper {
-    width: 280px;
+    width: 320px;
     margin: auto;
     border-radius: 10px
+}
+
+.password-change {
+    margin-top: 7%
+}
+
+.form-text {
+    width: 500px;
+    padding: 20px;
+}
+
+.form-wrapper form {
+    padding: 20px;
 }
 
 .form-floating input {

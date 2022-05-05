@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ValidationError
@@ -8,14 +9,16 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
-from django.views.generic.edit import CreateView, FormView
+from django.views.generic import TemplateView
+from django.views.generic.edit import CreateView, FormView, ModelFormMixin
 
 from .backends import EmailAuthBackend, EmailUniqueFailed
 from .forms import LoginForm, RegisterForm
-from .models import User
+from .models import Follow, User
 
 SIGNUP_TEMPLATE = "users/signup.html"
 LOGIN_WITH_USERNAME_TEMPLATE = "users/login_with_username.html"
@@ -124,3 +127,24 @@ class ActivateView(View):
             return redirect("/auth/profile")
         else:
             return HttpResponse("Activation link is invalid!")
+
+
+@method_decorator(login_required, name="dispatch")
+class ProfileView(TemplateView):
+    """Возвращает страничку профиля пользователя"""
+
+    template_name = PROFILE_TEMPLATE
+    context_object_name = "user"
+    model = User
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["follows"] = Follow.manager.get_followers(None,
+                                                          'user_from__first_name',
+                                                          'user_from__photo',
+                                                          user_to=self.object)
+        return context
+
+    def get(self, request, *args, **kwargs):
+        self.object = request.user
+        return super().get(request, *args, **kwargs)

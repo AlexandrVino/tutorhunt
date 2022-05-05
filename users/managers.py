@@ -14,4 +14,8 @@ class BunchManager(BaseManager, UserManager):
 
 
 class FollowManager(BaseManager, UserManager):
-    pass
+    def get_followers(self, follows=None, *args, **kwargs):
+        if follows is None:
+            follows = self.get_objects_with_filter(**kwargs)
+
+        return follows.select_related("user_from").only(*args)

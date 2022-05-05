@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
-from users.models import Role, User
+from users.models import Follow, Role, User
 
 
 class LoginForm(forms.ModelForm):
@@ -124,4 +124,12 @@ class RegisterForm(UserCreationForm):
             'username', 'email', 'password1', 'password2',
             'role', 'first_name', "last_name", 'photo',
         )
+
+
+class FollowForm(forms.ModelForm):
+    follow = forms.BooleanField()
+
+    class Meta:
+        model = Follow
+        fields = ('follow', )
 

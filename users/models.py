@@ -63,6 +63,7 @@ class Follow(models.Model):
         User, on_delete=models.CASCADE, related_name='follow_from', verbose_name='Подписчик')
     user_to = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='follow_to', verbose_name='Человек, на которого подписываются')
+    active = models.BooleanField(default=True)
 
     manager = FollowManager()
 

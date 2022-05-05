@@ -17,7 +17,7 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, FormView, ModelFormMixin
 
 from .backends import EmailAuthBackend, EmailUniqueFailed
-from .forms import LoginForm, RegisterForm
+from .forms import FollowForm, LoginForm, RegisterForm
 from .models import Follow, User
 
 SIGNUP_TEMPLATE = "users/signup.html"
@@ -36,24 +36,43 @@ class UserListView(ListView):
     context_object_name = "users"
 
 
-class UserDetailView(DetailView):
+class UserDetailView(DetailView, FormView):
     """Возвращает страничку конкретного пользователя"""
 
     template_name = CUR_USER_TEMPLATE
     model = User
     context_object_name = "user"
     pk_url_kwarg = "user_id"
+    form_class = FollowForm
+    current_user = None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['current_user'] = self.current_user
         context["follows"] = Follow.manager.get_followers(
             None, 'user_from__first_name', 'user_from__photo', user_to=self.object)
+        context['already_follow'] = any(
+            [follow.user_from.id == self.current_user and follow.active for follow in context["follows"]])
+
         return context
 
     def get(self, request, *args, **kwargs):
-        self.current_user = request.user.id
+        if not self.current_user:
+            self.current_user = request.user.id
         return super(UserDetailView, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+
+        user_from = request.user
+        user_to = self.get_object()
+
+        follow, is_exits = Follow.manager.get_or_create(user_to=user_to, user_from=user_from)
+        if not is_exits:
+            follow.active = not follow.active
+            follow.save()
+
+        self.current_user = user_from.id
+        return self.get(request, *args, **kwargs)
 
 
 class LoginWithEmailView(FormView):

@@ -14,24 +14,32 @@
       {% if current_user is user.id %}
         <button class="edit">Редактировать</button>
       {% else %}
-        <button class="edit">Подписаться</button>
+        <form method="post">
+          {% csrf_token %}
+          <button class="edit" type="submit">
+            {% if already_follow %}Отписаться{% else %}Подписаться{% endif %}
+          </button>
+        </form>
+
+
       {% endif %}
     </div>
     {% if follows %}
       <div class="friends widget">
 
-      <h6>
-        Подписчики
-      </h6>
-      <div class="friends_wrapper">
-        {% for follow in follows|slice:":6" %}
-          <a class="friend_item" href="{% url 'user_detail' follow.user_from.id %}">
-            <div class="img-wrapper">
-              {{ follow.user_from.photo_tmb }}</div>
-            <span class="friend_name">{{ follow.user_from.first_name }}</span>
-          </a>
-        {% endfor %}
-      </div></div>
+        <h6>
+          Подписчики
+        </h6>
+        <div class="friends_wrapper">
+          {% for follow in follows|slice:":6" %}
+            <a class="friend_item" href="{% url 'user_detail' follow.user_from.id %}">
+              <div class="img-wrapper">
+                {{ follow.user_from.photo_tmb }}</div>
+              <span class="friend_name">{{ follow.user_from.first_name }}</span>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
     {% endif %}
 
   </div>

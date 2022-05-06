@@ -7,7 +7,7 @@ from .managers import HometaskManager
 User = get_user_model()
 
 
-class Hometask(model.Model):
+class Hometask(models.Model):
     student = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

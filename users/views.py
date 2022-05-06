@@ -198,4 +198,3 @@ class ProfileView(TemplateView):
     def get(self, request, *args, **kwargs):
         self.object = request.user
         return super().get(request, *args, **kwargs)
-

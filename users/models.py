@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 from django.utils.safestring import mark_safe
 
 from users.managers import AppUserManager, BunchManager, FollowManager
@@ -19,20 +21,14 @@ class User(AbstractUser):
         verbose_name="Роль"
     )
     photo = models.ImageField(
-        upload_to="uploads/users/", null=True, blank=True, verbose_name="Фото",
-        default='uploads/users/user_default.png'
+        upload_to="uploads/users/", null=True, blank=True, verbose_name="Фото"
     )
 
     manager = AppUserManager()
 
     def photo_tmb(self):
         if self.photo:
-            return mark_safe(f'<img src="{self.photo.url}" class="friend_photo" width="50">')
-        return "Нет изображения"
-
-    def get_photo(self):
-        if self.photo:
-            return mark_safe(f'<img src="{self.photo.url}" class="avatar">')
+            return mark_safe(f'<img src="{self.photo.url}" width="50">')
         return "Нет изображения"
 
 
@@ -69,7 +65,6 @@ class Follow(models.Model):
         User, on_delete=models.CASCADE, related_name='follow_from', verbose_name='Подписчик')
     user_to = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='follow_to', verbose_name='Человек, на которого подписываются')
-    active = models.BooleanField(default=True)
 
     manager = FollowManager()
 

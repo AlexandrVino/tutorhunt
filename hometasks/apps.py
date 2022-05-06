@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class GraphicsConfig(AppConfig):
+class HometasksConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'graphics'
+    name = 'hometasks'

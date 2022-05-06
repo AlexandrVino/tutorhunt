@@ -10,7 +10,7 @@ class BaseManager(models.Manager):
         return list(self.all())
 
     def get_objects_with_filter(self, *args, **kwargs) -> QuerySet:
-        return self.filter(*args, **kwargs)
+        return self.filter(**kwargs).only(*args)
 
     def get_objects_with_filter_list(self, *args, **kwargs) -> list:
         return list(self.filter(*args, **kwargs))

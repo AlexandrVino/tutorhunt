@@ -19,7 +19,7 @@ class User(AbstractUser):
         verbose_name="Роль"
     )
     photo = models.ImageField(
-        upload_to="uploads/users/", null=True, blank=True, verbose_name="Фото",
+        upload_to="uploads/users/", verbose_name="Фото",
         default='uploads/users/user_default.png'
     )
 
@@ -28,12 +28,12 @@ class User(AbstractUser):
     def photo_tmb(self):
         if self.photo:
             return mark_safe(f'<img src="{self.photo.url}" class="friend_photo" width="50">')
-        return "Нет изображения"
+        return mark_safe(f'<img src="/media/uploads/users/user_default.png" class="friend_photo">')
 
     def get_photo(self):
         if self.photo:
             return mark_safe(f'<img src="{self.photo.url}" class="avatar">')
-        return "Нет изображения"
+        return mark_safe(f'<img src="/media/uploads/users/user_default.png" class="avatar">')
 
 
 class Bunch(models.Model):

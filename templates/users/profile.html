@@ -10,7 +10,7 @@
 
   <div class="col col-profile">
     <div class="profile widget">
-      <img class="avatar" src="{{ user.photo.url }}" alt="avatar"/>
+      {{ user.get_photo }}
       <button class="edit">Edit</button>
     </div>
     <div class="friends widget">

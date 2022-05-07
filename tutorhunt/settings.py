@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -53,6 +54,7 @@ ROOT_URLCONF = "tutorhunt.urls"
 
 TEMPLATES = [
     {
+<<<<<<< HEAD
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
@@ -64,6 +66,19 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
             ],
         },
+=======
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / "templates"],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ]
+        }
+>>>>>>> a1e0fe30533d580f93f5031f5b4b9e1e849aee65
     },
 ]
 
@@ -118,3 +133,14 @@ MEDIA_URL = "/media/"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "gorarded@gmail.com"
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
+
+LOGIN_URL = "/auth/login"
+LOGIN_REDIRECT_URL = "/auth/profile"
+LOGOUT_REDIRECT_URL = "/auth/login/"

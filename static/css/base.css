@@ -19,6 +19,10 @@ body {
     --bs-bg-opacity: .7 !important;
 }
 
+a {
+    text-decoration: none !important;
+}
+
 .nav-link:hover {
     color: #fff;
     text-decoration: none;
@@ -55,6 +59,33 @@ body {
     width: 200px;
     height: 200px;
     border-radius: 5px;
+}
+
+.col-card {
+    border: none;
+    padding: 0;
+    min-width: 30%;
+    max-width: 30%;
+    margin: 30px 10px 0 10px;
+    cursor: pointer;
+}
+
+.col-card:hover {
+    min-width: calc(30% + 20px);
+    max-width: calc(30% + 20px);
+    margin: 20px 0 0 0;
+    filter: drop-shadow(0 0 10px #ffffff);
+    /*box-shadow: -5px -5px 20px #ffffff;*/
+}
+.margin-top {
+    margin-top: 10px;
+}
+.card {
+    border-radius: 10px;
+}
+
+.card-body {
+    border-radius: 10px;
 }
 
 .col:hover a .avatar {

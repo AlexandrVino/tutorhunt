@@ -9,7 +9,8 @@ from django.contrib.auth.views import (
 )
 from django.urls import path
 
-from users.views import ActivateView, LoginWithEmailView, ProfileView, SignupView, UserDetailView, UserListView
+from users.views import ActivateView, FollowersListView, LoginWithEmailView, ProfileView, SignupView, UserDetailView, \
+    UserListView
 
 urlpatterns = [
 
@@ -65,7 +66,10 @@ urlpatterns = [
         ),
         name="password_reset_complete",
     ),
-    path("profile/", ProfileView.as_view(), name="profile"),
+
     path("users/", UserListView.as_view(), name="users"),
     path("users/<int:user_id>/", UserDetailView.as_view(), name="user_detail"),
+    path("users/follows/<int:user_to>/", FollowersListView.as_view(), name="user_detail_follows"),
+    path("users/edit_profile/<int:user_id>/", ProfileView.as_view(), name="user_detail_edit"),
+
 ]

@@ -10,9 +10,13 @@
 
   <div class="col col-profile">
     <div class="profile widget">
-      {{ user.get_photo }}
-      {% if current_user is user.id %}
-        <button class="edit">Редактировать</button>
+      {{ user_detail.get_photo }}
+      {% if user == user_detail %}
+        <a class="text-white" href="{% url 'user_detail_edit' user.id %}">
+          <button class="edit">
+            Редактировать
+          </button>
+        </a>
       {% else %}
         <form method="post">
           {% csrf_token %}
@@ -28,7 +32,7 @@
       <div class="friends widget">
 
         <h6>
-          Подписчики
+          <a class='nav-link text-white' href="{% url 'user_detail_follows' user_detail.id %}">Подписчики</a>
         </h6>
         <div class="friends_wrapper">
           {% for follow in follows|slice:":6" %}
@@ -48,9 +52,9 @@
 
     <div class="widget">
       <div class="bio">
-        <div class="name">{{ user.first_name }} {{ user.last_name }}</div>
-        <div class="status">{{ user.email }}</div>
-        <div class="status">{{ user.role }}</div>
+        <div class="name">{{ user_detail.first_name }} {{ user_detail.last_name }}</div>
+        <div class="status">{{ user_detail.email }}</div>
+        <div class="status">{{ user_detail.role }}</div>
       </div>
     </div>
   </div>

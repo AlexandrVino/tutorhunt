@@ -122,4 +122,8 @@ INTERNAL_IPS = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = '/tmp/app-messages/'
+EMAIL_FILE_PATH = BASE_DIR / 'sent_email'
+
+LOGIN_URL = "/auth/login"
+LOGIN_REDIRECT_URL = "/auth/users/"
+LOGOUT_REDIRECT_URL = "/auth/login/"

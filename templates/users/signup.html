@@ -7,16 +7,16 @@
 {% endblock %}
 
 {% block content %}
-  <main class="form">
+  <main class="form" >
     <div class="form-wrapper bg-dark">
 
-      <form method="post">
+      <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
 
 
-        <div class="form-floating ">
+        <div class="form-floating">
           {{ form.username }}
         </div>
         <div class="form-floating ">

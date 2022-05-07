@@ -9,6 +9,7 @@ class Role(models.TextChoices):
     TEACHER = 'Teacher'
     STUDENT = 'Student'
 
+# form-control input-field role
 
 class User(AbstractUser):
     email = models.EmailField(blank=False)
@@ -78,4 +79,3 @@ class Follow(models.Model):
         verbose_name_plural = 'Подписки'
 
         constraints = [models.UniqueConstraint(fields=["user_to", "user_from"], name="unique_follow")]
-

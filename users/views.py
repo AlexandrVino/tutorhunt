@@ -17,15 +17,16 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, FormView, ModelFormMixin
 
 from .backends import EmailAuthBackend, EmailUniqueFailed
-from .forms import FollowForm, LoginForm, RegisterForm
+from .forms import EditProfileForm, FollowForm, LoginForm, RegisterForm
 from .models import Follow, User
+from .utils import edit_user_data
 
 SIGNUP_TEMPLATE = "users/signup.html"
 LOGIN_WITH_USERNAME_TEMPLATE = "users/login_with_username.html"
 LOGIN_WITH_EMAIL_TEMPLATE = "users/login_with_email.html"
-PROFILE_TEMPLATE = "users/profile.html"
 USER_LIST_TEMPLATE = "users/user_list.html"
 CUR_USER_TEMPLATE = "users/user_detail.html"
+EDIT_PROFILE_TEMPLATE = "users/edit_profile.html"
 
 
 class UserListView(ListView):
@@ -41,7 +42,7 @@ class UserDetailView(DetailView, FormView):
 
     template_name = CUR_USER_TEMPLATE
     model = User
-    context_object_name = "user"
+    context_object_name = "user_detail"
     pk_url_kwarg = "user_id"
     form_class = FollowForm
     current_user = None
@@ -53,19 +54,22 @@ class UserDetailView(DetailView, FormView):
             None, 'user_from__first_name', 'user_from__photo', user_to=self.object)
         context['already_follow'] = any(
             [follow.user_from.id == self.current_user and follow.active for follow in context["follows"]])
+        print(context)
 
         return context
 
     def get(self, request, *args, **kwargs):
-        if not self.current_user:
-            self.current_user = request.user.id
+        self.current_user = request.user.id
         return super(UserDetailView, self).get(request, *args, **kwargs)
 
+    @method_decorator(login_required, name="dispatch")
     def post(self, request, *args, **kwargs):
-
         user_from = request.user
-        user_to = self.get_object()
 
+        if self.kwargs.get('user_id') == user_from.id:
+            return self.get(request, *args, **kwargs)
+
+        user_to = self.get_object()
         follow, is_exits = Follow.manager.get_or_create(user_to=user_to, user_from=user_from)
         if not is_exits:
             follow.active = not follow.active
@@ -82,25 +86,22 @@ class LoginWithEmailView(FormView):
     template_name = LOGIN_WITH_EMAIL_TEMPLATE
 
     def get_success_url(self):
-        return reverse("profile")
+        return reverse("users")
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
-        print(form.is_valid())
+
         if form.is_valid():
             email = form.cleaned_data["email"]
             password = form.cleaned_data["password"]
-            print(email, password)
             user = EmailAuthBackend.authenticate(
                 request, email=email, password=password
             )
 
-            print(user, email, password)
-
             if user is not None:
                 if user.is_active:
                     EmailAuthBackend.authenticate(request, email, password)
-                    return redirect(self.get_success_url())
+                    return redirect(reverse("user_detail", args=(user.id, )))
 
         return super().post(request, *args, **kwargs)
 
@@ -118,14 +119,14 @@ class SignupView(CreateView):
         return super().get(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse("profile")
+        return reverse("login")
 
     def post(self, request, *args, **kwargs):
-        form = self.get_form_class()(request.POST)
+        form = self.get_form_class()(request.POST, request.FILES)
         errors = []
         if form.is_valid():
             try:
-                print(form.cleaned_data)
+
                 new_user = EmailAuthBackend.create_user(**form.cleaned_data)
                 current_site = get_current_site(request)
                 mail_subject = "Activation link has been sent to your email id"
@@ -144,7 +145,7 @@ class SignupView(CreateView):
                 return HttpResponse("Подтвердите почту")
 
             except (IntegrityError, ValidationError, EmailUniqueFailed) as err:
-                print(err)
+
                 if type(err) is ValidationError:
                     err = "\n".join(err.messages)
 
@@ -174,30 +175,62 @@ class ActivateView(View):
             user.is_active = True
             user.save()
 
-            EmailAuthBackend.login(request, user)
+            EmailAuthBackend.authenticate(request, user=user)
 
-            return redirect("/auth/profile")
+            return redirect(reverse("user_detail", args=(user.id, )))
         else:
             return HttpResponse("Activation link is invalid!")
 
 
 @method_decorator(login_required, name="dispatch")
-class ProfileView(TemplateView):
+class ProfileView(TemplateView, ModelFormMixin):
     """Возвращает страничку профиля пользователя"""
 
-    template_name = CUR_USER_TEMPLATE
+    template_name = EDIT_PROFILE_TEMPLATE
     context_object_name = "user"
     model = User
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["follows"] = Follow.manager.get_followers(None,
-                                                          'user_from__first_name',
-                                                          'user_from__photo',
-                                                          user_to=self.object)
-        context['current_user'] = self.object.id
-        return context
+    form_class = EditProfileForm
 
     def get(self, request, *args, **kwargs):
         self.object = request.user
         return super().get(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse("users")
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            user = request.user
+            print(form.cleaned_data, request.FILES)
+            if user.id:
+                edit_user_data(user, **form.cleaned_data)
+                return redirect(reverse("user_detail", args=(user.id,)))
+
+        return super().post(request, *args, **kwargs)
+
+
+@method_decorator(login_required, name="dispatch")
+class FollowersListView(DetailView):
+    """Возвращает страничку Списка пользователей"""
+
+    template_name = USER_LIST_TEMPLATE
+    model = User
+    pk_url_kwarg = "user_to"
+
+    current_user = None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["users"] = map(
+            lambda x: x.user_from,
+            Follow.manager.get_followers(
+                None, 'user_from__first_name', 'user_from__photo',
+                'user_from__last_name', 'user_from__username',
+                'user_from__email', 'user_from__role',
+                user_to=self.object))
+        print(context, self.current_user, self.kwargs)
+        return context
+
+    def get(self, request, *args, **kwargs):
+        return super(FollowersListView, self).get(request, *args, **kwargs)

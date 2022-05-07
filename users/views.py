@@ -86,14 +86,16 @@ class LoginWithEmailView(FormView):
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
-
+        print(form.is_valid())
         if form.is_valid():
             email = form.cleaned_data["email"]
             password = form.cleaned_data["password"]
-
+            print(email, password)
             user = EmailAuthBackend.authenticate(
                 request, email=email, password=password
             )
+
+            print(user, email, password)
 
             if user is not None:
                 if user.is_active:
@@ -168,10 +170,11 @@ class ActivateView(View):
         except (TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
 
-        if user is not None and default_token_generator.check_token(user,
-                                                                    token):
+        if user is not None and default_token_generator.check_token(user, token):
             user.is_active = True
             user.save()
+
+            EmailAuthBackend.login(request, user)
 
             return redirect("/auth/profile")
         else:
@@ -198,4 +201,3 @@ class ProfileView(TemplateView):
     def get(self, request, *args, **kwargs):
         self.object = request.user
         return super().get(request, *args, **kwargs)
-

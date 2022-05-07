@@ -6,7 +6,7 @@
     <div class="card shadow-sm" style="border-radius: 10px;">
       <div class="card-body bg-dark text-white"
            style="border-radius: 10px;">
-        <div class="img-wrapper"><img src="{{ user.photo.url }}" alt="Нет изображения" class="avatar"></div>
+        <div class="img-wrapper">{{ user.get_photo }}</div>
         <p class="card-text">
           Username:
           {% if user.username %}{{ user.username }}{% else %}Отсутствует{% endif %}

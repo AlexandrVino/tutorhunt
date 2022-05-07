@@ -13,12 +13,17 @@ class EmailAuthBackend:
     def authenticate(request, email=None, password=None):
         try:
             user = User.objects.get(email=email)
+            print(user, user.check_password(password), password)
             if user.check_password(password):
                 login(request, user)
                 return user
             return None
         except User.DoesNotExist:
             return None
+
+    @staticmethod
+    def login(request, user):
+        login(request, user)
 
     @staticmethod
     def create_user(email=None, username=None, password1=None, password2=None, **kwargs):

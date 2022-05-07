@@ -10,7 +10,7 @@
 
   <div class="col col-profile">
     <div class="profile widget">
-      <img class="avatar" src="{{ user.photo.url }}" alt="avatar"/>
+      {{ user.get_photo }}
       {% if current_user is user.id %}
         <button class="edit">Редактировать</button>
       {% else %}

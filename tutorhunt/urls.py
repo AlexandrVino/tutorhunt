@@ -9,6 +9,7 @@ mimetypes.add_type("application/javascript", ".js", True)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('timeline/', include("graphics.urls")),
     path("auth/", include("users.urls")),
 ]
 

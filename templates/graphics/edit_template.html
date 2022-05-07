@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Редактировать расписание{% endblock title %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/form_grid.css' %}">
+{% endblock styles %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+
+        <div>
+        <table class="form-body">
+            {% for field in form %}
+                {{ field.as_text }}
+            {% endfor %}
+        </table>
+        </div>
+
+
+
+        <input type="submit" value="Save">
+    </form>
+
+    <script src="{% static 'js/form_grid.js' %}"></script>
+{% endblock content %} 

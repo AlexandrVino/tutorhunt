@@ -1,6 +1,6 @@
 .data {
-    width: 530px;
-    margin-left: 10px;
+    min-width: 220px;
+    max-width: 530px;
 }
 
 .name {
@@ -118,5 +118,5 @@ h6 {
 }
 
 .content {
-    max-width: 760px;
+    max-width: 470px;
 }

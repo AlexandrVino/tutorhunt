@@ -33,8 +33,9 @@ a {
     padding: 50px 20px;
     --bs-gutter-x: 0;
     --bs-gutter-y: 0;
-    width: 1000px;
+    max-width: 1000px;
     justify-content: space-evenly;
+    flex-wrap: wrap;
     margin: 0 auto;
 }
 
@@ -48,6 +49,8 @@ a {
 .widget-row {
     margin-top: 10px;
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 .content {
@@ -64,7 +67,7 @@ a {
 .col-card {
     border: none;
     padding: 0;
-    min-width: 30%;
+    min-width: max(30%, 288px);
     max-width: 30%;
     margin: 30px 10px 0 10px;
     cursor: pointer;

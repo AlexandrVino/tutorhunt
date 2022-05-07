@@ -202,12 +202,11 @@ class ProfileView(TemplateView, ModelFormMixin):
         form = self.get_form()
         if form.is_valid():
             user = request.user
-            print(form.cleaned_data, request.FILES)
             if user.id:
                 edit_user_data(user, **form.cleaned_data)
                 return redirect(reverse("user_detail", args=(user.id,)))
 
-        return super().post(request, *args, **kwargs)
+        return self.get(request, *args, **kwargs)
 
 
 @method_decorator(login_required, name="dispatch")

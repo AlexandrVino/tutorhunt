@@ -79,7 +79,7 @@ class RegisterForm(UserCreationForm):
 
 
 class EditProfileForm(forms.ModelForm):
-    role = forms.ChoiceField(choices=Role.choices)
+    # role = forms.ChoiceField(choices=Role.choices)
     first_name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control input-field',
         'type': 'text',
@@ -103,7 +103,7 @@ class EditProfileForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('role', 'first_name', "last_name", 'photo')
+        fields = ('first_name', "last_name", 'photo')
 
 
 class FollowForm(forms.ModelForm):

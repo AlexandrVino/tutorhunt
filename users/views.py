@@ -15,10 +15,14 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, FormView, ModelFormMixin
+from django.db.models import Avg, Count
+
 
 from .backends import EmailAuthBackend, EmailUniqueFailed
 from .forms import FollowForm, LoginForm, RegisterForm
 from .models import Follow, User
+from rating.forms import RatingForm
+from rating.models import Rating
 
 SIGNUP_TEMPLATE = "users/signup.html"
 LOGIN_WITH_USERNAME_TEMPLATE = "users/login_with_username.html"
@@ -48,17 +52,32 @@ class UserDetailView(DetailView, FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = self.current_user
+        context["current_user"] = self.current_user
         context["follows"] = Follow.manager.get_followers(
-            None, 'user_from__first_name', 'user_from__photo', user_to=self.object)
-        context['already_follow'] = any(
-            [follow.user_from.id == self.current_user and follow.active for follow in context["follows"]])
+            None, "user_from__first_name", "user_from__photo", user_to=self.object
+        )
+        context["already_follow"] = any(
+            [
+                follow.user_from.id == self.current_user.id and follow.active
+                for follow in context["follows"]
+            ]
+        )
+        context["rating_form"] = RatingForm()
+        try:
+            context["rating"] = Rating.manager.get(
+                user_from=self.current_user, user_to=self.object
+            )
+        except Rating.DoesNotExist:
+            context["rating"] = 0
+        context["all_ratings"] = Rating.manager.filter(
+            user_to=self.object, star__in=[1, 2, 3, 4, 5]
+        ).aggregate(Avg("star"), Count("star"))
 
         return context
 
     def get(self, request, *args, **kwargs):
         if not self.current_user:
-            self.current_user = request.user.id
+            self.current_user = request.user
         return super(UserDetailView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -66,12 +85,21 @@ class UserDetailView(DetailView, FormView):
         user_from = request.user
         user_to = self.get_object()
 
-        follow, is_exits = Follow.manager.get_or_create(user_to=user_to, user_from=user_from)
-        if not is_exits:
-            follow.active = not follow.active
-            follow.save()
+        if "rating_form" in request.POST:
+            rating, created = Rating.manager.get_or_create(
+                user_to=user_to, user_from=user_from
+            )
+            rating.star = int(request.POST["star"])
+            rating.save()
+        else:
+            follow, is_exits = Follow.manager.get_or_create(
+                user_to=user_to, user_from=user_from
+            )
+            if not is_exits:
+                follow.active = not follow.active
+                follow.save()
 
-        self.current_user = user_from.id
+        self.current_user = user_from
         return self.get(request, *args, **kwargs)
 
 
@@ -157,8 +185,9 @@ class SignupView(CreateView):
                 errors.append(err)
 
         errors += [err[0] for err in list(form.errors.values())]
-        return render(request, self.template_name,
-                      {"form": form, "errors": set(errors)})
+        return render(
+            request, self.template_name, {"form": form, "errors": set(errors)}
+        )
 
 
 class ActivateView(View):
@@ -191,11 +220,10 @@ class ProfileView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["follows"] = Follow.manager.get_followers(None,
-                                                          'user_from__first_name',
-                                                          'user_from__photo',
-                                                          user_to=self.object)
-        context['current_user'] = self.object.id
+        context["follows"] = Follow.manager.get_followers(
+            None, "user_from__first_name", "user_from__photo", user_to=self.object
+        )
+        context["current_user"] = self.object.id
         return context
 
     def get(self, request, *args, **kwargs):

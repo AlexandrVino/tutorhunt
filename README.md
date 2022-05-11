@@ -34,7 +34,7 @@
   
   **Ветка**: [feat/rating](https://github.com/AlexandrVino/tutorhunt/tree/feat/rating)
 
-  * Рейтинг
+  * ~~Рейтинг~~
   
     Модель рейтинга, интерфейс выставления оценок
     

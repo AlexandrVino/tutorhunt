@@ -45,11 +45,15 @@ class DayTimeline:
         """Возвращает initial для DayTimelineFormField (список номеров часов)"""
         busy_hours = list(
             map(
-                lambda x: x[0] + 1, # выдаёт номер часа
+                lambda x: x[0], # выдаёт номер часа
                 filter(lambda x: x[1], enumerate(self.timeline))
             )
         )
         return busy_hours
+
+    def is_busy(self, hour: int) -> bool:
+        """Возвращает True, если час занят (часы от 0 до 23)"""
+        return self.timeline[hour]
 
     @classmethod
     def parse_timeline(cls, value: str) -> "DayTimeline":
@@ -76,7 +80,7 @@ class DayTimeline:
         """
         timeline = [False] * 24
         for hour in busy_hours:
-            timeline[int(hour) - 1] = True
+            timeline[int(hour)] = True
 
         return DayTimeline(timeline=tuple(timeline))
 

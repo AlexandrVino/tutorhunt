@@ -1,7 +1,11 @@
 from typing import Any, Dict
+from django.http import HttpResponseForbidden
 
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
+
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from .fields import DayTimeline
 from .forms import TimelineForm
@@ -37,12 +41,19 @@ class TimelineView(DetailView):
         context["headers"] = WEEKDAYS_RUS
         context["table_data"] = table_data
         return context
-    
 
+
+@method_decorator(login_required, name='dispatch')
 class EditTimelineView(UpdateView):
     template_name = EDIT_TIMELINTE_TEMPLATE
     model = TimelineModel
     form_class = TimelineForm
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_staff or request.user.id == self.get_object().user.id:
+            return super().dispatch(request, *args, **kwargs)
+        return HttpResponseForbidden()
+
 
     def get_initial(self) -> Dict[str, Any]:
         initial = dict()

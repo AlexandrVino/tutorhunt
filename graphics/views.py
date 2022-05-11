@@ -1,11 +1,15 @@
 from typing import Any, Dict
+from django.http import HttpResponseForbidden
 
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 from .fields import DayTimeline
 from .forms import TimelineForm
-from .models import TimelineModel
+from .models import WEEKDAYS_RUS, TimelineModel
 
 
 TIMELINE_VIEW_TEMPLATE = "graphics/view_timeline.html"
@@ -14,26 +18,42 @@ EDIT_TIMELINTE_TEMPLATE = "graphics/edit_template.html"
 WEEKDAYS = ("monday", "tuesday",
             "wednesday", "thursday",
             "friday", "saturday", "sunday")
+HOURS = tuple(['%02d:00' % i for i in range(24)])
 
 
 class TimelineView(DetailView):
     template_name = TIMELINE_VIEW_TEMPLATE
     model = TimelineModel
 
+    def get_context_data(self, **kwargs):
+        object: TimelineModel = self.get_object()
+
+        table_data = [[None for __ in range(7)] for _ in range(24)]
+
+        for i, weekday in enumerate(object.get_days_fields()):
+            for j in range(24):
+                table_data[j][i] = {
+                    "value": HOURS[j],
+                    "class": "busy-hour" if weekday.is_busy(j) else "vacant-hour"
+                    }
+
+        context = super().get_context_data(**kwargs)
+        context["headers"] = WEEKDAYS_RUS
+        context["table_data"] = table_data
+        return context
+
+
+@method_decorator(login_required, name='dispatch')
 class EditTimelineView(UpdateView):
     template_name = EDIT_TIMELINTE_TEMPLATE
     model = TimelineModel
     form_class = TimelineForm
-    css_classes = ("visually-hidden", )
 
-    def get(self, *args, **kwargs):
-        # for f in self.get_form():
-        #     print(f.field.widget.__dict__)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_staff or request.user.id == self.get_object().user.id:
+            return super().dispatch(request, *args, **kwargs)
+        return HttpResponseForbidden()
 
-        # for f in self.get_form().fields.values():
-        #     print(f.__class__)
-
-        return super().get(*args, **kwargs)
 
     def get_initial(self) -> Dict[str, Any]:
         initial = dict()

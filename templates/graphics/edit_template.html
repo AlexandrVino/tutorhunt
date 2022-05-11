@@ -9,21 +9,18 @@
 {% endblock styles %}
 
 {% block content %}
-    <form method="post">
+    <form class="my-2 d-flex flex-column align-items-center" method="post">
         {% csrf_token %}
 
-        <div>
-        <table class="form-body">
+        <div class="form-grid-body d-flex flex-row justify-content-between overflow-auto mb-3">
             {% for field in form %}
-                {{ field.as_text }}
+            <div>
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
             {% endfor %}
-        </table>
         </div>
 
-
-
-        <input type="submit" value="Save">
+        <input class="btn btn-success" type="submit" value="Сохранить">
     </form>
-
-    <script src="{% static 'js/form_grid.js' %}"></script>
 {% endblock content %} 

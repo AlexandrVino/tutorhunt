@@ -121,3 +121,8 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
+# Auth
+
+LOGIN_REDIRECT_URL = "/auth/profile/"
+LOGIN_URL = "/auth/login/"
+LOGOUT_REDIRECT_URL = "/auth/users/"

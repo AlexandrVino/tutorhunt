@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'graphics.apps.GraphicsConfig',
     "rating.apps.RatingConfig",
     "hometasks.apps.HometasksConfig",
+    "notifications.apps.NotificationsConfig",
 
     'debug_toolbar',
     'django_cleanup.apps.CleanupConfig',

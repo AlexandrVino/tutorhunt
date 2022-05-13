@@ -35,6 +35,9 @@ class User(AbstractUser):
             return mark_safe(f'<img src="{self.photo.url}" class="avatar">')
         return "Нет изображения"
 
+    def has_timeline(self):
+        return hasattr(self, "timeline")
+
 
 class Bunch(models.Model):
     teacher = models.ForeignKey(

@@ -9,11 +9,11 @@
 
 {% block content %}
 <div class="overflow-auto my-4">
-<table>
+<table class="big-tl-table">
     <thead>
         <tr>
             {% for header in headers %}
-                <td>{{ header }}</td>
+                <th scope="col">{{ header }}</th>
             {% endfor %}
         </tr>
     </thead>

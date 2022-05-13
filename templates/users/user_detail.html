@@ -53,5 +53,9 @@
         <div class="status">{{ user.role }}</div>
       </div>
     </div>
+
+    <div class="widget">
+        {% with user.timeline as timeline %}{% include "includes/timeline_view.html" %}{% endwith %}
+    </div>
   </div>
 {% endblock %}

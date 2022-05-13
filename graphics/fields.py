@@ -7,12 +7,15 @@ class DayTimeline:
     """Расписание дня"""
     timeline: List[bool]
 
-    def __init__(self, timeline: Tuple[bool, ...] = None):
+    def __init__(self, timeline: Iterable[bool] = None):
         if timeline is None:
             timeline = (False, ) * 24
 
+        if not hasattr(timeline, "__init__"):
+            raise TypeError("timeline должен быть итерируемым")
+
         if not isinstance(timeline, tuple):
-            raise TypeError("timeline должен быть кортежем")
+            timeline = tuple(timeline)
 
         if len(timeline) != 24:
             raise ValueError("Количество часов должно быть равно 24")
@@ -63,9 +66,17 @@ class DayTimeline:
         Параметры:
         value -- строковое представление
 
+        Исключения:
+        TypeError -- если value не строка
+
         Возвращет соответствующий DayTimeline
         """
-        return DayTimeline(timeline=tuple(map(lambda x: x == "1", value)))
+        if value:
+            return DayTimeline(timeline=tuple(map(lambda x: x == "1", value)))
+        elif isinstance(value, str):
+            return DayTimeline()
+        else:
+            raise TypeError("value должно быть строкой")
 
 
     @classmethod

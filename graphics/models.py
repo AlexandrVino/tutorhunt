@@ -1,7 +1,9 @@
+from email.policy import default
 from django.db import models
+from django.dispatch import receiver
 from django.urls import reverse
 from django.conf import settings
-from .fields import DayTimelineField
+from .fields import DayTimeline, DayTimelineField
 
 
 User = settings.AUTH_USER_MODEL
@@ -18,7 +20,7 @@ class TimelineModel(models.Model):
     thursday,
     friday, 
     saturday,
-    sunday) = [DayTimelineField(weekday) for weekday in WEEKDAYS_RUS]
+    sunday) = [DayTimelineField(weekday, default=DayTimeline([False] * 24)) for weekday in WEEKDAYS_RUS]
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="timeline")
     
     def __str__(self) -> str:
@@ -40,3 +42,10 @@ class TimelineModel(models.Model):
     class Meta:
         verbose_name = "расписание"
         verbose_name_plural = "расписания"
+
+
+@receiver(models.signals.post_save, sender=User)
+def save_user_handler(sender, instance, *args, **kwargs):
+    if not instance.has_timeline():
+        timeline = TimelineModel(user=instance)
+        timeline.save()

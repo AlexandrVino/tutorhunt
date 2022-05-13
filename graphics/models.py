@@ -1,4 +1,5 @@
 from email.policy import default
+from typing import Any, Dict, Tuple
 from django.db import models
 from django.dispatch import receiver
 from django.urls import reverse
@@ -10,6 +11,7 @@ User = settings.AUTH_USER_MODEL
 
 WEEKDAYS_RUS = ("понедельник", "вторник", "среда",
                 "четверг", "пятница", "суббота", "воскресенье")
+HOURS = tuple(['%02d:00' % i for i in range(24)])
 
 
 class TimelineModel(models.Model):
@@ -38,6 +40,26 @@ class TimelineModel(models.Model):
                 self.friday, 
                 self.saturday,
                 self.sunday)
+
+    def get_table_data(self) -> Dict[str, Any]:
+        """Возвращает данные для таблицы (для шаблонов)"""
+        table_data = {"headers": WEEKDAYS_RUS, }
+        data = [[None for __ in range(7)] for _ in range(24)]
+        for i, weekday in enumerate(self.get_days_fields()):
+            for j in range(24):
+                data[j][i] = {
+                    "value": HOURS[j],
+                    "class": "busy-hour" if weekday.is_busy(j) else "vacant-hour"
+                    }
+        table_data["data"] = data
+        return table_data
+
+    def get_table_captions(self) -> Dict[str, Tuple[str]]:
+        """Возвращет заглавия для таблицы (для шаблонов)"""
+        captions = {
+            "hours": HOURS,
+            "weekdays": WEEKDAYS_RUS
+        }
 
     class Meta:
         verbose_name = "расписание"

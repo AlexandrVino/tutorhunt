@@ -18,7 +18,6 @@ EDIT_TIMELINTE_TEMPLATE = "graphics/edit_template.html"
 WEEKDAYS = ("monday", "tuesday",
             "wednesday", "thursday",
             "friday", "saturday", "sunday")
-HOURS = tuple(['%02d:00' % i for i in range(24)])
 
 
 class TimelineView(DetailView):
@@ -27,19 +26,11 @@ class TimelineView(DetailView):
 
     def get_context_data(self, **kwargs):
         object: TimelineModel = self.get_object()
-
-        table_data = [[None for __ in range(7)] for _ in range(24)]
-
-        for i, weekday in enumerate(object.get_days_fields()):
-            for j in range(24):
-                table_data[j][i] = {
-                    "value": HOURS[j],
-                    "class": "busy-hour" if weekday.is_busy(j) else "vacant-hour"
-                    }
+        table_data = object.get_table_data()
 
         context = super().get_context_data(**kwargs)
-        context["headers"] = WEEKDAYS_RUS
-        context["table_data"] = table_data
+        context["headers"] = table_data["headers"]
+        context["table_data"] = table_data["data"]
         return context
 
 

@@ -34,14 +34,13 @@ input[type="submit"] {
 
 table {
     width: 100%;
+    background-color: rgba(var(--bs-dark-rgb), .5);
 }
 
-table thead {
+.big-tl-table th {
     font-weight: bold;
     font-size: 1.5rem;
-
-    --bs-bg-opacity: .5;
-    background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
+    text-align: center;
 }
 
 table td {
@@ -90,6 +89,11 @@ td {
 }
 
 td:not(:last-child) {
-    padding: 0 .1rem;
     border-right: solid 2px rgba(var(--bs-dark-rgb), .5);
+}
+
+/* SMALL TABLE */
+
+table tr:not(:last-child) td {
+    border-bottom: solid 2px rgba(var(--bs-dark-rgb), .5);
 }

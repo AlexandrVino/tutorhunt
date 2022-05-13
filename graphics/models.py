@@ -43,7 +43,6 @@ class TimelineModel(models.Model):
 
     def get_table_data(self) -> Dict[str, Any]:
         """Возвращает данные для таблицы (для шаблонов)"""
-        table_data = {"headers": WEEKDAYS_RUS, }
         data = [[None for __ in range(7)] for _ in range(24)]
         for i, weekday in enumerate(self.get_days_fields()):
             for j in range(24):
@@ -51,14 +50,17 @@ class TimelineModel(models.Model):
                     "value": HOURS[j],
                     "class": "busy-hour" if weekday.is_busy(j) else "vacant-hour"
                     }
-        table_data["data"] = data
-        return table_data
+        return {"headers": WEEKDAYS_RUS, "data": data}
 
-    def get_table_captions(self) -> Dict[str, Tuple[str]]:
-        """Возвращет заглавия для таблицы (для шаблонов)"""
-        captions = {
+    def get_small_table_data(self) -> Dict[str, Tuple[str]]:
+        """Возвращет данные для малой таблицы (для шаблонов)"""
+        data = []
+        for caption, field in zip(WEEKDAYS_RUS, self.get_days_fields()):
+            data.append({"caption": caption, "weekday": field})
+
+        return {
             "hours": HOURS,
-            "weekdays": WEEKDAYS_RUS
+            "data": data
         }
 
     class Meta:

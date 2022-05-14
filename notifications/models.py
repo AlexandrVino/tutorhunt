@@ -1,8 +1,9 @@
-from django.conf import settings
+from typing import Optional
+from django.contrib.auth import get_user_model
 from django.db import models
 
 
-User = settings.AUTH_USER_MODEL
+User = get_user_model()
 
 
 class NotificationModel(models.Model):
@@ -17,3 +18,33 @@ class NotificationModel(models.Model):
     class Meta:
         verbose_name = "уведомление"
         verbose_name_plural = "уведомления"
+
+
+def send_notification(recipient: User, category: str,
+                      message: str, initiator: Optional[User] = None) -> NotificationModel:
+    """
+    Создаёт уведомление (в т. ч. в db) и возвращает созданный объект
+    
+    Параметры:
+    recipient -- получатель
+    category -- категория уведомления
+    message -- сообщение
+    initiator (необязательно) -- отправитель
+
+    Исключения:
+    TypeError -- несоответствие типам, упомянутым в сигнатуре
+    """
+    for name, obj, cls in zip(("recipient", "category", "message"),
+                              (recipient, category, message),
+                              (User, str, str)):
+        if not isinstance(obj, cls):
+            raise TypeError(f"{name} должен иметь тип {cls.__name__}")
+
+    if initiator is not None and not isinstance(initiator, User):
+        raise TypeError("initiator должен иметь тип User")
+
+    obj = NotificationModel(recipient=recipient, category=category,
+                            message=message, initiator=initiator)
+    obj.save()
+
+    return obj

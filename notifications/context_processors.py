@@ -1,5 +1,5 @@
 from typing import Any, Dict
-from django.template import Context
+from django.http import HttpRequest
 from django.contrib.auth import get_user_model
 
 from notifications.models import NotificationModel, NotificationQueryset
@@ -7,7 +7,7 @@ from notifications.models import NotificationModel, NotificationQueryset
 User = get_user_model()
 
 
-def add_notifications(request: Context) -> Dict[str, Any]:
+def add_notifications(request: HttpRequest) -> Dict[str, Any]:
     """Контекст-процессор для добавления уведомлений"""
     if not request.user.is_authenticated:
         return {}

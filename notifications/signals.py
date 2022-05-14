@@ -6,7 +6,7 @@ from users.models import Follow
 
 
 @receiver(post_save, sender=Follow)
-def notifiy_follow(sender, instance: Follow, created, **kwargs):    
+def notifiy_follow(sender, instance: Follow, **kwargs):    
     if instance.active:
         message = f"На вас подписался {instance.user_from}"
     else:
@@ -16,5 +16,5 @@ def notifiy_follow(sender, instance: Follow, created, **kwargs):
         recipient=instance.user_to,
         initiator=instance.user_from,
         category="подписки",
-        message=f"На вас подписался {instance.user_from}"
+        message=message
     )

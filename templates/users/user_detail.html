@@ -6,7 +6,7 @@
   <link rel="stylesheet" type="text/css" href={% static "css/profile.css" %}>{% endblock %}
 {% block content %}
 
-  <div class="widget-row">
+  <div class="widget-row d-flex">
 
   <div class="col col-profile">
     <div class="profile widget">
@@ -57,9 +57,9 @@
         <div class="status">{{ user_detail.role }}</div>
       </div>
     </div>
-
+    {% if user_detail.timeline %}
     <div class="widget">
-        {% with user.timeline as timeline %}{% include "includes/timeline_view.html" %}{% endwith %}
-    </div>
+        {% with user_detail.timeline as timeline %}{% include "includes/timeline_view.html" %}{% endwith %}
+    </div>{% endif %}
   </div>
 {% endblock %}

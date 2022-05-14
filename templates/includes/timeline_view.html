@@ -11,14 +11,14 @@
         <tr>
             <th scope="col">День</th>
             {% for hour in hours %}
-                <th scope="col">{{ hour }}</th>
+                <th scope="col" class="table-header">{{ hour }}</th>
             {% endfor %}
         </tr>
     </thead>
     <tbody>
         {% for row_data in data %}
             <tr>
-                <th scope="row">{{ row_data.caption }}</th>
+                <th scope="row">{{ row_data.caption|capfirst }}</th>
                 {% for hour in row_data.weekday.timeline %}
                     <td class="{% if hour %}busy-hour{% else %}vacant-hour{% endif %}"></td>
                 {% endfor %}

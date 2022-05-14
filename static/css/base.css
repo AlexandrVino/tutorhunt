@@ -49,11 +49,10 @@ a {
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
 }
 
 .content {
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 130px);
     margin: 0 auto;
 }
 
@@ -106,7 +105,7 @@ a {
 /* Header */
 
 header {
-    /* height: 60px; */
+    height: 70px;
     --bs-bg-opacity: .7 !important;
 }
 

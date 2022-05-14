@@ -6,6 +6,41 @@ from django.db import models
 User = get_user_model()
 
 
+class NotificationQueryset(models.QuerySet):
+    def by_recipient(self, user: User):
+        """Сортирует queryset по получателю"""
+        return self.filter(recipient=user)
+    
+    def by_category(self, category: str):
+        """Сортирует queryset по категории"""
+        return self.filter(category=category)
+
+    def by_initiator(self, initiator: User):
+        """Сортирует quryset по отправителю"""
+        return self.filter(initiator=initiator)
+
+    def filter_by(self, category: str = None, initiator: User = None, recipient: User = None):
+        """Сортирует уведомления по категории, отправителю и получателю (ни один аргумент необязателен)"""
+        result = self.all()
+
+        if category is not None:
+            result = result.by_category(category)
+        if initiator is not None:
+            result = result.by_initiator(initiator)
+        if recipient is not None:
+            result = result.by_recipient(recipient)
+
+        return result
+    
+    def get_unread(self):
+        """Возвращает непрочитанные уведомления"""
+        return self.filter(read=False)
+    
+    def get_read(self):
+        """Возвращает прочитанные уведомления"""
+        return self.filter(read=True)
+
+
 class NotificationModel(models.Model):
     category = models.CharField("категория", max_length=20)
     message = models.TextField("сообщение")
@@ -14,6 +49,8 @@ class NotificationModel(models.Model):
     initiator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="caused_notifications",
                                   blank=True, null=True, default=None)
     creation = models.DateTimeField("дата получения", auto_now_add=True)
+    
+    objects = NotificationQueryset.as_manager()
 
     class Meta:
         verbose_name = "уведомление"

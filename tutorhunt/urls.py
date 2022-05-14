@@ -11,6 +11,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('timeline/', include("graphics.urls")),
     path("auth/", include("users.urls")),
+    path("notifications/", include("notifications.urls")),
 ]
 
 if settings.DEBUG:

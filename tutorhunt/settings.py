@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -105,7 +106,7 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-          
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
@@ -122,7 +123,8 @@ INTERNAL_IPS = [
 ]
 
 # Auth
-
-LOGIN_REDIRECT_URL = "/auth/profile/"
+LOGIN_REDIRECT_URL = "/auth/users/"
 LOGIN_URL = "/auth/login/"
 LOGOUT_REDIRECT_URL = "/auth/users/"
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / 'sent_email'

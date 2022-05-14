@@ -9,6 +9,7 @@ class Role(models.TextChoices):
     TEACHER = 'Teacher'
     STUDENT = 'Student'
 
+# form-control input-field role
 
 class User(AbstractUser):
     email = models.EmailField(blank=False)
@@ -19,7 +20,7 @@ class User(AbstractUser):
         verbose_name="Роль"
     )
     photo = models.ImageField(
-        upload_to="uploads/users/", null=True, blank=True, verbose_name="Фото",
+        upload_to="uploads/users/", verbose_name="Фото",
         default='uploads/users/user_default.png'
     )
 
@@ -28,12 +29,12 @@ class User(AbstractUser):
     def photo_tmb(self):
         if self.photo:
             return mark_safe(f'<img src="{self.photo.url}" class="friend_photo" width="50">')
-        return "Нет изображения"
+        return mark_safe(f'<img src="/media/uploads/users/user_default.png" class="friend_photo">')
 
     def get_photo(self):
         if self.photo:
             return mark_safe(f'<img src="{self.photo.url}" class="avatar">')
-        return "Нет изображения"
+        return mark_safe(f'<img src="/media/uploads/users/user_default.png" class="avatar">')
 
     def has_timeline(self):
         return hasattr(self, "timeline")
@@ -81,4 +82,3 @@ class Follow(models.Model):
         verbose_name_plural = 'Подписки'
 
         constraints = [models.UniqueConstraint(fields=["user_to", "user_from"], name="unique_follow")]
-

@@ -76,6 +76,7 @@ class Bunch(models.Model):
         )
 
     class Meta:
+        ordering = ('datetime', )
         verbose_name = 'Связка'
         verbose_name_plural = 'Связки'
 

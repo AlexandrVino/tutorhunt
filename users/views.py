@@ -237,11 +237,14 @@ class FollowersListView(DetailView):
 
 @method_decorator(login_required, name="dispatch")
 class BunchView(TemplateView, ModelFormMixin):
-
     template_name = ADD_BUNCH_TEMPLATE
     context_object_name = "bunch"
     model = Bunch
     form_class = AddBunchForm
+    object = None
+
+    def get_datetime(self) -> str:
+        return f"{self.kwargs.get('day')}:{self.kwargs.get('time')}"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -252,7 +255,13 @@ class BunchView(TemplateView, ModelFormMixin):
         return context
 
     def get(self, request, *args, **kwargs):
-        self.object = request.user
+        if not self.object:
+            bunch = self.model.manager.filter(student=request.user, datetime=self.get_datetime())
+            self.object = bunch[0] if bunch else None
+
+        if self.object:
+            print(self.kwargs)
+            return redirect(reverse("user_detail", args=(self.kwargs.get('user_to'),)))
         return super().get(request, *args, **kwargs)
 
     def get_success_url(self):
@@ -277,8 +286,11 @@ class BunchView(TemplateView, ModelFormMixin):
             day = form.cleaned_data['day']
             time = form.cleaned_data['time']
 
-            bunch = Bunch.manager.create(student=student, teacher=teacher, status=1, datetime=f'{day}:{time}')
-            bunch.save()
+            bunch, is_created = Bunch.manager.get_or_create(student=student, teacher=teacher, datetime=f'{day}:{time}')
+
+            if is_created:
+                bunch.status = BunchStatus.WAITING
+                bunch.save()
 
             if user_from.id:
                 return redirect(reverse("user_detail", args=(user_to.id,)))
@@ -288,7 +300,6 @@ class BunchView(TemplateView, ModelFormMixin):
 
 @method_decorator(login_required, name="dispatch")
 class EditBunchView(TemplateView, ModelFormMixin):
-
     template_name = EDIT_BUNCH_TEMPLATE
     context_object_name = "bunch"
     model = Bunch
@@ -317,6 +328,11 @@ class EditBunchView(TemplateView, ModelFormMixin):
         if not self.object:
             bunch = self.model.manager.filter(teacher=request.user, datetime=self.get_datetime())
             self.object = bunch[0] if bunch else None
+
+            print(self.object)
+
+            if self.object is None:
+                return redirect(reverse("user_detail", args=(request.user.id,)))
 
         return super().get(request, *args, **kwargs)
 
@@ -352,9 +368,10 @@ class EditBunchView(TemplateView, ModelFormMixin):
                 else:
                     add_busy_hours(teacher, bunch=self.object, value=False)
 
-                self.object.datetime = datetime
-                self.object.status = status
-                self.object.save()
+                if self.object:
+                    self.object.datetime = datetime
+                    self.object.status = status
+                    self.object.save()
 
                 return redirect(reverse("user_detail", args=(teacher.id,)))
 

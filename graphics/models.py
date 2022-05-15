@@ -4,13 +4,15 @@ from django.db import models
 from django.dispatch import receiver
 from django.urls import reverse
 from django.conf import settings
+
+from users.models import Bunch, Role
 from .fields import DayTimeline, DayTimelineField
 
 User = settings.AUTH_USER_MODEL
 
 WEEKDAYS_RUS = ("понедельник", "вторник", "среда",
                 "четверг", "пятница", "суббота", "воскресенье")
-HOURS = tuple(['%02d:00' % i for i in range(24)])
+HOURS = tuple(["%02d:00" % i for i in range(24)])
 
 
 class TimelineModel(models.Model):
@@ -48,11 +50,19 @@ class TimelineModel(models.Model):
                 }
         return {"headers": WEEKDAYS_RUS, "data": data}
 
-    def get_small_table_data(self) -> Dict[str, Tuple[str]]:
+    def get_small_table_data(self, user) -> Dict[str, Tuple[str]]:
         """Возвращет данные для малой таблицы (для шаблонов)"""
         data = []
+        bunches = Bunch.manager.filter(teacher=user).order_by("datetime")
+
         for index, (caption, field) in enumerate(zip(WEEKDAYS_RUS, self.get_days_fields())):
-            data.append({"caption": caption, "weekday": zip(field.timeline, HOURS)})
+
+            curr_line_bunches = [None] * 24
+            indexes = list(filter(lambda x: x.datetime[0] == str(index + 1), bunches))
+            for bunch in indexes:
+                curr_line_bunches[int(bunch.datetime.split(":")[-1])] = bunch
+
+            data.append({"caption": caption, "weekday": zip(field.timeline, HOURS, curr_line_bunches)})
 
         return {
             "hours": HOURS,
@@ -66,6 +76,6 @@ class TimelineModel(models.Model):
 
 @receiver(models.signals.post_save, sender=User)
 def save_user_handler(sender, instance, *args, **kwargs):
-    if not instance.has_timeline():
+    if not instance.has_timeline() and instance.role == Role.TEACHER:
         timeline = TimelineModel(user=instance)
         timeline.save()

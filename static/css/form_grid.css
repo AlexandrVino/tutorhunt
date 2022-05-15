@@ -44,10 +44,11 @@ table {
 
 table td {
     text-align: center;
+    cursor: not-allowed;
 }
 
 .busy-hour {
-    cursor: not-allowed;
+
     --bs-bg-opacity: 1;
     background-color: rgba(var(--bs-danger-rgb), var(--bs-bg-opacity)) !important;
 }
@@ -57,11 +58,20 @@ table td {
     background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
 }
 
+.wait-hour {
+    --bs-bg-opacity: .7;
+    background-color: rgba(var(--bs-info-rgb), var(--bs-bg-opacity)) !important;
+}
+
 .vacant-hour::before {
     content: "\F26B";
 }
 
 .busy-hour::before {
+    content: "\F623";
+}
+
+.wait-hour::before {
     content: "\F623";
 }
 
@@ -74,6 +84,7 @@ table td {
     opacity: 0;
 }
 
+.wait-hour::before,
 .vacant-hour::before,
 .busy-hour::before {
     display: inline-block;

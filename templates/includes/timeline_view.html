@@ -1,8 +1,9 @@
 {% load static %}
+{% load filters %}
 
 <link rel="stylesheet" href="{% static 'css/form_grid.css' %}">
 
-{% with timeline.get_small_table_data as table_data %}
+{% with timeline|get_small_table_data:user_detail as table_data %}
 {% with hours=table_data.hours data=table_data.data %}
 
 <div class="overflow-auto">
@@ -19,15 +20,13 @@
         {% for row_data in data %}
             <tr>
                 <th scope="row">{{ row_data.caption|capfirst }}</th>
-                {% for hour, hour_str in row_data.weekday %}
-                    <td class="{% if hour %}busy-hour{% else %}vacant-hour{% endif %}">
-
-                        {% if user.id != user_detail.id and not hour %}
+                {% for hour, hour_str, bunch in row_data.weekday %}
+                    <td class="{% if hour %}busy-hour{% elif bunch %}wait-hour{% else %}vacant-hour{% endif %}">
+                        {% if user.id != user_detail.id and not hour and not bunch %}
                             <a class='add-bunch' href="{% url "add_bunch" user_to=user_detail.id time=forloop.counter0 day=forloop.parentloop.counter  %}"></a>
-                        {% elif user.id == user_detail.id and hour %}
+                        {% elif user.id == user_detail.id and hour or user.id == user_detail.id and bunch %}
                             <a class='add-bunch' href="{% url "edit_bunch" time=forloop.counter0 day=forloop.parentloop.counter  %}"></a>
                         {% endif %}
-
                     </td>
                 {% endfor %}
             </tr>

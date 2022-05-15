@@ -21,4 +21,4 @@ class TimelineForm(ModelForm):
 
     class Meta:
         model = TimelineModel
-        fields = '__all__'
+        exclude = ("user", )

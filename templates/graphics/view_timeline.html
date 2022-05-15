@@ -1,0 +1,31 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block title %}{{ object }}{% endblock title %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/form_grid.css' %}">
+{% endblock styles %}
+
+{% block content %}
+<div class="overflow-auto my-4">
+<table class="big-tl-table">
+    <thead>
+        <tr>
+            {% for header in headers %}
+                <th scope="col">{{ header }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in table_data %}
+            <tr>
+                {% for col in row %}
+                    <td class="{{ col.class }}">{{ col.value }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock content %}

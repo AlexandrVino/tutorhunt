@@ -1,4 +1,6 @@
 from django.contrib import admin
+
+from users.form_validations import bunch_form_validation, follow_form_validation
 from users.models import Bunch, Follow, Role, User
 
 
@@ -61,6 +63,11 @@ class BunchAdmin(admin.ModelAdmin):
         return super(BunchAdmin, self).formfield_for_foreignkey(
             db_field, request, **kwargs
         )
+
+    def get_form(self, request, obj=None, change=False, **kwargs):
+        form = super(BunchAdmin, self).get_form(request, obj=None, change=False, **kwargs)
+        form.is_valid = bunch_form_validation
+        return form
 
 
 @admin.register(Follow)

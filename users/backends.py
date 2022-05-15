@@ -10,20 +10,20 @@ class EmailUniqueFailed(BaseException):
 
 class EmailAuthBackend:
     @staticmethod
-    def authenticate(request, email=None, password=None):
+    def authenticate(request, email=None, password=None, user=None):
         try:
-            user = User.objects.get(email=email)
-            print(user, user.check_password(password), password)
-            if user.check_password(password):
+            print(locals())
+            if user is None:
+                user = User.objects.get(email=email)
+                if user.check_password(password):
+                    login(request, user)
+                    return user
+                return None
+            else:
                 login(request, user)
                 return user
-            return None
         except User.DoesNotExist:
             return None
-
-    @staticmethod
-    def login(request, user):
-        login(request, user)
 
     @staticmethod
     def create_user(email=None, username=None, password1=None, password2=None, **kwargs):
@@ -34,8 +34,6 @@ class EmailAuthBackend:
 
         if User.objects.filter(email=email):
             raise EmailUniqueFailed()
-
-        print(kwargs)
 
         user = User(email=email, username=username, **kwargs)
         user.set_password(password1)

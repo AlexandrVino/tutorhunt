@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Редактировать расписание{% endblock title %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/form_grid.css' %}">
+{% endblock styles %}
+
+{% block content %}
+    <form class="my-2 d-flex flex-column align-items-center" method="post">
+        {% csrf_token %}
+
+        <div class="form-grid-body d-flex flex-row justify-content-between overflow-auto mb-3">
+            {% for field in form %}
+            <div>
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+            {% endfor %}
+        </div>
+
+        <input class="btn btn-success" type="submit" value="Сохранить">
+    </form>
+{% endblock content %} 

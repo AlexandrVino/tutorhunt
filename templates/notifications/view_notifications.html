@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Уведомления{% endblock title %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-primary" value="Фильтровать">
+</form>
+
+{% for obj in objects %}
+    <div class="card bg-dark my-3" style="--bs-bg-opacity: .5">
+        <div class="card-body">
+            <h4 class="card-title fs-5">{{ obj.category|capfirst }}</h4>
+            <h5 class="card-subtitle fs-6 mb-2 text-muted">{{ obj.creation|date:"d E Y" }}</h5>
+            <p class="card-text">{{ obj.message }}</p>
+            {% if obj.initiator %}
+                <a href="{{ obj.initiator.get_absolute_url }}" class="card-link link-light">{{ obj.initiator }}</a>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
+
+<nav aria-label="страницы">
+    <ul class="pagination justify-content-center">
+        {% if objects.has_other_pages %}
+            {% if objects.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" 
+                        href="{% url 'page-notifications' page=1 %}">&lt;&lt;</a>
+                </li>
+
+                <li class="page-item"><a class="page-link"
+                    href="{% url 'page-notifications' page=objects.previous_page_number %}">{{ objects.previous_page_number }}</a></li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">&lt;&lt;</span>
+                </li>
+            {% endif %}
+
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">{{ objects.number }}</span>
+            </li>
+
+            {% if objects.number < num_page %}
+                <li class="page-item"><a class="page-link"
+                    href="{% url 'page-notifications' page=objects.next_page_number %}">{{ objects.next_page_number }}</a></li>
+        
+                <li class="page-item">
+                    <a class="page-link"
+                        href="{% url 'page-notifications' page=num_page %}">&gt;&gt;</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">&gt;&gt;</span>
+                </li>
+            {% endif %}
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">&lt;&lt;</span>
+            </li>
+
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">1</span>
+            </li>
+            
+            <li class="page-item disabled">
+                <span class="page-link">&gt;&gt;</span>
+            </li>
+        {% endif %}
+    </ul>
+</nav>  
+{% endblock %}

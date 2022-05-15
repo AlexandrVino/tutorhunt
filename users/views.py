@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model, logout
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
@@ -19,7 +19,7 @@ from django.views.generic.edit import CreateView, FormView, ModelFormMixin
 from .backends import EmailAuthBackend, EmailUniqueFailed
 from .forms import AddBunchForm, EditBunchForm, EditProfileForm, FollowForm, LoginForm, RegisterForm
 from .models import Bunch, BunchStatus, Follow, User
-from .utils import edit_user_data
+from .utils import add_busy_hours, edit_user_data
 
 SIGNUP_TEMPLATE = "users/signup.html"
 LOGIN_WITH_USERNAME_TEMPLATE = "users/login_with_username.html"
@@ -303,11 +303,12 @@ class EditBunchView(TemplateView, ModelFormMixin):
 
         context['form'].fields['day'].initial = self.kwargs.get('day')
         context['form'].fields['time'].initial = self.kwargs.get('time')
-        context['form'].fields['status'].initial = self.object.status
+
+        if self.object:
+            context['form'].fields['status'].initial = self.object.status
 
         self.kwargs['old_day'] = self.kwargs.get('day')
         self.kwargs['old_time'] = self.kwargs.get('time')
-        self.kwargs['status'] = self.object.status
 
         return context
 
@@ -332,6 +333,7 @@ class EditBunchView(TemplateView, ModelFormMixin):
             if teacher.id:
                 day = form.cleaned_data['day']
                 time = form.cleaned_data['time']
+
                 status = form.cleaned_data['status']
 
                 datetime = f'{day}:{time}'
@@ -341,9 +343,14 @@ class EditBunchView(TemplateView, ModelFormMixin):
                     self.object = bunch[0] if bunch else None
 
                 new_bunch = Bunch.manager.filter(teacher__id=teacher.id, datetime=datetime, status=BunchStatus.ACCEPTED)
-                print(new_bunch)
-                if new_bunch:
+
+                if new_bunch and not (new_bunch[0] == self.object):
                     return self.get(request, *args, **kwargs)
+
+                if status == BunchStatus.ACCEPTED:
+                    add_busy_hours(teacher, bunch=self.object, value=True)
+                else:
+                    add_busy_hours(teacher, bunch=self.object, value=False)
 
                 self.object.datetime = datetime
                 self.object.status = status

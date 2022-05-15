@@ -66,13 +66,21 @@ class Bunch(models.Model):
 
     manager = BunchManager()
 
+    def __eq__(self, other) -> bool:
+        if type(other) is not type(self):
+            print(type(other), type(self))
+            return False
+        print(self, other)
+        return (
+                self.teacher == other.teacher and self.student == other.student and self.datetime == other.datetime
+        )
+
     class Meta:
         verbose_name = 'Связка'
         verbose_name_plural = 'Связки'
 
         constraints = [models.UniqueConstraint(
             fields=['teacher', 'student', 'datetime'],
-            condition=Q(status=BunchStatus.ACCEPTED),
             name='unique_bunch',
         )]
 

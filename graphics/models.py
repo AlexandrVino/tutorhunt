@@ -32,13 +32,10 @@ class TimelineModel(models.Model):
 
     def get_days_fields(self) -> tuple:
         """Выдаёт кортеж с полями-днями недели"""
-        return (self.monday,
-                self.tuesday,
-                self.wednesday,
-                self.thursday,
-                self.friday,
-                self.saturday,
-                self.sunday)
+        return (
+            self.monday, self.tuesday, self.wednesday, self.thursday,
+            self.friday, self.saturday, self.sunday
+        )
 
     def get_table_data(self) -> Dict[str, Any]:
         """Возвращает данные для таблицы (для шаблонов)"""

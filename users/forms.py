@@ -119,7 +119,7 @@ class AddBunchForm(forms.ModelForm):
         (1, 'Понедельник'), (2, 'Вторник'), (3, 'Среда'), (4, 'Четверг'),
         (5, 'Пятница'), (6, 'Суббота'), (7, 'Воскресенье'),
     ))
-    time = forms.ChoiceField(choices=((i, f'{i}:00') for i in range(24)))
+    time = forms.ChoiceField(choices=((i, '%02d:00' % i) for i in range(24)))
     user_from = forms.IntegerField(widget=forms.FileInput(attrs={
         'class': 'form-control input-field input-file',
         'placeholder': 'Id пользователя',
@@ -145,7 +145,7 @@ class EditBunchForm(forms.ModelForm):
         (1, 'Понедельник'), (2, 'Вторник'), (3, 'Среда'), (4, 'Четверг'),
         (5, 'Пятница'), (6, 'Суббота'), (7, 'Воскресенье'),
     ))
-    time = forms.ChoiceField(choices=((i, f'{i}:00') for i in range(24)))
+    time = forms.ChoiceField(choices=((i, '%02d:00' % i) for i in range(24)))
 
     user_to = forms.IntegerField(widget=forms.FileInput(attrs={
         'class': 'form-control input-field input-file',

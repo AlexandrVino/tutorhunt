@@ -1,12 +1,7 @@
 from django.contrib import admin
+
+from users.form_validations import bunch_form_validation, follow_form_validation
 from users.models import Bunch, Follow, Role, User
-
-
-def my_form_validation(form):
-    data = form.__dict__.get('data')
-    if data.get('user_from') == data.get('user_to'):
-        form.add_error('user_to', 'Пользователь не может быть подписан сам на себя')
-    return form.is_bound and not form.errors
 
 
 @admin.register(User)
@@ -40,6 +35,11 @@ class BunchAdmin(admin.ModelAdmin):
 
         return super(BunchAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
+    def get_form(self, request, obj=None, change=False, **kwargs):
+        form = super(BunchAdmin, self).get_form(request, obj=None, change=False, **kwargs)
+        form.is_valid = bunch_form_validation
+        return form
+
 
 @admin.register(Follow)
 class FollowAdmin(admin.ModelAdmin):
@@ -48,5 +48,5 @@ class FollowAdmin(admin.ModelAdmin):
 
     def get_form(self, request, obj=None, change=False, **kwargs):
         form = super(FollowAdmin, self).get_form(request, obj=None, change=False, **kwargs)
-        form.is_valid = my_form_validation
+        form.is_valid = follow_form_validation
         return form

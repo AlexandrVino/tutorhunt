@@ -14,8 +14,8 @@ class DayTimeline:
         if not hasattr(timeline, "__init__"):
             raise TypeError("timeline должен быть итерируемым")
 
-        if not isinstance(timeline, tuple):
-            timeline = tuple(timeline)
+        if not isinstance(timeline, list):
+            timeline = list(timeline)
 
         if len(timeline) != 24:
             raise ValueError("Количество часов должно быть равно 24")
@@ -33,6 +33,12 @@ class DayTimeline:
 
     def __len__(self):
         return 24
+
+    def set_hour(self, hour: int, value: bool) -> None:
+        """Меняет час (номер от 0 до 23) на value (True - занято, False - свободно)"""
+        if not isinstance(value, bool):
+            raise TypeError("value должно быть bool")
+        self.timeline[hour] = value
 
     def deconstruct(self) -> Tuple[str, Iterable[str], Dict[str, Any]]:
         """Функция деконструкции для сериализации"""

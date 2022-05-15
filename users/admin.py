@@ -28,8 +28,8 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Bunch)
 class BunchAdmin(admin.ModelAdmin):
-    list_display = ('teacher', 'student', 'status')
-    fieldsets = ((None, {'fields': ('teacher', 'student', 'status')}),)
+    list_display = ('teacher', 'student', 'status', 'datetime')
+    fieldsets = ((None, {'fields': ('teacher', 'student', 'status', 'datetime')}),)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
 

@@ -19,8 +19,16 @@
         {% for row_data in data %}
             <tr>
                 <th scope="row">{{ row_data.caption|capfirst }}</th>
-                {% for hour in row_data.weekday.timeline %}
-                    <td class="{% if hour %}busy-hour{% else %}vacant-hour{% endif %}"></td>
+                {% for hour, hour_str in row_data.weekday %}
+                    <td class="{% if hour %}busy-hour{% else %}vacant-hour{% endif %}">
+
+                        {% if user.id != user_detail.id and not hour %}
+                            <a class='add-bunch' href="{% url "add_bunch" user_to=user_detail.id time=forloop.counter0 day=forloop.parentloop.counter  %}"></a>
+                        {% elif user.id == user_detail.id and hour %}
+                            <a class='add-bunch' href="{% url "edit_bunch" time=forloop.counter0 day=forloop.parentloop.counter  %}"></a>
+                        {% endif %}
+
+                    </td>
                 {% endfor %}
             </tr>
         {% endfor %}

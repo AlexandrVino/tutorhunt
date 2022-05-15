@@ -1,9 +1,8 @@
 {% load static %}
-{% load filters %}
 
 <link rel="stylesheet" href="{% static 'css/form_grid.css' %}">
 
-{% with timeline|get_small_table_data:user_detail as table_data %}
+{% with timeline.get_small_table_data as table_data %}
 {% with hours=table_data.hours data=table_data.data %}
 
 <div class="overflow-auto">

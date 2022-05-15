@@ -52,7 +52,6 @@ class Bunch(models.Model):
     student = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="bunch_student", verbose_name="Ученик"
     )
-
     status = models.CharField(
         max_length=16,
         default=BunchStatus.WAITING,
@@ -60,22 +59,19 @@ class Bunch(models.Model):
         verbose_name="Статус",
         help_text="Поставьте стстус",
     )
-
     datetime = models.CharField("Время занятия", max_length=10, default=None)
 
     manager = BunchManager()
 
     def __eq__(self, other) -> bool:
         if type(other) is not type(self):
-            print(type(other), type(self))
             return False
-        print(self, other)
         return (
                 self.teacher == other.teacher and self.student == other.student and self.datetime == other.datetime
         )
 
     class Meta:
-        ordering = ("datetime", )
+        ordering = ("datetime",)
         verbose_name = "Связка"
         verbose_name_plural = "Связки"
 

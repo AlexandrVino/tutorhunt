@@ -16,5 +16,5 @@ def update_user_timeline(user: User, day: int, time: int, value: bool):
 
 def add_busy_hours(user: User, bunch: Bunch, value: bool):
     if bunch:
-        day, time = map(int, bunch.datetime.split(':'))
+        day, time = map(int, bunch.datetime.split(":"))
         update_user_timeline(user, day - 1, time, value)

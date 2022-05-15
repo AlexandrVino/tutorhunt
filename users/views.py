@@ -51,10 +51,10 @@ class UserDetailView(DetailView, FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = self.current_user
+        context["current_user"] = self.current_user
         context["follows"] = Follow.manager.get_followers(
-            None, 'user_from__first_name', 'user_from__photo', user_to=self.object)
-        context['already_follow'] = any(
+            None, "user_from__first_name", "user_from__photo", user_to=self.object)
+        context["already_follow"] = any(
             [follow.user_from.id == self.current_user and follow.active for follow in context["follows"]])
 
         return context
@@ -67,7 +67,7 @@ class UserDetailView(DetailView, FormView):
     def post(self, request, *args, **kwargs):
         user_from = request.user
 
-        if self.kwargs.get('user_id') == user_from.id:
+        if self.kwargs.get("user_id") == user_from.id:
             return self.get(request, *args, **kwargs)
 
         user_to = self.get_object()
@@ -225,9 +225,9 @@ class FollowersListView(DetailView):
         context["users"] = map(
             lambda x: x.user_from,
             Follow.manager.get_followers(
-                None, 'user_from__first_name', 'user_from__photo',
-                'user_from__last_name', 'user_from__username',
-                'user_from__email', 'user_from__role',
+                None, "user_from__first_name", "user_from__photo",
+                "user_from__last_name", "user_from__username",
+                "user_from__email", "user_from__role",
                 user_to=self.object))
         return context
 
@@ -244,13 +244,13 @@ class BunchView(TemplateView, ModelFormMixin):
     object = None
 
     def get_datetime(self) -> str:
-        return f"{self.kwargs.get('day')}:{self.kwargs.get('time')}"
+        return f'{self.kwargs.get("day")}:{self.kwargs.get("time")}'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['form'].fields['day'].initial = self.kwargs.get('day')
-        context['form'].fields['time'].initial = self.kwargs.get('time')
+        context["form"].fields["day"].initial = self.kwargs.get("day")
+        context["form"].fields["time"].initial = self.kwargs.get("time")
 
         return context
 
@@ -261,7 +261,7 @@ class BunchView(TemplateView, ModelFormMixin):
 
         if self.object:
             print(self.kwargs)
-            return redirect(reverse("user_detail", args=(self.kwargs.get('user_to'),)))
+            return redirect(reverse("user_detail", args=(self.kwargs.get("user_to"),)))
         return super().get(request, *args, **kwargs)
 
     def get_success_url(self):
@@ -273,20 +273,20 @@ class BunchView(TemplateView, ModelFormMixin):
 
             user_from = request.user
 
-            if self.kwargs.get('user_id') == user_from.id:
+            if self.kwargs.get("user_id") == user_from.id:
                 return self.get(request, *args, **kwargs)
 
-            user_to = User.manager.get(pk=self.kwargs.get('user_to'))
-            teacher = user_from if user_from.role == 'teacher' else user_to
+            user_to = User.manager.get(pk=self.kwargs.get("user_to"))
+            teacher = user_from if user_from.role == "teacher" else user_to
             student = user_from if user_from is not teacher else user_to
 
             if student == teacher:
                 return self.get(request, *args, **kwargs)
 
-            day = form.cleaned_data['day']
-            time = form.cleaned_data['time']
+            day = form.cleaned_data["day"]
+            time = form.cleaned_data["time"]
 
-            bunch, is_created = Bunch.manager.get_or_create(student=student, teacher=teacher, datetime=f'{day}:{time}')
+            bunch, is_created = Bunch.manager.get_or_create(student=student, teacher=teacher, datetime=f"{day}:{time}")
 
             if is_created:
                 bunch.status = BunchStatus.WAITING
@@ -307,19 +307,19 @@ class EditBunchView(TemplateView, ModelFormMixin):
     object = None
 
     def get_datetime(self) -> str:
-        return f"{self.kwargs.get('day')}:{self.kwargs.get('time')}"
+        return f'{self.kwargs.get("day")}:{self.kwargs.get("time")}'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['form'].fields['day'].initial = self.kwargs.get('day')
-        context['form'].fields['time'].initial = self.kwargs.get('time')
+        context["form"].fields["day"].initial = self.kwargs.get("day")
+        context["form"].fields["time"].initial = self.kwargs.get("time")
 
         if self.object:
-            context['form'].fields['status'].initial = self.object.status
+            context["form"].fields["status"].initial = self.object.status
 
-        self.kwargs['old_day'] = self.kwargs.get('day')
-        self.kwargs['old_time'] = self.kwargs.get('time')
+        self.kwargs["old_day"] = self.kwargs.get("day")
+        self.kwargs["old_time"] = self.kwargs.get("time")
 
         return context
 
@@ -347,12 +347,12 @@ class EditBunchView(TemplateView, ModelFormMixin):
             teacher = request.user
 
             if teacher.id:
-                day = form.cleaned_data['day']
-                time = form.cleaned_data['time']
+                day = form.cleaned_data["day"]
+                time = form.cleaned_data["time"]
 
-                status = form.cleaned_data['status']
+                status = form.cleaned_data["status"]
 
-                datetime = f'{day}:{time}'
+                datetime = f"{day}:{time}"
 
                 if not self.object:
                     bunch = self.model.manager.filter(teacher=request.user, datetime=self.get_datetime())

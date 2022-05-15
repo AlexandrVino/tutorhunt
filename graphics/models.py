@@ -1,9 +1,9 @@
-from email.policy import default
 from typing import Any, Dict, Tuple
+
+from django.conf import settings
 from django.db import models
 from django.dispatch import receiver
 from django.urls import reverse
-from django.conf import settings
 
 from users.models import Bunch, Role
 from .fields import DayTimeline, DayTimelineField

@@ -3,5 +3,5 @@ from .models import TimelineModel
 
 
 @admin.register(TimelineModel)
-class TimlineAdmin(admin.ModelAdmin):
+class TimelineAdmin(admin.ModelAdmin):
     pass

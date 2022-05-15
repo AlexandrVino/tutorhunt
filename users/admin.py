@@ -7,24 +7,24 @@ from users.models import Bunch, Follow, Role, User
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = (
-        'username', 'first_name', 'last_name', 'email',
-        'is_active', 'date_joined', 'role', 'photo_tmb'
+        "username", "first_name", "last_name", "email",
+        "is_active", "date_joined", "role", "photo_tmb"
     )
-    list_editable = ('is_active',)
-    list_display_links = ('username',)
+    list_editable = ("is_active",)
+    list_display_links = ("username",)
 
     fieldsets = ((None, {
-        'fields': (
-            'username', 'email', 'first_name', 'last_name', 'role', 'photo',
-            'is_staff', 'is_active', 'user_permissions', 'date_joined',
+        "fields": (
+            "username", "email", "first_name", "last_name", "role", "photo",
+            "is_staff", "is_active", "user_permissions", "date_joined",
         )
     }),)
 
 
 @admin.register(Bunch)
 class BunchAdmin(admin.ModelAdmin):
-    list_display = ('teacher', 'student', 'status', 'datetime')
-    fieldsets = ((None, {'fields': ('teacher', 'student', 'status', 'datetime')}),)
+    list_display = ("teacher", "student", "status", "datetime")
+    fieldsets = ((None, {"fields": ("teacher", "student", "status", "datetime")}),)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
 
@@ -43,8 +43,8 @@ class BunchAdmin(admin.ModelAdmin):
 
 @admin.register(Follow)
 class FollowAdmin(admin.ModelAdmin):
-    list_display = ('user_from', 'user_to')
-    fieldsets = ((None, {'fields': ('user_from', 'user_to')}),)
+    list_display = ("user_from", "user_to")
+    fieldsets = ((None, {"fields": ("user_from", "user_to")}),)
 
     def get_form(self, request, obj=None, change=False, **kwargs):
         form = super(FollowAdmin, self).get_form(request, obj=None, change=False, **kwargs)

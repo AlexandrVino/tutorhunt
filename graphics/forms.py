@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from .models import TimelineModel
 
+
 class TimelineForm(ModelForm):
     # def __init__(self, classes: Optional[Iterable[str]]=None, *args, **kwargs) -> None:
     #     super().__init__(*args, **kwargs)
@@ -21,4 +22,4 @@ class TimelineForm(ModelForm):
 
     class Meta:
         model = TimelineModel
-        exclude = ("user", )
+        exclude = ("user",)

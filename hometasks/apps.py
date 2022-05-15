@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class HometasksConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'hometasks'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "hometasks"

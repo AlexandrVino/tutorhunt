@@ -15,11 +15,17 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views import View
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, FormView, ModelFormMixin
+from django.db.models import Avg, Count
+
 
 from .backends import EmailAuthBackend, EmailUniqueFailed
 from .forms import AddBunchForm, EditBunchForm, EditProfileForm, FollowForm, LoginForm, RegisterForm
 from .models import Bunch, BunchStatus, Follow, User
 from .utils import add_busy_hours, edit_user_data
+from .forms import FollowForm, LoginForm, RegisterForm
+from .models import Follow, User
+from rating.forms import RatingForm
+from rating.models import Rating
 
 SIGNUP_TEMPLATE = "users/signup.html"
 LOGIN_WITH_USERNAME_TEMPLATE = "users/login_with_username.html"
@@ -51,11 +57,26 @@ class UserDetailView(DetailView, FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = self.current_user
+        context["current_user"] = self.current_user
         context["follows"] = Follow.manager.get_followers(
-            None, 'user_from__first_name', 'user_from__photo', user_to=self.object)
-        context['already_follow'] = any(
-            [follow.user_from.id == self.current_user and follow.active for follow in context["follows"]])
+            None, "user_from__first_name", "user_from__photo", user_to=self.object
+        )
+        context["already_follow"] = any(
+            [
+                follow.user_from.id == self.current_user.id and follow.active
+                for follow in context["follows"]
+            ]
+        )
+        context["rating_form"] = RatingForm()
+        try:
+            context["rating"] = Rating.manager.get(
+                user_from=self.current_user, user_to=self.object
+            )
+        except Rating.DoesNotExist:
+            context["rating"] = 0
+        context["all_ratings"] = Rating.manager.filter(
+            user_to=self.object, star__in=[1, 2, 3, 4, 5]
+        ).aggregate(Avg("star"), Count("star"))
 
         return context
 
@@ -66,17 +87,20 @@ class UserDetailView(DetailView, FormView):
     @method_decorator(login_required, name="dispatch")
     def post(self, request, *args, **kwargs):
         user_from = request.user
-
-        if self.kwargs.get('user_id') == user_from.id:
-            return self.get(request, *args, **kwargs)
-
-        user_to = self.get_object()
-        follow, is_exits = Follow.manager.get_or_create(user_to=user_to, user_from=user_from)
-        if not is_exits:
-            follow.active = not follow.active
-            follow.save()
-
-        self.current_user = user_from.id
+        if "rating_form" in request.POST:
+            rating, created = Rating.manager.get_or_create(
+                user_to=user_to, user_from=user_from
+            )
+            rating.star = int(request.POST["star"])
+            rating.save()
+        else:
+            follow, is_exits = Follow.manager.get_or_create(
+                user_to=user_to, user_from=user_from
+            )
+            if not is_exits:
+                follow.active = not follow.active
+                follow.save()
+        self.current_user = user_from
         return self.get(request, *args, **kwargs)
 
 
@@ -159,8 +183,9 @@ class SignupView(CreateView):
                 errors.append(err)
 
         errors += [err[0] for err in list(form.errors.values())]
-        return render(request, self.template_name,
-                      {"form": form, "errors": set(errors)})
+        return render(
+            request, self.template_name, {"form": form, "errors": set(errors)}
+        )
 
 
 class ActivateView(View):

@@ -17,8 +17,8 @@ from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, FormView, ModelFormMixin
 
 from .backends import EmailAuthBackend, EmailUniqueFailed
-from .forms import EditProfileForm, FollowForm, LoginForm, RegisterForm
-from .models import Follow, User
+from .forms import AddBunchForm, EditBunchForm, EditProfileForm, FollowForm, LoginForm, RegisterForm
+from .models import Bunch, BunchStatus, Follow, User
 from .utils import edit_user_data
 
 SIGNUP_TEMPLATE = "users/signup.html"
@@ -27,6 +27,8 @@ LOGIN_WITH_EMAIL_TEMPLATE = "users/login_with_email.html"
 USER_LIST_TEMPLATE = "users/user_list.html"
 CUR_USER_TEMPLATE = "users/user_detail.html"
 EDIT_PROFILE_TEMPLATE = "users/edit_profile.html"
+ADD_BUNCH_TEMPLATE = "users/add_bunch.html"
+EDIT_BUNCH_TEMPLATE = "users/edit_bunch.html"
 
 
 class UserListView(ListView):
@@ -54,7 +56,6 @@ class UserDetailView(DetailView, FormView):
             None, 'user_from__first_name', 'user_from__photo', user_to=self.object)
         context['already_follow'] = any(
             [follow.user_from.id == self.current_user and follow.active for follow in context["follows"]])
-        print(context)
 
         return context
 
@@ -101,7 +102,7 @@ class LoginWithEmailView(FormView):
             if user is not None:
                 if user.is_active:
                     EmailAuthBackend.authenticate(request, email, password)
-                    return redirect(reverse("user_detail", args=(user.id, )))
+                    return redirect(reverse("user_detail", args=(user.id,)))
 
         return super().post(request, *args, **kwargs)
 
@@ -177,7 +178,7 @@ class ActivateView(View):
 
             EmailAuthBackend.authenticate(request, user=user)
 
-            return redirect(reverse("user_detail", args=(user.id, )))
+            return redirect(reverse("user_detail", args=(user.id,)))
         else:
             return HttpResponse("Activation link is invalid!")
 
@@ -228,8 +229,126 @@ class FollowersListView(DetailView):
                 'user_from__last_name', 'user_from__username',
                 'user_from__email', 'user_from__role',
                 user_to=self.object))
-        print(context, self.current_user, self.kwargs)
         return context
 
     def get(self, request, *args, **kwargs):
         return super(FollowersListView, self).get(request, *args, **kwargs)
+
+
+@method_decorator(login_required, name="dispatch")
+class BunchView(TemplateView, ModelFormMixin):
+
+    template_name = ADD_BUNCH_TEMPLATE
+    context_object_name = "bunch"
+    model = Bunch
+    form_class = AddBunchForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['form'].fields['day'].initial = self.kwargs.get('day')
+        context['form'].fields['time'].initial = self.kwargs.get('time')
+
+        return context
+
+    def get(self, request, *args, **kwargs):
+        self.object = request.user
+        return super().get(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse("users")
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+
+            user_from = request.user
+
+            if self.kwargs.get('user_id') == user_from.id:
+                return self.get(request, *args, **kwargs)
+
+            user_to = User.manager.get(pk=self.kwargs.get('user_to'))
+            teacher = user_from if user_from.role == 'teacher' else user_to
+            student = user_from if user_from is not teacher else user_to
+
+            if student == teacher:
+                return self.get(request, *args, **kwargs)
+
+            day = form.cleaned_data['day']
+            time = form.cleaned_data['time']
+
+            bunch = Bunch.manager.create(student=student, teacher=teacher, status=1, datetime=f'{day}:{time}')
+            bunch.save()
+
+            if user_from.id:
+                return redirect(reverse("user_detail", args=(user_to.id,)))
+
+        return self.get(request, *args, **kwargs)
+
+
+@method_decorator(login_required, name="dispatch")
+class EditBunchView(TemplateView, ModelFormMixin):
+
+    template_name = EDIT_BUNCH_TEMPLATE
+    context_object_name = "bunch"
+    model = Bunch
+    form_class = EditBunchForm
+    object = None
+
+    def get_datetime(self) -> str:
+        return f"{self.kwargs.get('day')}:{self.kwargs.get('time')}"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['form'].fields['day'].initial = self.kwargs.get('day')
+        context['form'].fields['time'].initial = self.kwargs.get('time')
+        context['form'].fields['status'].initial = self.object.status
+
+        self.kwargs['old_day'] = self.kwargs.get('day')
+        self.kwargs['old_time'] = self.kwargs.get('time')
+        self.kwargs['status'] = self.object.status
+
+        return context
+
+    def get(self, request, *args, **kwargs):
+
+        if not self.object:
+            bunch = self.model.manager.filter(teacher=request.user, datetime=self.get_datetime())
+            self.object = bunch[0] if bunch else None
+
+        return super().get(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse("users")
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+
+        if form.is_valid():
+
+            teacher = request.user
+
+            if teacher.id:
+                day = form.cleaned_data['day']
+                time = form.cleaned_data['time']
+                status = form.cleaned_data['status']
+
+                datetime = f'{day}:{time}'
+
+                if not self.object:
+                    bunch = self.model.manager.filter(teacher=request.user, datetime=self.get_datetime())
+                    self.object = bunch[0] if bunch else None
+
+                new_bunch = Bunch.manager.filter(teacher__id=teacher.id, datetime=datetime, status=BunchStatus.ACCEPTED)
+                print(new_bunch)
+                if new_bunch:
+                    return self.get(request, *args, **kwargs)
+
+                self.object.datetime = datetime
+                self.object.status = status
+                self.object.save()
+
+                return redirect(reverse("user_detail", args=(teacher.id,)))
+
+        return self.get(request, *args, **kwargs)

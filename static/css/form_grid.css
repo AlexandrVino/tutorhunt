@@ -47,6 +47,7 @@ table td {
 }
 
 .busy-hour {
+    cursor: not-allowed;
     --bs-bg-opacity: 1;
     background-color: rgba(var(--bs-danger-rgb), var(--bs-bg-opacity)) !important;
 }
@@ -62,6 +63,15 @@ table td {
 
 .busy-hour::before {
     content: "\F623";
+}
+
+.add-bunch {
+    width: 50px;
+    height: 27px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
 }
 
 .vacant-hour::before,
@@ -102,6 +112,7 @@ tbody tr:hover th {
 
 td {
     letter-spacing: 1px;
+    position: relative;
 }
 
 td:not(:last-child) {

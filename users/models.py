@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models import Q
 from django.utils.safestring import mark_safe
 
 from users.managers import AppUserManager, BunchManager, FollowManager
@@ -9,7 +10,12 @@ class Role(models.TextChoices):
     TEACHER = 'Teacher'
     STUDENT = 'Student'
 
-# form-control input-field role
+
+class BunchStatus(models.TextChoices):
+    WAITING = 'Waiting'
+    ACCEPTED = 'Accepted'
+    FINISHED = 'Finished'
+
 
 class User(AbstractUser):
     email = models.EmailField(blank=False)
@@ -17,10 +23,10 @@ class User(AbstractUser):
         max_length=7,
         choices=Role.choices,
         default=Role.STUDENT,
-        verbose_name="Роль"
+        verbose_name='Роль'
     )
     photo = models.ImageField(
-        upload_to="uploads/users/", verbose_name="Фото",
+        upload_to='uploads/users/', verbose_name='Фото',
         default='uploads/users/user_default.png'
     )
 
@@ -37,7 +43,7 @@ class User(AbstractUser):
         return mark_safe(f'<img src="/media/uploads/users/user_default.png" class="avatar">')
 
     def has_timeline(self):
-        return hasattr(self, "timeline")
+        return hasattr(self, 'timeline')
 
 
 class Bunch(models.Model):
@@ -48,13 +54,15 @@ class Bunch(models.Model):
         User, on_delete=models.CASCADE, related_name='bunch_student', verbose_name='Ученик'
     )
 
-    status = models.SmallIntegerField(
-        blank=True, default=1,
-        choices=(
-            (1, "waiting"), (2, "accepted"), (3, "finished")
-        ),
-        help_text="Поставьте стстус",
+    status = models.CharField(
+        max_length=16,
+        default=BunchStatus.WAITING,
+        choices=BunchStatus.choices,
+        verbose_name='Статус',
+        help_text='Поставьте стстус',
     )
+
+    datetime = models.CharField('Время занятия', max_length=10, default=None)
 
     manager = BunchManager()
 
@@ -63,8 +71,9 @@ class Bunch(models.Model):
         verbose_name_plural = 'Связки'
 
         constraints = [models.UniqueConstraint(
-            fields=["teacher", "student"],
-            name="unique_bunch",
+            fields=['teacher', 'student', 'datetime'],
+            condition=Q(status=BunchStatus.ACCEPTED),
+            name='unique_bunch',
         )]
 
 
@@ -81,4 +90,4 @@ class Follow(models.Model):
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
 
-        constraints = [models.UniqueConstraint(fields=["user_to", "user_from"], name="unique_follow")]
+        constraints = [models.UniqueConstraint(fields=['user_to', 'user_from'], name='unique_follow')]

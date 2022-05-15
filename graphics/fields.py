@@ -2,14 +2,13 @@ from typing import Any, Dict, Iterable, List, Tuple, Union
 from django.db import models
 
 
-
 class DayTimeline:
     """Расписание дня"""
     timeline: List[bool]
 
     def __init__(self, timeline: Iterable[bool] = None):
         if timeline is None:
-            timeline = (False, ) * 24
+            timeline = (False,) * 24
 
         if not hasattr(timeline, "__init__"):
             raise TypeError("timeline должен быть итерируемым")
@@ -37,10 +36,10 @@ class DayTimeline:
     def deconstruct(self) -> Tuple[str, Iterable[str], Dict[str, Any]]:
         """Функция деконструкции для сериализации"""
         name, args, kwargs = (
-            "graphics.fields.DayTimeline", 
+            "graphics.fields.DayTimeline",
             (),
             {"timeline": self.timeline}
-        ) 
+        )
 
         return name, args, kwargs
 
@@ -48,7 +47,7 @@ class DayTimeline:
         """Возвращает initial для DayTimelineFormField (список номеров часов)"""
         busy_hours = list(
             map(
-                lambda x: x[0], # выдаёт номер часа
+                lambda x: x[0],  # выдаёт номер часа
                 filter(lambda x: x[1], enumerate(self.timeline))
             )
         )
@@ -78,7 +77,6 @@ class DayTimeline:
         else:
             raise TypeError("value должно быть строкой")
 
-
     @classmethod
     def parse_formfield(cls, busy_hours: List[str]):
         """
@@ -99,7 +97,7 @@ class DayTimeline:
 class DayTimelineField(models.CharField):
     """Поле, обозначающее расписание в рамках одного дня"""
     from .formfields import DayTimelineFormField
-    
+
     description = "Поле, обозначающее расписание в рамках одного дня"
     initial = {
         "null": False,

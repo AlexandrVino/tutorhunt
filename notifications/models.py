@@ -2,8 +2,10 @@ from typing import Optional
 from django.contrib.auth import get_user_model
 from django.db import models
 
-
 User = get_user_model()
+
+# будет дополняться (придумаю чем)
+CATEGORY_CHOICES = (("подписки", "подписки"), )
 
 
 class NotificationQueryset(models.QuerySet):
@@ -40,17 +42,26 @@ class NotificationQueryset(models.QuerySet):
         """Возвращает прочитанные уведомления"""
         return self.filter(read=True)
 
+    def mark_read(self) -> None:
+        """Отмечает все уведомления прочитанными"""
+        self.get_unread().update(read=True)
+
+    def mark_unread(self) -> None:
+        """Отмечает все уведомления непрочитанными"""
+        self.get_read().update(read=False)
+
 
 class NotificationModel(models.Model):
-    category = models.CharField("категория", max_length=20)
+    category = models.CharField("категория", max_length=20, choices=CATEGORY_CHOICES)
     message = models.TextField("сообщение")
     read = models.BooleanField("прочитано", default=False)
-    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received_notifications")
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received_notifications",
+                                  verbose_name="получатель")
     initiator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="caused_notifications",
-                                  blank=True, null=True, default=None)
+                                  blank=True, null=True, default=None, verbose_name="отправитель")
     creation = models.DateTimeField("дата получения", auto_now_add=True)
     
-    objects = NotificationQueryset.as_manager()
+    objects: NotificationQueryset = NotificationQueryset.as_manager()
 
     class Meta:
         verbose_name = "уведомление"

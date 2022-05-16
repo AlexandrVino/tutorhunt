@@ -11,9 +11,15 @@ class AdminFilterNotificationsForm(ModelForm):
     category = ChoiceField(
         choices=CATEGORY_CHOICES + ((None, "--------"), ),
         widget=Select(attrs={"class": "form-control"}),
-        required=False
+        required=False,
+        label="Категория"
     )
-    recipient = ModelChoiceField(queryset=User.objects.all(), widget=Select(attrs={"class": "form-control"}), required=False)
+    recipient = ModelChoiceField(
+        queryset=User.objects.all(),
+        widget=Select(attrs={"class": "form-control"}),
+        required=False,
+        label="Получатель"
+    )
 
     class Meta:
         model = NotificationModel
@@ -21,7 +27,12 @@ class AdminFilterNotificationsForm(ModelForm):
 
 
 class FilterNotificationsForm(ModelForm):
-    category = ChoiceField(choices=CATEGORY_CHOICES, widget=Select(attrs={"class": "form-control"}), required=False)
+    category = ChoiceField(
+        choices=CATEGORY_CHOICES,
+        widget=Select(attrs={"class": "form-control"}),
+        required=False,
+        label="Категория"
+    )
 
     class Meta:
         model = NotificationModel

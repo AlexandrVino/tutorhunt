@@ -62,8 +62,7 @@ class UserDetailView(DetailView, FormView):
             None, "user_from__first_name", "user_from__photo", user_to=self.object)
         context["already_follow"] = any(
             [follow.user_from.id == self.current_user and follow.active for follow in context["follows"]])
-            None, "user_from__first_name", "user_from__photo", user_to=self.object
-        )
+
         context["rating_form"] = RatingForm()
         try:
             context["rating"] = Rating.manager.get(

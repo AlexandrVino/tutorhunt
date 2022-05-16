@@ -44,7 +44,6 @@ table {
 
 table td {
     text-align: center;
-    cursor: not-allowed;
 }
 
 .busy-hour {
@@ -83,6 +82,13 @@ table td {
     left: 0;
     opacity: 0;
 }
+
+.wait-hour,
+.vacant-hour,
+.busy-hour {
+    cursor: not-allowed;
+}
+
 
 .wait-hour::before,
 .vacant-hour::before,

@@ -47,11 +47,10 @@
 }
 
 
-
 .edit {
     width: 200px;
     height: 30px;
-    background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
+    background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
     color: #ffffff;
     border-radius: 10px;
     border: none;
@@ -60,6 +59,20 @@
     cursor: pointer;
 
 }
+
+.rating {
+    display: flex;
+    justify-content: space-between;
+}
+
+.rating .values {
+    position: relative;
+}
+
+.rating .values span {
+    width: 100%;
+}
+
 
 .edit a {
     text-decoration: none !important;
@@ -74,6 +87,11 @@
     margin-top: 10px;
     text-decoration: none;
 }
+
+.text-muted {
+    font-size: 15px;
+}
+
 h6 {
     text-align: center;
 }

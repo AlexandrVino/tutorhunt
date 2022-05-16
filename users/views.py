@@ -70,7 +70,10 @@ class UserDetailView(DetailView, FormView):
             )
         except Rating.DoesNotExist:
             context["rating"] = 0
-        context["all_ratings"] = Rating.manager.filter(
+
+        context["rating_form"].fields['star'].initial = context["rating"]
+
+        context["all_ratings"] = Rating.manager.get_objects_with_filter(
             user_to=self.object, star__in=[1, 2, 3, 4, 5]
         ).aggregate(Avg("star"), Count("star"))
 
@@ -100,7 +103,7 @@ class UserDetailView(DetailView, FormView):
                 follow.active = not follow.active
                 follow.save()
 
-        self.current_user = user_from
+        self.current_user = user_from.id
         return self.get(request, *args, **kwargs)
 
 

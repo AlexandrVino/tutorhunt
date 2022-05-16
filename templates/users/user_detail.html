@@ -46,9 +46,45 @@
       </div>
     {% endif %}
 
+    <div class="widget">
+      {% if all_ratings.star__avg %}
+        <div class="rating">
+          <div>
+            <span class="text-muted">Средняя оценка:</span>
+            <br>
+            <span class="text-muted">Всего оценок:</span>
+          </div>
+
+          <div>
+            <div class="values"><span class='badge bg-warning'>{{ all_ratings.star__avg }}</span></div>
+            <div class="values"><span class='badge bg-success'>{{ all_ratings.star__count }}</span></div>
+          </div>
+        </div>
+      {% else %} <span class="text-muted">Пока нет ни одной оценки :(</span>
+      {% endif %}
+    </div>
+    {% if not current_user == user_detail.id and current_user.role != user_detail.role %}
+      <div class="widget">
+        {% if already_follow %}
+          {% if rating %}
+            <h6>Ваша оценка: {{ rating }}</h6>
+          {% endif %}
+          <form method="post">
+          {% csrf_token %}
+          {{ rating_form.rating_form }}
+          <div>{{ rating_form.star }}</div>
+          <button class="edit" type="submit">
+            Оценить
+          </button>
+        {% else %}
+          <p>Оценку ставить могут только подписчики</p>
+        {% endif %}
+        </form>
+      </div>
+    {% endif %}
   </div>
 
-  <div class="data">
+  <div class="col data">
 
     <div class="widget">
       <div class="bio">
@@ -58,47 +94,9 @@
       </div>
     </div>
     {% if user_detail.timeline %}
-    <div class="widget">
+      <div class="widget">
         {% with user_detail.timeline as timeline %}{% include "includes/timeline_view.html" %}{% endwith %}
-    </div>{% endif %}
+      </div>{% endif %}
   </div>
 
-  <div class="data">
-    <div class="widget">
-  {% if all_ratings.star__avg %}
-      <span class="text-muted">
-          Средняя оценка: 
-      </span>
-      <span class='badge bg-warning'>{{all_ratings.star__avg}}</span></br>
-          <span class="text-muted">
-              Всего оценок: 
-          </span>
-      <span class='badge bg-success'>{{all_ratings.star__count}}</span>
-      {% else %} <span class="text-muted">
-          Пока нет ни одной оценки :(
-      </span>
-      {% endif %}
-    </div>
-  </div>
-            
-  {% if not current_user is user.id and current_user.role != user.role %}
-  <div class="data">
-    <div class="widget">
-      {% if already_follow %}
-      {% if rating %}
-      <h3>Ваша оценка: {{rating}}</h3>
-      {% endif %}
-      <form method="post">
-        {% csrf_token %}
-        {{rating_form.as_p}}
-        <button class="edit" type="submit">
-          Оценить
-        </button>
-      {% else %} <p>Оценку ставить могут только подписчики</p>
-      {% endif %}
-      </form>
-    </div>
-  </div>
-  {% endif %}
-  
 {% endblock %}

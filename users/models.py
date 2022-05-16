@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models import Q
 from django.utils.safestring import mark_safe
 
 from users.managers import AppUserManager, BunchManager, FollowManager
@@ -10,16 +11,22 @@ class Role(models.TextChoices):
     STUDENT = 'Student'
 
 
+class BunchStatus(models.TextChoices):
+    WAITING = 'Waiting'
+    ACCEPTED = 'Accepted'
+    FINISHED = 'Finished'
+
+
 class User(AbstractUser):
     email = models.EmailField(blank=False)
     role = models.CharField(
         max_length=7,
         choices=Role.choices,
         default=Role.STUDENT,
-        verbose_name="Роль"
+        verbose_name='Роль'
     )
     photo = models.ImageField(
-        upload_to="uploads/users/", null=True, blank=True, verbose_name="Фото",
+        upload_to='uploads/users/', verbose_name='Фото',
         default='uploads/users/user_default.png'
     )
 
@@ -28,15 +35,15 @@ class User(AbstractUser):
     def photo_tmb(self):
         if self.photo:
             return mark_safe(f'<img src="{self.photo.url}" class="friend_photo" width="50">')
-        return "Нет изображения"
+        return mark_safe(f'<img src="/media/uploads/users/user_default.png" class="friend_photo">')
 
     def get_photo(self):
         if self.photo:
             return mark_safe(f'<img src="{self.photo.url}" class="avatar">')
-        return "Нет изображения"
+        return mark_safe(f'<img src="/media/uploads/users/user_default.png" class="avatar">')
 
     def has_timeline(self):
-        return hasattr(self, "timeline")
+        return hasattr(self, 'timeline')
 
 
 class Bunch(models.Model):
@@ -47,23 +54,35 @@ class Bunch(models.Model):
         User, on_delete=models.CASCADE, related_name='bunch_student', verbose_name='Ученик'
     )
 
-    status = models.SmallIntegerField(
-        blank=True, default=1,
-        choices=(
-            (1, "waiting"), (2, "accepted"), (3, "finished")
-        ),
-        help_text="Поставьте стстус",
+    status = models.CharField(
+        max_length=16,
+        default=BunchStatus.WAITING,
+        choices=BunchStatus.choices,
+        verbose_name='Статус',
+        help_text='Поставьте стстус',
     )
+
+    datetime = models.CharField('Время занятия', max_length=10, default=None)
 
     manager = BunchManager()
 
+    def __eq__(self, other) -> bool:
+        if type(other) is not type(self):
+            print(type(other), type(self))
+            return False
+        print(self, other)
+        return (
+                self.teacher == other.teacher and self.student == other.student and self.datetime == other.datetime
+        )
+
     class Meta:
+        ordering = ('datetime', )
         verbose_name = 'Связка'
         verbose_name_plural = 'Связки'
 
         constraints = [models.UniqueConstraint(
-            fields=["teacher", "student"],
-            name="unique_bunch",
+            fields=['teacher', 'student', 'datetime'],
+            name='unique_bunch',
         )]
 
 
@@ -80,5 +99,4 @@ class Follow(models.Model):
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
 
-        constraints = [models.UniqueConstraint(fields=["user_to", "user_from"], name="unique_follow")]
-
+        constraints = [models.UniqueConstraint(fields=['user_to', 'user_from'], name='unique_follow')]

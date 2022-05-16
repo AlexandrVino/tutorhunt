@@ -13,6 +13,10 @@ h1 {
     border-radius: 10px
 }
 
+.profile-form {
+    margin-top: 10px;
+}
+
 .password-change {
     margin-top: 7%
 }

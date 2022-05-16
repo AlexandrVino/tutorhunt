@@ -1,6 +1,7 @@
 .data {
-    width: 530px;
-    margin-left: 10px;
+    min-width: 220px;
+    max-width: 530px;
+    margin-left: max(100% - 750px, 0px);
 }
 
 .name {
@@ -16,7 +17,6 @@
     padding: 10px 0;
     display: flex;
     width: 100%;
-    justify-content: space-between;
 }
 
 .info_item {
@@ -58,6 +58,11 @@
     padding: 0;
     margin-top: 10px;
     cursor: pointer;
+
+}
+
+.edit a {
+    text-decoration: none !important;
 }
 
 .edit:hover {

@@ -4,42 +4,40 @@ from django.db import models
 from django.dispatch import receiver
 from django.urls import reverse
 from django.conf import settings
-from .fields import DayTimeline, DayTimelineField
 
+from users.models import Bunch, Role
+from .fields import DayTimeline, DayTimelineField
 
 User = settings.AUTH_USER_MODEL
 
 WEEKDAYS_RUS = ("понедельник", "вторник", "среда",
                 "четверг", "пятница", "суббота", "воскресенье")
-HOURS = tuple(['%02d:00' % i for i in range(24)])
+HOURS = tuple(["%02d:00" % i for i in range(24)])
 
 
 class TimelineModel(models.Model):
     """Модель расписания"""
     (monday,
-    tuesday,
-    wednesday, 
-    thursday,
-    friday, 
-    saturday,
-    sunday) = [DayTimelineField(weekday, default=DayTimeline([False] * 24)) for weekday in WEEKDAYS_RUS]
+     tuesday,
+     wednesday,
+     thursday,
+     friday,
+     saturday,
+     sunday) = [DayTimelineField(weekday, default=DayTimeline([False] * 24)) for weekday in WEEKDAYS_RUS]
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="timeline")
-    
+
     def __str__(self) -> str:
         return "Расписание %s" % self.user
 
     def get_absolute_url(self):
         return reverse("detail-timeline", kwargs={"pk": self.pk})
-    
+
     def get_days_fields(self) -> tuple:
         """Выдаёт кортеж с полями-днями недели"""
-        return (self.monday,
-                self.tuesday,
-                self.wednesday, 
-                self.thursday,
-                self.friday, 
-                self.saturday,
-                self.sunday)
+        return (
+            self.monday, self.tuesday, self.wednesday, self.thursday,
+            self.friday, self.saturday, self.sunday
+        )
 
     def get_table_data(self) -> Dict[str, Any]:
         """Возвращает данные для таблицы (для шаблонов)"""
@@ -49,14 +47,22 @@ class TimelineModel(models.Model):
                 data[j][i] = {
                     "value": HOURS[j],
                     "class": "busy-hour" if weekday.is_busy(j) else "vacant-hour"
-                    }
+                }
         return {"headers": WEEKDAYS_RUS, "data": data}
 
-    def get_small_table_data(self) -> Dict[str, Tuple[str]]:
+    def get_small_table_data(self, user) -> Dict[str, Tuple[str]]:
         """Возвращет данные для малой таблицы (для шаблонов)"""
         data = []
-        for caption, field in zip(WEEKDAYS_RUS, self.get_days_fields()):
-            data.append({"caption": caption, "weekday": field})
+        bunches = Bunch.manager.filter(teacher=user).order_by("datetime")
+
+        for index, (caption, field) in enumerate(zip(WEEKDAYS_RUS, self.get_days_fields())):
+
+            curr_line_bunches = [None] * 24
+            indexes = list(filter(lambda x: x.datetime[0] == str(index + 1), bunches))
+            for bunch in indexes:
+                curr_line_bunches[int(bunch.datetime.split(":")[-1])] = bunch
+
+            data.append({"caption": caption, "weekday": zip(field.timeline, HOURS, curr_line_bunches)})
 
         return {
             "hours": HOURS,
@@ -70,6 +76,6 @@ class TimelineModel(models.Model):
 
 @receiver(models.signals.post_save, sender=User)
 def save_user_handler(sender, instance, *args, **kwargs):
-    if not instance.has_timeline():
+    if not instance.has_timeline() and instance.role == Role.TEACHER:
         timeline = TimelineModel(user=instance)
         timeline.save()

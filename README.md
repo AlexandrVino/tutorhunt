@@ -22,7 +22,7 @@
     
     *Страницы*: переписка, список чатов
 
-* Графики ([М. Л.](https://github.com/Leamich))
+* ~~Графики~~ ([М. Л.](https://github.com/Leamich))
   
   **Ветка**: [feat/time_graphics](https://github.com/AlexandrVino/tutorhunt/tree/feat/time_graphics)
   
@@ -31,7 +31,15 @@
   *Страницы*: ~~просмотр/редактирование графика~~
   
   *Виджеты*: ~~просмотр таблицы в профиле пользователя~~
+
+* Уведомления ([М. Л.](https://github.com/Leamich))
   
+  **Ветка**: [feat/notifications](https://github.com/AlexandrVino/tutorhunt/tree/feat/notifications)
+  
+  ~~Модель уведомлений~~, создание уведомлений, отображение в хэдере, добавление сигналов
+  
+  *Страницы*: просмотр уведомлений
+
 * Взаимодействие пользователей ([А. Б.](https://github.com/1Alekron1))
   
   **Ветка**: [feat/rating](https://github.com/AlexandrVino/tutorhunt/tree/feat/rating)

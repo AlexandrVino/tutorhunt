@@ -59,14 +59,10 @@ class UserDetailView(DetailView, FormView):
         context = super().get_context_data(**kwargs)
         context["current_user"] = self.current_user
         context["follows"] = Follow.manager.get_followers(
-            None, "user_from__first_name", "user_from__photo", user_to=self.object
-        )
+            None, "user_from__first_name", "user_from__photo", user_to=self.object)
         context["already_follow"] = any(
-            [
-                follow.user_from.id == self.current_user.id and follow.active
-                for follow in context["follows"]
-            ]
-        )
+            [follow.user_from.id == self.current_user and follow.active for follow in context["follows"]])
+
         context["rating_form"] = RatingForm()
         try:
             context["rating"] = Rating.manager.get(
@@ -74,7 +70,10 @@ class UserDetailView(DetailView, FormView):
             )
         except Rating.DoesNotExist:
             context["rating"] = 0
-        context["all_ratings"] = Rating.manager.filter(
+
+        context["rating_form"].fields['star'].initial = context["rating"]
+
+        context["all_ratings"] = Rating.manager.get_objects_with_filter(
             user_to=self.object, star__in=[1, 2, 3, 4, 5]
         ).aggregate(Avg("star"), Count("star"))
 
@@ -87,6 +86,11 @@ class UserDetailView(DetailView, FormView):
     @method_decorator(login_required, name="dispatch")
     def post(self, request, *args, **kwargs):
         user_from = request.user
+
+        if self.kwargs.get("user_id") == user_from.id:
+            return self.get(request, *args, **kwargs)
+        user_to = self.get_object()
+
         if "rating_form" in request.POST:
             rating, created = Rating.manager.get_or_create(
                 user_to=user_to, user_from=user_from
@@ -94,13 +98,12 @@ class UserDetailView(DetailView, FormView):
             rating.star = int(request.POST["star"])
             rating.save()
         else:
-            follow, is_exits = Follow.manager.get_or_create(
-                user_to=user_to, user_from=user_from
-            )
-            if not is_exits:
+            follow, is_created = Follow.manager.get_or_create(user_to=user_to, user_from=user_from)
+            if not is_created:
                 follow.active = not follow.active
                 follow.save()
-        self.current_user = user_from
+
+        self.current_user = user_from.id
         return self.get(request, *args, **kwargs)
 
 
@@ -183,9 +186,7 @@ class SignupView(CreateView):
                 errors.append(err)
 
         errors += [err[0] for err in list(form.errors.values())]
-        return render(
-            request, self.template_name, {"form": form, "errors": set(errors)}
-        )
+        return render(request, self.template_name, {"form": form, "errors": set(errors)})
 
 
 class ActivateView(View):
@@ -250,9 +251,9 @@ class FollowersListView(DetailView):
         context["users"] = map(
             lambda x: x.user_from,
             Follow.manager.get_followers(
-                None, 'user_from__first_name', 'user_from__photo',
-                'user_from__last_name', 'user_from__username',
-                'user_from__email', 'user_from__role',
+                None, "user_from__first_name", "user_from__photo",
+                "user_from__last_name", "user_from__username",
+                "user_from__email", "user_from__role",
                 user_to=self.object))
         return context
 
@@ -269,13 +270,13 @@ class BunchView(TemplateView, ModelFormMixin):
     object = None
 
     def get_datetime(self) -> str:
-        return f"{self.kwargs.get('day')}:{self.kwargs.get('time')}"
+        return f'{self.kwargs.get("day")}:{self.kwargs.get("time")}'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['form'].fields['day'].initial = self.kwargs.get('day')
-        context['form'].fields['time'].initial = self.kwargs.get('time')
+        context["form"].fields["day"].initial = self.kwargs.get("day")
+        context["form"].fields["time"].initial = self.kwargs.get("time")
 
         return context
 
@@ -286,7 +287,7 @@ class BunchView(TemplateView, ModelFormMixin):
 
         if self.object:
             print(self.kwargs)
-            return redirect(reverse("user_detail", args=(self.kwargs.get('user_to'),)))
+            return redirect(reverse("user_detail", args=(self.kwargs.get("user_to"),)))
         return super().get(request, *args, **kwargs)
 
     def get_success_url(self):
@@ -298,7 +299,7 @@ class BunchView(TemplateView, ModelFormMixin):
 
             user_from = request.user
 
-            if self.kwargs.get('user_id') == user_from.id:
+            if self.kwargs.get("user_id") == user_from.id:
                 return self.get(request, *args, **kwargs)
 
             user_to = User.manager.get(pk=self.kwargs.get('user_to'))

@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "core.apps.CoreConfig",
     "users.apps.UsersConfig",
     "graphics.apps.GraphicsConfig",
@@ -48,7 +49,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
 ]
 
@@ -124,13 +124,9 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = "gorarded@gmail.com"
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-EMAIL_PORT = 587
-EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
-
-LOGIN_URL = "/auth/login"
-LOGIN_REDIRECT_URL = "/auth/profile"
-LOGOUT_REDIRECT_URL = "/auth/login/"
+# Auth
+LOGIN_REDIRECT_URL = "/auth/users/"
+LOGIN_URL = "/auth/login/"
+LOGOUT_REDIRECT_URL = "/auth/users/"
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = BASE_DIR / "sent_email"

@@ -66,8 +66,8 @@ class DayTimeline:
     @classmethod
     def parse_timeline(cls, value: str) -> "DayTimeline":
         """
-        Обработка строкового представления расписания. 
-        
+        Обработка строкового представления расписания.
+
         Параметры:
         value -- строковое представление
 

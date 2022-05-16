@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from notifications.models import send_notification
 from rating.models import Rating
 
-from users.models import Follow
+from users.models import Bunch, BunchStatus, Follow
 
 
 @receiver(post_save, sender=Follow)
@@ -30,3 +30,24 @@ def notify_rating(sender, instance: Rating, **kwargs):
             category="рейтинг",
             message="Вам выставлена оценка: %s" % instance.star
         )
+
+
+@receiver(post_save, sender=Bunch)
+def notify_bunch(sender, instance: Bunch, **kwargs):
+    if instance.status != BunchStatus.FINISHED:
+        notification_kwargs = {
+            BunchStatus.ACCEPTED: {
+                "message": "Ваша заявка для %s принята" % instance.teacher,
+                "category": "уроки",
+                "initiator": instance.teacher,
+                "recipient": instance.student
+            },
+            BunchStatus.WAITING: {
+                "message": "Вам пришла заявка на урок от %s" % instance.student,
+                "category": "уроки",
+                "initiator": instance.student,
+                "recipient": instance.teacher
+            }
+        }[instance.status]
+
+        send_notification(**notification_kwargs)

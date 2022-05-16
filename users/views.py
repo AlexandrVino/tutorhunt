@@ -58,6 +58,7 @@ class UserDetailView(DetailView, FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["current_user"] = self.current_user
+
         context["follows"] = Follow.manager.get_followers(
             None, "user_from__first_name", "user_from__photo", user_to=self.object)
         context["already_follow"] = any(
@@ -112,12 +113,20 @@ class LoginWithEmailView(FormView):
 
     form_class = LoginForm
     template_name = LOGIN_WITH_EMAIL_TEMPLATE
+    messages = []
 
     def get_success_url(self):
         return reverse("users")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["messages"] = self.messages
+        return context
+
     def post(self, request, *args, **kwargs):
         form = self.get_form()
+
+        print(form.is_valid())
 
         if form.is_valid():
             email = form.cleaned_data["email"]
@@ -130,8 +139,12 @@ class LoginWithEmailView(FormView):
                 if user.is_active:
                     EmailAuthBackend.authenticate(request, email, password)
                     return redirect(reverse("user_detail", args=(user.id,)))
+            self.messages.append('Неверный логин или пароль!')
 
-        return super().post(request, *args, **kwargs)
+            return self.get(request, *args, **kwargs)
+
+        self.messages.append('Заполните форму корректно!')
+        return super().get(request, *args, **kwargs)
 
 
 class SignupView(CreateView):
@@ -186,7 +199,7 @@ class SignupView(CreateView):
                 errors.append(err)
 
         errors += [err[0] for err in list(form.errors.values())]
-        return render(request, self.template_name, {"form": form, "errors": set(errors)})
+        return render(request, self.template_name, {"form": form, "messages": set(errors)})
 
 
 class ActivateView(View):

@@ -1,0 +1,23 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href={% static "css/messages.css" %}>
+<link rel="stylesheet" type="text/css" href="{% static "css/toast.min.css" %}">
+<script src={% static "js/toast.js" %}></script>
+
+{% if messages %}
+
+  <div class="toast-container">
+  </div>
+
+  <script>
+      {% for message in messages %}
+          new Toast({
+              title: 'Ошибка!!!',
+              text: "{{ message }}",
+              theme: 'dark',
+              autohide: true,
+              interval: 50000 - (({{ messages|length }} - {{ forloop.counter0 }}) * 1500)
+          });
+      {% endfor %}
+  </script>
+{% endif %}

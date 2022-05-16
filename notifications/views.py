@@ -1,6 +1,4 @@
-from ctypes import Union
 from typing import Any, Dict, Type
-from unicodedata import category
 from django.forms import ModelForm
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect

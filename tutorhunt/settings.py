@@ -34,9 +34,10 @@ INSTALLED_APPS = [
     "graphics.apps.GraphicsConfig",
     "rating.apps.RatingConfig",
     "hometasks.apps.HometasksConfig",
+    "notifications.apps.NotificationsConfig",
 
-    "debug_toolbar",
-    "django_cleanup.apps.CleanupConfig",
+    'debug_toolbar',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
@@ -55,15 +56,16 @@ ROOT_URLCONF = "tutorhunt.urls"
 
 TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / "templates"],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                "notifications.context_processors.add_notifications",
             ]
         }
     },

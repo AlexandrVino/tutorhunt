@@ -28,13 +28,20 @@
 
       <div class="text-end">
         {% if user.is_authenticated %}
-          <a href="{% url "logout" %}" class="btn btn-outline-danger me-2">Выход</a>
+            <a href="{% url 'logout' %}" class="text-danger"><i class="fs-6 bi bi-box-arrow-right"></i></a>
+            <a class="position-relative" href="{% url 'notifications' %}">
+                <i class="fs-6 bi bi-bell"></i>
+
+                {% if has_unread_notifications %}
+                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle">
+                        <span class="visually-hidden">Новые уведомления</span>
+                    </span>
+                {% endif %}              
+            </a>
         {% else %}
           <a href="{% url "login" %}" class="btn btn-outline-light me-2">Вход</a>
           <a href="{% url "signup" %}" class="btn btn-warning">Регистрация</a>
         {% endif %}
-
-      </div>
     </div>
   </div>
 </header>

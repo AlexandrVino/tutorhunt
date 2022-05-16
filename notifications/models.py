@@ -5,7 +5,8 @@ from django.db import models
 User = get_user_model()
 
 # будет дополняться (придумаю чем)
-CATEGORY_CHOICES = (("подписки", "подписки"), )
+CATEGORY_CHOICES = (("подписки", "подписки"),
+                    ("рейтинг", "рейтинг"))
 
 
 class NotificationQueryset(models.QuerySet):

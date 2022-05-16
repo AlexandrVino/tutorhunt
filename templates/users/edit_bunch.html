@@ -6,7 +6,7 @@
   <link rel="stylesheet" type="text/css" href={% static "css/base_form.css" %}>
   <link rel="stylesheet" type="text/css" href={% static "css/profile.css" %}>{% endblock %}
 {% block scripts %}
-  <script src="{% static 'js/edit_bunch.js' %}" type="text/javascript"></script>
+  <script src="{% static "js/edit_bunch.js" %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
@@ -32,9 +32,9 @@
         {{ form.status }}
       </div>
 
-{#      <div class="form-floating ">#}
-{#        {{ form.role }}#}
-{#      </div>#}
+      {#      <div class="form-floating ">#}
+      {#        {{ form.role }}#}
+      {#      </div>#}
 
       <button class="w-100 btn btn-lg btn-primary margin-top" type="submit">
         Обновить

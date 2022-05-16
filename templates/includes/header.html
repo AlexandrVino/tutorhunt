@@ -8,16 +8,16 @@
       </a>
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a class="nav-link px-2 text-white" href="{% url 'users' %}">Пользователи</a></li>
+        <li><a class="nav-link px-2 text-white" href="{% url "users" %}">Пользователи</a></li>
 
         {% if user.is_authenticated %}
-          <li><a class="nav-link px-2 text-white" href="{% url 'user_detail' user.id %}">Профиль</a></li>
+          <li><a class="nav-link px-2 text-white" href="{% url "user_detail" user.id %}">Профиль</a></li>
           <li><a class="nav-link px-2 text-white" href="#">Сообщения</a></li>
-          <li><a class="nav-link px-2 text-white" href="{% url 'user_detail_follows' user.id %}">Подписчики</a></li>
+          <li><a class="nav-link px-2 text-white" href="{% url "user_detail_follows" user.id %}">Подписчики</a></li>
         {% endif %}
 
         {% if request.user.is_superuser %}
-          <li><a href="{% url 'admin:index' %}" class="nav-link px-2 text-white ">Админка</a></li>
+          <li><a href="{% url "admin:index" %}" class="nav-link px-2 text-white ">Админка</a></li>
         {% endif %}
       </ul>
 
@@ -28,10 +28,10 @@
 
       <div class="text-end">
         {% if user.is_authenticated %}
-          <a href="{% url 'logout' %}" class="btn btn-outline-danger me-2">Выход</a>
+          <a href="{% url "logout" %}" class="btn btn-outline-danger me-2">Выход</a>
         {% else %}
-          <a href="{% url 'login' %}" class="btn btn-outline-light me-2">Вход</a>
-          <a href="{% url 'signup' %}" class="btn btn-warning">Регистрация</a>
+          <a href="{% url "login" %}" class="btn btn-outline-light me-2">Вход</a>
+          <a href="{% url "signup" %}" class="btn btn-warning">Регистрация</a>
         {% endif %}
 
       </div>

@@ -12,7 +12,7 @@
     <div class="profile widget">
       {{ user_detail.get_photo }}
       {% if user == user_detail %}
-        <a class="text-white" href="{% url 'user_detail_edit' user.id %}">
+        <a class="text-white" href="{% url "user_detail_edit" user.id %}">
           <button class="edit">
             Редактировать
           </button>
@@ -32,11 +32,11 @@
       <div class="friends widget">
 
         <h6>
-          <a class='nav-link text-white' href="{% url 'user_detail_follows' user_detail.id %}">Подписчики</a>
+          <a class="nav-link text-white" href="{% url "user_detail_follows" user_detail.id %}">Подписчики</a>
         </h6>
         <div class="friends_wrapper">
           {% for follow in follows|slice:":6" %}
-            <a class="friend_item" href="{% url 'user_detail' follow.user_from.id %}">
+            <a class="friend_item" href="{% url "user_detail" follow.user_from.id %}">
               <div class="img-wrapper">
                 {{ follow.user_from.photo_tmb }}</div>
               <span class="friend_name">{{ follow.user_from.first_name }}</span>
@@ -56,8 +56,8 @@
           </div>
 
           <div>
-            <div class="values"><span class='badge bg-warning'>{{ all_ratings.star__avg }}</span></div>
-            <div class="values"><span class='badge bg-success'>{{ all_ratings.star__count }}</span></div>
+            <div class="values"><span class="badge bg-warning">{{ all_ratings.star__avg }}</span></div>
+            <div class="values"><span class="badge bg-success">{{ all_ratings.star__count }}</span></div>
           </div>
         </div>
       {% else %} <span class="text-muted">Пока нет ни одной оценки :(</span>

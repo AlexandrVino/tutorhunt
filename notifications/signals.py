@@ -96,3 +96,26 @@ def notify_bunch(sender, instance: Bunch, **kwargs):
         }[instance.status]
 
         send_notification(**notification_kwargs)
+
+
+@receiver(post_save, sender=Message)
+def notify_message(sender, instance: Message, created: bool, **kwargs):
+    if not created:
+        return
+
+    notification_kwargs = {
+        "recipient": instance.get_recipient(),
+        "initiator": instance.owner,
+        "category": "чаты",
+    }
+
+    need_send = check_allowable_delta(
+        ALLOWABLE_DELTA_FOR_CHATS,
+        **notification_kwargs
+    )[0]
+
+    if need_send:
+        send_notification(
+            message="Вам отправлено сообщение(я) от %s" % instance.owner,
+            **notification_kwargs
+        )

@@ -7,6 +7,8 @@ from django.views.generic.edit import UpdateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
+from graphics.utils import CONST
+
 from .fields import DayTimeline
 from .forms import TimelineForm
 from .models import TimelineModel
@@ -14,10 +16,6 @@ from .models import TimelineModel
 
 TIMELINE_VIEW_TEMPLATE = "graphics/view_timeline.html"
 EDIT_TIMELINTE_TEMPLATE = "graphics/edit_template.html"
-
-WEEKDAYS = ("monday", "tuesday",
-            "wednesday", "thursday",
-            "friday", "saturday", "sunday")
 
 
 class TimelineView(DetailView):
@@ -50,7 +48,7 @@ class EditTimelineView(UpdateView):
         initial = dict()
         timeline: TimelineModel = self.get_object()
 
-        for weekday in WEEKDAYS:
+        for weekday in CONST.WEEKDAYS:
             weekday_timeline: DayTimeline = timeline.__dict__[weekday]
             initial[weekday] = weekday_timeline.get_form_initial()
         return initial

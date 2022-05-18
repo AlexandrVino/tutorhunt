@@ -1,17 +1,12 @@
-from email.policy import default
 from typing import Any, Dict, Tuple
 from django.db import models
 from django.dispatch import receiver
 from django.urls import reverse
 from django.conf import settings
 from .fields import DayTimeline, DayTimelineField
-
+from .utils import CONST
 
 User = settings.AUTH_USER_MODEL
-
-WEEKDAYS_RUS = ("понедельник", "вторник", "среда",
-                "четверг", "пятница", "суббота", "воскресенье")
-HOURS = tuple(['%02d:00' % i for i in range(24)])
 
 
 class TimelineModel(models.Model):
@@ -22,7 +17,7 @@ class TimelineModel(models.Model):
     thursday,
     friday, 
     saturday,
-    sunday) = [DayTimelineField(weekday, default=DayTimeline([False] * 24)) for weekday in WEEKDAYS_RUS]
+    sunday) = [DayTimelineField(weekday, default=DayTimeline([False] * 24)) for weekday in CONST.WEEKDAYS_RUS]
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="timeline")
     
     def __str__(self) -> str:
@@ -47,19 +42,19 @@ class TimelineModel(models.Model):
         for i, weekday in enumerate(self.get_days_fields()):
             for j in range(24):
                 data[j][i] = {
-                    "value": HOURS[j],
+                    "value": CONST.HOURS[j],
                     "class": "busy-hour" if weekday.is_busy(j) else "vacant-hour"
                     }
-        return {"headers": WEEKDAYS_RUS, "data": data}
+        return {"headers": CONST.WEEKDAYS_RUS, "data": data}
 
     def get_small_table_data(self) -> Dict[str, Tuple[str]]:
         """Возвращет данные для малой таблицы (для шаблонов)"""
         data = []
-        for caption, field in zip(WEEKDAYS_RUS, self.get_days_fields()):
+        for caption, field in zip(CONST.WEEKDAYS_RUS, self.get_days_fields()):
             data.append({"caption": caption, "weekday": field})
 
         return {
-            "hours": HOURS,
+            "hours": CONST.HOURS,
             "data": data
         }
 

@@ -1,5 +1,4 @@
 from typing import List
-from django.conf import settings
 from django.forms import CheckboxSelectMultiple, MultipleChoiceField
 
 

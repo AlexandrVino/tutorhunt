@@ -9,7 +9,7 @@ from django.utils.decorators import method_decorator
 
 from .fields import DayTimeline
 from .forms import TimelineForm
-from .models import WEEKDAYS_RUS, TimelineModel
+from .models import TimelineModel
 
 
 TIMELINE_VIEW_TEMPLATE = "graphics/view_timeline.html"
@@ -58,10 +58,8 @@ class EditTimelineView(UpdateView):
     def get_form_kwargs(self) -> Dict[str, Any]:
         kwargs = super().get_form_kwargs()
         kwargs["label_suffix"] = ""
-        # kwargs["classes"] = self.css_classes
         return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context["options"] = self.get
         return context

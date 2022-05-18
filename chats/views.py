@@ -74,6 +74,6 @@ class ChatsView(DetailView, FormView):
             form.clean()
 
         else:
-            self.messages.extend([err["text"] for err in form.errors])
+            self.messages.extend([err["text"] if type(err) is dict else err for err in form.errors])
 
         return super(ChatsView, self).get(request, *args, **kwargs)

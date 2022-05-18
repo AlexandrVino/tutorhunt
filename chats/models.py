@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -12,9 +14,8 @@ class ChatRoom(models.Model):
 
     manager = ChatRoomManager()
 
-    def send_message(self, model, sender: User, text: str, images: list = None) -> bool:
-        model.manager.create(chat_room=self, owner=sender, text=text, image=None)
-        return True
+    def send_message(self, model, sender: User, text: str, images: list = None):
+        model.manager.create(chat_room=self, owner=sender, text=text, image=None, time=datetime.now().time())
 
     class Meta:
         verbose_name = "Комната"
@@ -23,9 +24,11 @@ class ChatRoom(models.Model):
 
 class Message(models.Model):
 
-    text = models.CharField(max_length=255)
+    text = models.TextField()
     image = models.ImageField(blank=True, default=None)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    time = models.TimeField(verbose_name='Время отправки', null=True)
+
     chat_room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE, default=None)
 
     manager = MessagesManager()

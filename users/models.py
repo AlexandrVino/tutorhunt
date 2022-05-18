@@ -19,7 +19,7 @@ class BunchStatus(models.TextChoices):
 class User(AbstractUser):
     email = models.EmailField(blank=False)
     role = models.CharField(
-        max_length=7,
+        max_length=8,
         choices=Role.choices,
         default=Role.STUDENT,
         verbose_name="Роль"

@@ -12,6 +12,7 @@ urlpatterns = [
     path("timeline/", include("graphics.urls")),
     path("auth/", include("users.urls")),
     path("notifications/", include("notifications.urls")),
+    path("chats/", include("chats.urls")),
 ]
 
 if settings.DEBUG:

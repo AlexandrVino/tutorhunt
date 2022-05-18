@@ -60,6 +60,16 @@
 
 }
 
+a.edit {
+    display: block;
+    text-align: center;
+    line-height: 30px;
+}
+
+a.edit:hover {
+    color: #fff;
+}
+
 .rating {
     display: flex;
     justify-content: space-between;

@@ -72,7 +72,7 @@ class UserDetailView(DetailView, FormView):
         except Rating.DoesNotExist:
             context["rating"] = 0
 
-        context["rating_form"].fields['star'].initial = context["rating"]
+        context["rating_form"].fields["star"].initial = context["rating"]
 
         context["all_ratings"] = Rating.manager.get_objects_with_filter(
             user_to=self.object, star__in=[1, 2, 3, 4, 5]
@@ -120,13 +120,11 @@ class LoginWithEmailView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["messages"] = self.messages
+        context["message"] = self.messages
         return context
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
-
-        print(form.is_valid())
 
         if form.is_valid():
             email = form.cleaned_data["email"]
@@ -139,11 +137,11 @@ class LoginWithEmailView(FormView):
                 if user.is_active:
                     EmailAuthBackend.authenticate(request, email, password)
                     return redirect(reverse("user_detail", args=(user.id,)))
-            self.messages.append('Неверный логин или пароль!')
+            self.messages.append("Неверный логин или пароль!")
 
             return self.get(request, *args, **kwargs)
 
-        self.messages.append('Заполните форму корректно!')
+        self.messages.append("Заполните форму корректно!")
         return super().get(request, *args, **kwargs)
 
 
@@ -199,7 +197,7 @@ class SignupView(CreateView):
                 errors.append(err)
 
         errors += [err[0] for err in list(form.errors.values())]
-        return render(request, self.template_name, {"form": form, "messages": set(errors)})
+        return render(request, self.template_name, {"form": form, "chats": set(errors)})
 
 
 class ActivateView(View):
@@ -315,17 +313,17 @@ class BunchView(TemplateView, ModelFormMixin):
             if self.kwargs.get("user_id") == user_from.id:
                 return self.get(request, *args, **kwargs)
 
-            user_to = User.manager.get(pk=self.kwargs.get('user_to'))
-            teacher = user_from if user_from.role == 'teacher' else user_to
+            user_to = User.manager.get(pk=self.kwargs.get("user_to"))
+            teacher = user_from if user_from.role == "teacher" else user_to
             student = user_from if user_from is not teacher else user_to
 
             if student == teacher:
                 return self.get(request, *args, **kwargs)
 
-            day = form.cleaned_data['day']
-            time = form.cleaned_data['time']
+            day = form.cleaned_data["day"]
+            time = form.cleaned_data["time"]
 
-            bunch, is_created = Bunch.manager.get_or_create(student=student, teacher=teacher, datetime=f'{day}:{time}')
+            bunch, is_created = Bunch.manager.get_or_create(student=student, teacher=teacher, datetime=f"{day}:{time}")
 
             if is_created:
                 bunch.status = BunchStatus.WAITING
@@ -346,19 +344,19 @@ class EditBunchView(TemplateView, ModelFormMixin):
     object = None
 
     def get_datetime(self) -> str:
-        return f"{self.kwargs.get('day')}:{self.kwargs.get('time')}"
+        return f'{self.kwargs.get("day")}:{self.kwargs.get("time")}'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['form'].fields['day'].initial = self.kwargs.get('day')
-        context['form'].fields['time'].initial = self.kwargs.get('time')
+        context["form"].fields["day"].initial = self.kwargs.get("day")
+        context["form"].fields["time"].initial = self.kwargs.get("time")
 
         if self.object:
-            context['form'].fields['status'].initial = self.object.status
+            context["form"].fields["status"].initial = self.object.status
 
-        self.kwargs['old_day'] = self.kwargs.get('day')
-        self.kwargs['old_time'] = self.kwargs.get('time')
+        self.kwargs["old_day"] = self.kwargs.get("day")
+        self.kwargs["old_time"] = self.kwargs.get("time")
 
         return context
 
@@ -386,12 +384,12 @@ class EditBunchView(TemplateView, ModelFormMixin):
             teacher = request.user
 
             if teacher.id:
-                day = form.cleaned_data['day']
-                time = form.cleaned_data['time']
+                day = form.cleaned_data["day"]
+                time = form.cleaned_data["time"]
 
-                status = form.cleaned_data['status']
+                status = form.cleaned_data["status"]
 
-                datetime = f'{day}:{time}'
+                datetime = f"{day}:{time}"
 
                 if not self.object:
                     bunch = self.model.manager.filter(teacher=request.user, datetime=self.get_datetime())

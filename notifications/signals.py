@@ -7,7 +7,7 @@ from users.models import Bunch, BunchStatus, Follow
 
 
 @receiver(post_save, sender=Follow)
-def notifiy_follow(sender, instance: Follow, **kwargs):    
+def notify_follow(sender, instance: Follow, **kwargs):
     if instance.active:
         message = f"На вас подписался {instance.user_from}"
     else:

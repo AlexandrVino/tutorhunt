@@ -30,11 +30,11 @@ class NotificationListView(TemplateView):
     
     def get_queryset(self) -> NotificationQueryset:
         if self.request.user.is_staff:
-            return self.queryset.order_by("-creation")
+            return self.queryset.order_by("-last_modified")
         return (
             self.queryset
                 .by_recipient(self.request.user)
-                .order_by("-creation")
+                .order_by("-last_modified")
         )
 
     def get_paginator(self) -> Paginator:

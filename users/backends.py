@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import login
 
 from users.models import User
 
@@ -10,13 +10,18 @@ class EmailUniqueFailed(BaseException):
 
 class EmailAuthBackend:
     @staticmethod
-    def authenticate(request, email=None, password=None):
+    def authenticate(request, email=None, password=None, user=None):
         try:
-            user = User.objects.get(email=email)
-            if user.check_password(password):
+            print(locals())
+            if user is None:
+                user = User.objects.get(email=email)
+                if user.check_password(password):
+                    login(request, user)
+                    return user
+                return None
+            else:
                 login(request, user)
                 return user
-            return None
         except User.DoesNotExist:
             return None
 
@@ -29,8 +34,6 @@ class EmailAuthBackend:
 
         if User.objects.filter(email=email):
             raise EmailUniqueFailed()
-
-        print(kwargs)
 
         user = User(email=email, username=username, **kwargs)
         user.set_password(password1)

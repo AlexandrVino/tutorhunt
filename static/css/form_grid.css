@@ -13,7 +13,7 @@
 }
 
 .form-grid-body > * > label {
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .form-grid-body li {
@@ -34,11 +34,10 @@ input[type="submit"] {
 
 table {
     width: 100%;
-    background-color: rgba(var(--bs-dark-rgb), .5);
 }
 
 .big-tl-table th {
-    font-weight: bold;
+    font-weight: 500;
     font-size: 1.5rem;
     text-align: center;
 }
@@ -48,13 +47,19 @@ table td {
 }
 
 .busy-hour {
+
     --bs-bg-opacity: 1;
-    background-color: rgba(var(--bs-danger-rgb),var(--bs-bg-opacity))!important;
+    background-color: rgba(var(--bs-danger-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .vacant-hour {
     --bs-bg-opacity: .7;
-    background-color: rgba(var(--bs-success-rgb),var(--bs-bg-opacity))!important;
+    background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.wait-hour {
+    --bs-bg-opacity: .7;
+    background-color: rgba(var(--bs-info-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .vacant-hour::before {
@@ -65,27 +70,66 @@ table td {
     content: "\F623";
 }
 
+.wait-hour::before {
+    content: "\F623";
+}
+
+.add-bunch {
+    width: 50px;
+    height: 27px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.wait-hour,
+.vacant-hour,
+.busy-hour {
+    cursor: not-allowed;
+}
+
+
+.wait-hour::before,
 .vacant-hour::before,
 .busy-hour::before {
     display: inline-block;
     font-family: bootstrap-icons !important;
     font-style: normal;
-    font-weight: normal !important;
+    font-weight: 500 !important;
     font-variant: normal;
     text-transform: none;
     line-height: 1;
     vertical-align: -0.125em;
     -webkit-font-smoothing: antialiased;
     font-size: .8rem;
-    padding-right: .2rem;
+    padding-right: 0;
+}
+
+.table-header {
+    font-size: 12px;
+    min-width: 50px;
 }
 
 th {
     letter-spacing: 2px;
+    font-weight: 500;
+    text-align: center;
+    min-width: 130px;
+    font-size: 14px;
 }
-  
+
+th:hover {
+    filter: drop-shadow(0 0 5px #ffffff);
+}
+
+tbody tr:hover th {
+    filter: drop-shadow(0 0 5px #ffffff);
+}
+
 td {
     letter-spacing: 1px;
+    position: relative;
 }
 
 td:not(:last-child) {
@@ -96,4 +140,8 @@ td:not(:last-child) {
 
 table tr:not(:last-child) td {
     border-bottom: solid 2px rgba(var(--bs-dark-rgb), .5);
+}
+
+.small-tl-table {
+    margin: 5px 0;
 }

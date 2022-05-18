@@ -9,63 +9,46 @@ from django.contrib.auth.views import (
 )
 from django.urls import path
 
-from users.views import ActivateView, LoginWithEmailView, ProfileView, SignupView, UserDetailView, UserListView
+from users.views import ActivateView, BunchView, EditBunchView, FollowersListView, LoginWithEmailView, ProfileView, \
+    SignupView, \
+    UserDetailView, \
+    UserListView
 
 urlpatterns = [
 
     path("login/", LoginWithEmailView.as_view(), name="login"),
-    path(
-        "logout/", LogoutView.as_view(template_name="users/logout.html"),
-        name="logout"
-    ),
+    path("logout/", LogoutView.as_view(template_name="users/logout.html"), name="logout"),
     path("signup/", SignupView.as_view(), name="signup"),
+
+    path(r"activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/",
+         ActivateView.as_view(), name="activate"),
+
+    path("password_change/", PasswordChangeView.as_view(template_name="users/password_change_form.html"),
+         name="password_change"),
+
+    path("password_change/done/", PasswordChangeDoneView.as_view(template_name="users/password_change_done.html"),
+         name="password_change_done"),
+
+    path("password_reset/", PasswordResetView.as_view(email_template_name="users/password_reset_email.html",
+                                                      template_name="users/password_reset_form.html"),
+         name="password_reset"),
+
     path(
-        r"activate/(?P<uidb64>[0-9A-Za-z_\-]+)/"
-        "(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/",
-        ActivateView.as_view(),
-        name="activate",
-    ),
-    path(
-        "password_change/",
-        PasswordChangeView.as_view(
-            template_name="users/password_change_form.html"),
-        name="password_change",
-    ),
-    path(
-        "password_change/done/",
-        PasswordChangeDoneView.as_view(
-            template_name="users/password_change_done.html"),
-        name="password_change_done",
-    ),
-    path(
-        "password_reset/",
-        PasswordResetView.as_view(
-            email_template_name="users/password_reset_email.html",
-            template_name="users/password_reset_form.html",
-        ),
-        name="password_reset",
-    ),
-    path(
-        "password_reset/done/",
-        PasswordResetDoneView.as_view(
-            template_name="users/password_reset_done.html"),
-        name="password_reset_done",
-    ),
-    path(
-        "reset/<uidb64>/<token>/",
-        PasswordResetConfirmView.as_view(
-            template_name="users/password_reset_confirm.html"
-        ),
-        name="password_reset_confirm",
-    ),
-    path(
-        "reset/done/",
-        PasswordResetCompleteView.as_view(
-            template_name="users/password_reset_complete.html"
-        ),
-        name="password_reset_complete",
-    ),
-    path("profile/", ProfileView.as_view(), name="profile"),
+        "password_reset/done/", PasswordResetDoneView.as_view(template_name="users/password_reset_done.html"),
+        name="password_reset_done"),
+
+    path("reset/<uidb64>/<token>/", PasswordResetConfirmView.as_view(template_name="users/password_reset_confirm.html"),
+         name="password_reset_confirm"),
+
+    path("reset/done/", PasswordResetCompleteView.as_view(template_name="users/password_reset_complete.html"),
+         name="password_reset_complete"),
+
     path("users/", UserListView.as_view(), name="users"),
     path("users/<int:user_id>/", UserDetailView.as_view(), name="user_detail"),
+    path("users/follows/<int:user_to>/", FollowersListView.as_view(), name="user_detail_follows"),
+    path("users/edit_profile/<int:user_id>/", ProfileView.as_view(), name="user_detail_edit"),
+
+    path("users/add_bunch/<int:user_to>/<int:day>/<int:time>/", BunchView.as_view(), name="add_bunch"),
+    path("users/edit_bunch/<int:day>/<int:time>/", EditBunchView.as_view(), name="edit_bunch"),
+
 ]

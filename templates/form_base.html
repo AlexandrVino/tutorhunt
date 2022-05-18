@@ -13,14 +13,11 @@
 
   {% block scripts %}{% endblock %}
 
-  {% include 'includes/favicon.html' %}
+  {% include "includes/favicon.html" %}
   <title>{% block title %}Регистрация{% endblock %}</title>
 </head>
 <body class="bg-dark text-white" style="--bs-bg-opacity: 0.9;">
-{% if errors %}
-  <div> {{ errors }}</div>
-{% endif %}
-
+{% block messages %}{% include "includes/messages.html" %}{% endblock %}
 {% block content %}
 {% endblock %}
 

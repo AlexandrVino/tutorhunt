@@ -5,8 +5,8 @@ from django.forms import CheckboxSelectMultiple, MultipleChoiceField
 class DayTimelineFormField(MultipleChoiceField):
     """Поле для выбора расписания в форме"""
     from graphics.fields import DayTimeline
-    
-    _choices = [(i, '%02d:00' % i) for i in range(24)]
+
+    _choices = [(i, "%02d:00" % i) for i in range(24)]
 
     def __init__(self, *args, **kwargs):
         if "max_length" in kwargs:

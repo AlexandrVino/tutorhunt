@@ -1,8 +1,9 @@
 from django.contrib.auth.models import UserManager
-from django.db.models import QuerySet
 
 from core.managers import BaseManager
 
 
 class RatingManager(BaseManager, UserManager):
-    pass
+    def get_rating(self, *args, **kwargs):
+        rating = self.get_objects_with_filter(**kwargs)
+        return rating

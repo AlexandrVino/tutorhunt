@@ -34,10 +34,10 @@ class DayTimeline:
     def deconstruct(self) -> Tuple[str, Iterable[str], Dict[str, Any]]:
         """Функция деконструкции для сериализации"""
         name, args, kwargs = (
-            "graphics.fields.DayTimeline", 
+            "graphics.fields.DayTimeline",
             (),
             {"timeline": self.timeline}
-        ) 
+        )
 
         return name, args, kwargs
 
@@ -76,7 +76,6 @@ class DayTimeline:
         else:
             raise TypeError("value должно быть строкой")
 
-
     @classmethod
     def parse_formfield(cls, busy_hours: List[str]):
         """
@@ -95,7 +94,7 @@ class DayTimeline:
 class DayTimelineField(models.CharField):
     """Поле, обозначающее расписание в рамках одного дня"""
     from .formfields import DayTimelineFormField
-    
+
     description = "Поле, обозначающее расписание в рамках одного дня"
     initial = {
         "null": False,

@@ -1,6 +1,7 @@
 from django.urls import path
-from chats.views import ChatsView
+from chats.views import ChatsView, ChatsListView
 
 urlpatterns = [
-    path("<int:user_to>/", ChatsView.as_view()),
+    path("<int:chat_id>/<int:user_id>/", ChatsView.as_view(), name="current_chat"),
+    path("all/", ChatsListView.as_view(), name="all_chats"),
 ]

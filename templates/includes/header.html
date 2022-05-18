@@ -12,7 +12,7 @@
 
         {% if user.is_authenticated %}
           <li><a class="nav-link px-2 text-white" href="{% url "user_detail" user.id %}">Профиль</a></li>
-          <li><a class="nav-link px-2 text-white" href="#">Сообщения</a></li>
+          <li><a class="nav-link px-2 text-white" href="{% url "all_chats" %}">Сообщения</a></li>
           <li><a class="nav-link px-2 text-white" href="{% url "user_detail_follows" user.id %}">Подписчики</a></li>
         {% endif %}
 

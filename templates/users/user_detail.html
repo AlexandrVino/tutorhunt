@@ -23,7 +23,7 @@
           <button class="edit" type="submit">
             {% if already_follow %}Отписаться{% else %}Подписаться{% endif %}
           </button>
-          <a class="edit" href="#">Написать</a>
+          <a class="edit" href="{% url "current_chat" 100000 user_detail.id %}">Написать</a>
         </form>
 
 

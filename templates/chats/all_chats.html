@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Мой профиль{% endblock %}
+{% block scripts %}
+  <script src="{% static "/js/send_message.js" %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" type="text/css" href={% static "css/profile.css" %}>
+  <link rel="stylesheet" type="text/css" href={% static "css/chat.css" %}>{% endblock %}
+{% block content %}
+
+  <div class="chat">
+    <div class="widget widget-wrapper">
+      <div class="chat-header">
+        <div class="button-back-wrapper">
+        </div>
+        <div class="interlocutor">
+          <span class="header-name">Чаты</span>
+        </div>
+        <div class="user">
+        </div>
+
+      </div>
+
+      <div class="messages-list-wrapper">
+
+        <div class="messages-list overflow-auto" id="messages-list">
+          {% for chat, interlocutor in chats %}
+            <a href="{% url "current_chat" chat.id interlocutor.id %}">
+              <div class="message chat-item">
+                <div class="img-wrapper">{{ interlocutor.photo_tmb }}</div>
+
+                <div class="message-text">
+
+                  <div>
+                    <span class="friend_name">{{ interlocutor.first_name }}</span>
+                  </div>
+
+                </div>
+
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

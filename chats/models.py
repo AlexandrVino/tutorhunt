@@ -10,7 +10,7 @@ User = get_user_model()
 
 class ChatRoom(models.Model):
     first_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="first_user")
-    second_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="second_name")
+    second_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="second_user")
 
     manager = ChatRoomManager()
 

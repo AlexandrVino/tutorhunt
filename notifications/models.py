@@ -63,6 +63,7 @@ class NotificationModel(models.Model):
     initiator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="caused_notifications",
                                   blank=True, null=True, default=None, verbose_name="отправитель")
     creation = models.DateTimeField("дата получения", auto_now_add=True)
+    last_modified = models.DateTimeField("дата обновления", auto_now=True)
     
     objects: NotificationQueryset = NotificationQueryset.as_manager()
 

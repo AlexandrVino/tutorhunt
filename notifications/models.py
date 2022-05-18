@@ -7,7 +7,8 @@ User = get_user_model()
 # будет дополняться (придумаю чем)
 CATEGORY_CHOICES = (("подписки", "подписки"),
                     ("рейтинг", "рейтинг"),
-                    ("уроки", "уроки"))
+                    ("уроки", "уроки"),
+                    ("чаты", "чаты"))
 
 
 class NotificationQueryset(models.QuerySet):

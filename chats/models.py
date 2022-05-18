@@ -30,6 +30,13 @@ class Message(models.Model):
 
     manager = MessagesManager()
 
+    def get_recipient(self) -> User:
+        """Возвращает получателя сообщения (для грязных целей обработчика уведомлений)"""
+        first_user, second_user = self.chat_room.first_user, self.chat_room.second_user
+        if not first_user == self.owner:
+            return first_user
+        return second_user
+
     class Meta:
         verbose_name = "Сообщение"
         verbose_name_plural = "Сообщения"

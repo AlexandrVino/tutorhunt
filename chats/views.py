@@ -2,8 +2,7 @@ from itertools import chain
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, FormView, ListView
@@ -14,6 +13,7 @@ from chats.utils import get_interlocutor, get_interlocutor_with_id
 
 MESSAGES_TEMPLATE = "chats/chats.html"
 CHATS_TEMPLATE = "chats/all_chats.html"
+
 User = get_user_model()
 
 

@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     "hometasks.apps.HometasksConfig",
     "notifications.apps.NotificationsConfig",
     "chats.apps.ChatsConfig",
+    "bunch.apps.BunchConfig",
+    "follow.apps.FollowConfig",
 
     "debug_toolbar",
     "django_cleanup.apps.CleanupConfig",

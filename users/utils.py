@@ -1,4 +1,5 @@
-from users.models import Bunch, User
+from bunch.models import Bunch
+from users.models import User
 
 
 def edit_user_data(user: User, **kwargs) -> None:

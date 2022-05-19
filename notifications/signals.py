@@ -4,11 +4,12 @@ from typing import Optional, Tuple
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
+
+from bunch.models import Bunch, BunchStatus
 from chats.models import Message
+from follow.models import Follow
 from notifications.models import NotificationModel, send_notification
 from rating.models import Rating
-
-from users.models import Bunch, BunchStatus, Follow
 
 User = get_user_model()
 

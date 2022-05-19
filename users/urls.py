@@ -1,18 +1,10 @@
 from django.contrib.auth.views import (
-    LogoutView,
-    PasswordChangeDoneView,
-    PasswordChangeView,
-    PasswordResetCompleteView,
-    PasswordResetConfirmView,
-    PasswordResetDoneView,
-    PasswordResetView,
+    LogoutView, PasswordChangeDoneView, PasswordChangeView, PasswordResetCompleteView,
+    PasswordResetConfirmView, PasswordResetDoneView, PasswordResetView
 )
 from django.urls import path
 
-from users.views import ActivateView, BunchView, EditBunchView, FollowersListView, LoginWithEmailView, ProfileView, \
-    SignupView, \
-    UserDetailView, \
-    UserListView
+from users.views import ActivateView, LoginWithEmailView, ProfileView, SignupView, UserDetailView, UserListView
 
 urlpatterns = [
 
@@ -45,10 +37,5 @@ urlpatterns = [
 
     path("users/", UserListView.as_view(), name="users"),
     path("users/<int:user_id>/", UserDetailView.as_view(), name="user_detail"),
-    path("users/follows/<int:user_to>/", FollowersListView.as_view(), name="user_detail_follows"),
     path("users/edit_profile/<int:user_id>/", ProfileView.as_view(), name="user_detail_edit"),
-
-    path("users/add_bunch/<int:user_to>/<int:day>/<int:time>/", BunchView.as_view(), name="add_bunch"),
-    path("users/edit_bunch/<int:day>/<int:time>/", EditBunchView.as_view(), name="edit_bunch"),
-
 ]

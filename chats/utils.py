@@ -11,5 +11,3 @@ def get_interlocutor(chat: ChatRoom, user: User) -> User:
 
 def get_interlocutor_with_id(chat: ChatRoom, user_id: int) -> User:
     return chat.first_user if chat.first_user.id != user_id else chat.second_user
-
-

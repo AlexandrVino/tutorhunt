@@ -1,6 +1,5 @@
 from typing import Any, Dict, Tuple
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.dispatch import receiver
@@ -17,7 +16,7 @@ User = get_user_model()
 class TimelineModel(models.Model):
     """Модель расписания"""
     monday, tuesday, wednesday, thursday, friday, saturday, sunday = [
-      DayTimelineField(weekday, default=DayTimeline([False] * 24)) for weekday in CONST.WEEKDAYS_RUS]
+        DayTimelineField(weekday, default=DayTimeline([False] * 24)) for weekday in CONST.WEEKDAYS_RUS]
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="timeline")
 
     def __str__(self) -> str:

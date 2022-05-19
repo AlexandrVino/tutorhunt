@@ -27,7 +27,7 @@ class Message(models.Model):
     text = models.TextField()
     image = models.ImageField(blank=True, default=None)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
-    time = models.TimeField(verbose_name='Время отправки', null=True)
+    time = models.TimeField(verbose_name="Время отправки", null=True)
 
     chat_room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE, default=None)
 

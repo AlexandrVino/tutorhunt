@@ -13,10 +13,10 @@ from rating.models import Rating
 
 User = get_user_model()
 
-
 # Допустимая разница между уведомлениями
 ALLOWABLE_DELTA_FOR_CHATS = dt.timedelta(hours=2)
 ALLOWABLE_DELTA_FOR_FOLLOW = dt.timedelta(days=1)
+
 
 def check_allowable_delta(allowable_delta: dt.timedelta,
                           **kwargs) -> Tuple[bool, Optional[NotificationModel]]:
@@ -50,7 +50,7 @@ def notify_follow(sender, instance: Follow, **kwargs):
         message = f"На вас подписался {instance.user_from}"
     else:
         message = f"От вас отписался {instance.user_from}"
-    
+
     need_send, last_notification = check_allowable_delta(
         ALLOWABLE_DELTA_FOR_FOLLOW,
         **notification_kwargs

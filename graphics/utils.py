@@ -17,4 +17,4 @@ class CONST:
         "суббота",
         "воскресенье"
     )
-    HOURS = tuple(['%02d:00' % i for i in range(24)])
+    HOURS = tuple(["%02d:00" % i for i in range(24)])

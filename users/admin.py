@@ -17,4 +17,3 @@ class UserAdmin(admin.ModelAdmin):
             "is_staff", "is_active", "user_permissions", "date_joined",
         )
     }),)
-

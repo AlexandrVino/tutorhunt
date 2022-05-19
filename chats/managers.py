@@ -1,6 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.db.models import Prefetch
-
 from core.managers import BaseManager
 
 User = get_user_model()

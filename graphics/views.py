@@ -19,6 +19,12 @@ EDIT_TIMELINE_TEMPLATE = "graphics/edit_template.html"
 class TimelineView(DetailView):
     template_name = TIMELINE_VIEW_TEMPLATE
     model = TimelineModel
+    object = None
+
+    def get_object(self, queryset=None):
+        if self.object:
+            return self.object
+        return super(TimelineView, self).get_object(queryset)
 
     def get_context_data(self, **kwargs):
         object: TimelineModel = self.get_object()

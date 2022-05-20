@@ -4,18 +4,19 @@ from typing import Optional, Tuple
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
+
+from bunch.models import Bunch, BunchStatus
 from chats.models import Message
+from follow.models import Follow
 from notifications.models import NotificationModel, send_notification
 from rating.models import Rating
 
-from users.models import Bunch, BunchStatus, Follow
-
 User = get_user_model()
-
 
 # Допустимая разница между уведомлениями
 ALLOWABLE_DELTA_FOR_CHATS = dt.timedelta(hours=2)
 ALLOWABLE_DELTA_FOR_FOLLOW = dt.timedelta(days=1)
+
 
 def check_allowable_delta(allowable_delta: dt.timedelta,
                           **kwargs) -> Tuple[bool, Optional[NotificationModel]]:
@@ -49,7 +50,7 @@ def notify_follow(sender, instance: Follow, **kwargs):
         message = f"На вас подписался {instance.user_from}"
     else:
         message = f"От вас отписался {instance.user_from}"
-    
+
     need_send, last_notification = check_allowable_delta(
         ALLOWABLE_DELTA_FOR_FOLLOW,
         **notification_kwargs

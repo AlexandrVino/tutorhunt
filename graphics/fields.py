@@ -13,7 +13,7 @@ class DayTimeline:
             raise TypeError("timeline должен быть итерируемым")
         elif not isinstance(timeline, list):
             timeline = list(timeline)
-        
+
         if len(timeline) != 24:
             raise ValueError("Количество часов должно быть равно 24")
 
@@ -50,7 +50,7 @@ class DayTimeline:
     def is_busy(self, hour: int) -> bool:
         """Возвращает True, если час занят (часы от 0 до 23)"""
         return self.timeline[hour]
-    
+
     def get_form_initial(self) -> List[str]:
         """Возвращает initial для DayTimelineFormField (список номеров занятых часов)"""
         busy_hours = []

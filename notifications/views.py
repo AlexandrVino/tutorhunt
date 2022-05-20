@@ -18,7 +18,7 @@ class NotificationListView(TemplateView):
     paginate_by = 5
     queryset = NotificationModel.objects.all()
     form_initial: Dict[str, Any] = {}
-    
+
     def dispatch(self, request: HttpRequest, *args, **kwargs):
         self.kwargs.setdefault("page", 1)
         return super().dispatch(request, *args, **kwargs)
@@ -27,7 +27,7 @@ class NotificationListView(TemplateView):
         if self.request.user.is_staff:
             return AdminFilterNotificationsForm
         return FilterNotificationsForm
-    
+
     def get_queryset(self) -> NotificationQueryset:
         if self.request.user.is_staff:
             return self.queryset.order_by("-last_modified")
@@ -53,7 +53,7 @@ class NotificationListView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
+
         context["form"] = self.get_form()
 
         paginator = self.get_paginator()
@@ -61,7 +61,7 @@ class NotificationListView(TemplateView):
         context["num_page"] = paginator.num_pages
 
         return context
-    
+
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         self.get_queryset().by_recipient(request.user).mark_read()
 
@@ -69,10 +69,10 @@ class NotificationListView(TemplateView):
             return redirect(reverse("notifications"))
 
         return super().get(request, *args, **kwargs)
-    
+
     def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         self.form_initial = self.request.POST.dict()
-        
+
         category, recipient = (self.request.POST.get("category"),
                                self.request.POST.get("recipient"))
 

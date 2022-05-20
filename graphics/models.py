@@ -1,20 +1,22 @@
 from typing import Any, Dict, Tuple
 
-from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.dispatch import receiver
 from django.urls import reverse
-from users.models import Bunch, Role
+
+from bunch.models import Bunch
+from users.models import Role
 from .fields import DayTimeline, DayTimelineField
 from .utils import CONST
 
-User = settings.AUTH_USER_MODEL
+User = get_user_model()
 
 
 class TimelineModel(models.Model):
     """Модель расписания"""
     monday, tuesday, wednesday, thursday, friday, saturday, sunday = [
-      DayTimelineField(weekday, default=DayTimeline([False] * 24)) for weekday in CONST.WEEKDAYS_RUS]
+        DayTimelineField(weekday, default=DayTimeline([False] * 24)) for weekday in CONST.WEEKDAYS_RUS]
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="timeline")
 
     def __str__(self) -> str:
@@ -42,7 +44,7 @@ class TimelineModel(models.Model):
     def get_small_table_data(self) -> Dict[str, Tuple[str]]:
         """Возвращет данные для малой таблицы (для шаблонов)"""
         data = []
-        bunches = Bunch.manager.filter(teacher=self.user).order_by("datetime")
+        bunches = Bunch.manager.get_objects_with_filter(teacher=self.user).order_by("datetime")
 
         for index, (caption, field) in enumerate(zip(CONST.WEEKDAYS_RUS, self.get_days_fields())):
 

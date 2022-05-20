@@ -15,7 +15,7 @@ class NotificationQueryset(models.QuerySet):
     def by_recipient(self, user: User):
         """Сортирует queryset по получателю"""
         return self.filter(recipient=user)
-    
+
     def by_category(self, category: str):
         """Сортирует queryset по категории"""
         return self.filter(category=category)
@@ -36,11 +36,11 @@ class NotificationQueryset(models.QuerySet):
             result = result.by_recipient(recipient)
 
         return result
-    
+
     def get_unread(self):
         """Возвращает непрочитанные уведомления"""
         return self.filter(read=False)
-    
+
     def get_read(self):
         """Возвращает прочитанные уведомления"""
         return self.filter(read=True)
@@ -64,7 +64,7 @@ class NotificationModel(models.Model):
                                   blank=True, null=True, default=None, verbose_name="отправитель")
     creation = models.DateTimeField("дата получения", auto_now_add=True)
     last_modified = models.DateTimeField("дата обновления", auto_now=True)
-    
+
     objects: NotificationQueryset = NotificationQueryset.as_manager()
 
     class Meta:
@@ -76,7 +76,6 @@ def send_notification(recipient: User, category: str,
                       message: str, initiator: Optional[User] = None) -> NotificationModel:
     """
     Создаёт уведомление (в т. ч. в db) и возвращает созданный объект
-    
     Параметры:
     recipient -- получатель
     category -- категория уведомления

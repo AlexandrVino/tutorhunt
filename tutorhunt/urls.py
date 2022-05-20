@@ -13,6 +13,7 @@ urlpatterns = [
     path("auth/", include("users.urls")),
     path("notifications/", include("notifications.urls")),
     path("chats/", include("chats.urls")),
+    path("", include("homepage.urls"))
 ]
 
 if settings.DEBUG:

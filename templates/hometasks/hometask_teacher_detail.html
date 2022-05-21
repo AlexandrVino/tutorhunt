@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Домашнее задание{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href={% static "css/profile.css" %}>{% endblock %}
+{% block content %}
+
+<div class="widget-row d-flex">
+  <div class="widget">
+    <h2>Название: {{ hometask.title }}</h2>
+    <h3>Учитель: {{ hometask.teacher }}</h3>
+    <h3>Описание: {{ hometask.description }}</h3>
+    <span>Файл: <a href="{% url 'hometask_download' hometask.get_file_name %}">{{ hometask.get_file_name }}</a></span>
+  </div>
+</div>
+
+
+{% if user.role == "Teacher" and students %}
+<br>
+<h2>Назначить задание</h2>
+<form method="post">
+  {% csrf_token %}
+  {% for student in students %}
+
+  <input type="checkbox" name="choose" id="option{{student.user_from.id}}" value={{student.user_from.id}} />
+  <label for="option{{student.user_from.id}}"><b>{{student.user_from.first_name}}</b></label><br />
+
+  {% endfor %}
+  <button class="edit" type="submit">
+    Назначить
+  </button>
+</form>
+
+{% if users %}
+<h2>Ученики</h2>
+{% for user in users %}
+<span><h3>{{user.student.first_name}}</h3>: {{user.is_completed}}</span>
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endblock %}

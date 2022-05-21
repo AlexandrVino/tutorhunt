@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Домашнее задание{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href={% static "css/profile.css" %}>{% endblock %}
+{% block content %}
+
+<div class="widget-row d-flex">
+  <div class="widget">
+    <h2>Название: {{ hometask.title }}</h2>
+    <h3>Учитель: {{ hometask.teacher }}</h3>
+    <h3>Описание: {{ hometask.description }}</h3>
+    <span>Файл: <a href="{% url 'hometask_download' hometask.get_file_name %}">{{ hometask.get_file_name }}</a></span>
+  </div>
+</div>
+
+<form method="post">
+  {% csrf_token %}
+  <button class="edit" type="submit">
+    Отметить
+  </button>
+</form>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "form_base.html" %}
+
+{% load static %}
+
+{% block content %}
+  <main class="form">
+    <div class="form-wrapper bg-dark">
+
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <h1 class="h3 mb-3 fw-normal">Работа</h1>
+
+
+        <div class="form-floating">
+          {{ form.title }}
+        </div>
+        <div class="form-floating ">
+          {{ form.description }}
+        </div>
+        <div class="form-floating">
+          {{ form.files }}
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Создать</button>
+      </form>
+    </div>
+  </main>
+
+
+{% endblock %}
+

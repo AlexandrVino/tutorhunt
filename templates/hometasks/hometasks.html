@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Домашние задания{% endblock %}
+
+{% block content %}
+<div class="widget-row d-flex">
+
+<table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Название</th>
+        <th scope="col">Описание</th>
+        <th scope="col">Учитель</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if request.user.role == 'Teacher' %}
+          {% for task in hometasks %}
+          <tr>
+              <td>{{forloop.counter}}</td>
+              <td><a href="{% url "hometask_teacher_detail" task.pk %}">{{ task.title }}</a></td>
+              <td>{{ task.description }}</td>
+              <td>{{ task.teacher }}</td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          {% for task in hometasks %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td><a href="{% url "hometask_student_detail" task.hometask.pk %}">{{ task.hometask.title }}</a></td>
+                <td>{{ task.hometask.description }}</td>
+                <td>{{ task.hometask.teacher }}</td>
+            </tr>
+          {% endfor %}
+        {% endif %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

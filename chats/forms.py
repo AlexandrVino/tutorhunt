@@ -4,6 +4,10 @@ from chats.models import Message
 
 
 class AddMessage(forms.ModelForm):
+    """
+    Класс формы отправки сообщений
+    """
+
     # role = forms.ChoiceField(choices=Role.choices)
     text = forms.CharField(widget=forms.TextInput(attrs={
         "class": "form-control input-field send-mess",

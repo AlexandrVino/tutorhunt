@@ -9,7 +9,7 @@ from django.views.generic import DetailView, FormView, ListView
 
 from chats.forms import AddMessage
 from chats.models import ChatRoom, Message
-from chats.utils import get_interlocutor, get_interlocutor_with_id
+from chats.utils import get_interlocutor_with_id
 
 MESSAGES_TEMPLATE = "chats/chats.html"
 CHATS_TEMPLATE = "chats/all_chats.html"
@@ -32,7 +32,7 @@ class ChatsView(DetailView, FormView):
 
         context["form"] = self.form_class()
         context["message"] = self.messages
-        context["interlocutor"] = get_interlocutor(self.object, self.current_user)
+        context["interlocutor"] = get_interlocutor_with_id(self.object, self.current_user.id)
         context["chat_messages"] = Message.manager.join_owners(chat_room=self.object)
 
         return context
@@ -90,11 +90,11 @@ class ChatsListView(ListView):
     context_object_name = "chats"
 
     def get_queryset(self):
-        user = self.request.user
+        user_id = self.request.user
 
         return set(chain(
-            map(lambda x: (x, get_interlocutor_with_id(x, user.id)),
-                ChatRoom.manager.join_owners(first_user_id=user.id)),
-            map(lambda x: (x, get_interlocutor_with_id(x, user.id)),
-                ChatRoom.manager.join_owners(second_user_id=user.id))
+            map(lambda x: (x, get_interlocutor_with_id(x, user_id)),
+                ChatRoom.manager.join_owners(first_user_id=user_id)),
+            map(lambda x: (x, get_interlocutor_with_id(x, user_id)),
+                ChatRoom.manager.join_owners(second_user_id=user_id))
         ))

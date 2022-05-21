@@ -58,7 +58,7 @@ class BunchView(TemplateView, ModelFormMixin):
         Метод, получающий url для успешной переадрисации
         """
 
-        return reverse("user_detail", args=(self.kwargs.get("user_to")))
+        return reverse("user_detail", args=(self.kwargs.get("user_to"), ))
 
     def get(self, request, *args, **kwargs):
         """

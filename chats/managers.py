@@ -10,7 +10,9 @@ class ChatRoomManager(BaseManager):
     """
 
     def join_owners(self, *args, **kwargs):
-        return self.get_objects_with_filter(*args, **kwargs).select_related("first_user").select_related("second_user")
+        return self.get_objects_with_filter(**kwargs).select_related("first_user").select_related("second_user").only(
+            *[f"first_user__{arg}" for arg in args], *[f"second_user__{arg}" for arg in args]
+        )
 
 
 class MessagesManager(BaseManager):
@@ -19,4 +21,4 @@ class MessagesManager(BaseManager):
     """
 
     def join_owners(self, *args, **kwargs):
-        return self.get_objects_with_filter(*args, **kwargs).order_by("-id").select_related("owner")[:30:-1]
+        return self.get_objects_with_filter(*args, **kwargs).order_by("-id").select_related("owner").only(*args)[:30:-1]

@@ -38,7 +38,7 @@ class UserListView(ListView):
     """Возвращает страничку Списка пользователей"""
 
     template_name = USER_LIST_TEMPLATE
-    queryset = User.objects.all()
+    queryset = User.manager.get_objects_with_filter("username", "first_name", "last_name", "role", "email", "photo")
     context_object_name = "users"
 
 

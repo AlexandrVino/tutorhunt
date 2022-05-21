@@ -33,7 +33,9 @@ class ChatsView(DetailView, FormView):
         context["form"] = self.form_class()
         context["message"] = self.messages
         context["interlocutor"] = get_interlocutor_with_id(self.object, self.current_user.id)
-        context["chat_messages"] = Message.manager.join_owners(chat_room=self.object)
+        context["chat_messages"] = Message.manager.join_owners(
+            "owner__username", "owner__first_name", "owner__last_name", "owner__role", "owner__email", "owner__photo",
+            "text", "time", chat_room=self.object)
 
         return context
 
@@ -44,9 +46,12 @@ class ChatsView(DetailView, FormView):
         user_id = self.kwargs.get("user_id")
         curr_user_id = self.current_user.id
 
+        args = ("username", "first_name", "last_name", "role", "email", "photo")
+
         try:
-            chats = self.model.manager.join_owners(id=self.kwargs.get("chat_id")) or self.model.manager.join_owners(
-                first_user_id__in=(user_id, curr_user_id), second_user_id__in=(curr_user_id, user_id))
+            chats = (self.model.manager.join_owners(
+                *args, id=self.kwargs.get("chat_id")) or self.model.manager.join_owners(
+                *args, first_user_id__in=(user_id, curr_user_id), second_user_id__in=(curr_user_id, user_id)))
             chat = chats and chats[0]
 
             assert chat
@@ -94,7 +99,9 @@ class ChatsListView(ListView):
 
         return set(chain(
             map(lambda x: (x, get_interlocutor_with_id(x, user_id)),
-                ChatRoom.manager.join_owners(first_user_id=user_id)),
+                ChatRoom.manager.join_owners("username", "first_name", "last_name", "role", "email", "photo",
+                                             first_user_id=user_id)),
             map(lambda x: (x, get_interlocutor_with_id(x, user_id)),
-                ChatRoom.manager.join_owners(second_user_id=user_id))
+                ChatRoom.manager.join_owners("username", "first_name", "last_name", "role", "email", "photo",
+                                             second_user_id=user_id))
         ))

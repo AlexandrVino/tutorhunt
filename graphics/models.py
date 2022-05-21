@@ -1,24 +1,22 @@
 from typing import Any, Dict, Tuple
 
-from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.dispatch import receiver
 from django.urls import reverse
 
-from users.models import Bunch, Role
+from bunch.models import Bunch
+from users.models import Role
 from .fields import DayTimeline, DayTimelineField
+from .utils import CONST
 
-User = settings.AUTH_USER_MODEL
-
-WEEKDAYS_RUS = ("понедельник", "вторник", "среда",
-                "четверг", "пятница", "суббота", "воскресенье")
-HOURS = tuple(["%02d:00" % i for i in range(24)])
+User = get_user_model()
 
 
 class TimelineModel(models.Model):
     """Модель расписания"""
     monday, tuesday, wednesday, thursday, friday, saturday, sunday = [
-        DayTimelineField(weekday, default=DayTimeline([False] * 24)) for weekday in WEEKDAYS_RUS]
+        DayTimelineField(weekday, default=DayTimeline([False] * 24)) for weekday in CONST.WEEKDAYS_RUS]
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="timeline")
 
     def __str__(self) -> str:
@@ -37,27 +35,27 @@ class TimelineModel(models.Model):
     def get_table_data(self) -> Dict[str, Any]:
         """Возвращает данные для таблицы (для шаблонов)"""
         data = [[{
-            "value": HOURS[j],
+            "value": CONST.HOURS[j],
             "class": "busy-hour" if weekday.is_busy(j) else "vacant-hour"
         } for i, weekday in enumerate(self.get_days_fields())] for j in range(24)]
 
-        return {"headers": WEEKDAYS_RUS, "data": data}
+        return {"headers": CONST.WEEKDAYS_RUS, "data": data}
 
     def get_small_table_data(self) -> Dict[str, Tuple[str]]:
         """Возвращет данные для малой таблицы (для шаблонов)"""
         data = []
-        bunches = Bunch.manager.filter(teacher=self.user).order_by("datetime")
+        bunches = Bunch.manager.get_objects_with_filter(teacher=self.user).order_by("datetime")
 
-        for index, (caption, field) in enumerate(zip(WEEKDAYS_RUS, self.get_days_fields())):
+        for index, (caption, field) in enumerate(zip(CONST.WEEKDAYS_RUS, self.get_days_fields())):
 
             curr_line_bunches = [None] * 24
             indexes = list(filter(lambda x: x.datetime[0] == str(index + 1), bunches))
             for bunch in indexes:
                 curr_line_bunches[int(bunch.datetime.split(":")[-1])] = bunch
 
-            data.append({"caption": caption, "weekday": zip(field.timeline, HOURS, curr_line_bunches)})
+            data.append({"caption": caption, "weekday": zip(field.timeline, CONST.HOURS, curr_line_bunches)})
 
-        return {"hours": HOURS, "data": data}
+        return {"hours": CONST.HOURS, "data": data}
 
     class Meta:
         verbose_name = "расписание"

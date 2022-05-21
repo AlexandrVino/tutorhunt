@@ -3,6 +3,14 @@
     justify-content: space-between;
 }
 
+.bell {
+    margin: auto 10px;
+}
+
+.bell i:before {
+    font-size: 22px !important;
+}
+
 header {
     height: 60px;
     --bs-bg-opacity: .7 !important;

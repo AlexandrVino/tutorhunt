@@ -19,6 +19,11 @@
     width: 100%;
 }
 
+.content {
+    min-height: calc(100vh - 140px);
+    margin: 0 auto;
+}
+
 .info_item {
     display: block;
     cursor: pointer;
@@ -58,6 +63,16 @@
     margin-top: 10px;
     cursor: pointer;
 
+}
+
+a.edit {
+    display: block;
+    text-align: center;
+    line-height: 30px;
+}
+
+a.edit:hover {
+    color: #fff;
 }
 
 .rating {

@@ -8,12 +8,10 @@ class DayTimeline:
 
     def __init__(self, timeline: Iterable[bool] = None):
         if timeline is None:
-            timeline = (False,) * 24
-
-        if not hasattr(timeline, "__init__"):
+            timeline = [False for _ in range(24)]
+        elif not hasattr(timeline, "__iter__"):
             raise TypeError("timeline должен быть итерируемым")
-
-        if not isinstance(timeline, list):
+        elif not isinstance(timeline, list):
             timeline = list(timeline)
 
         if len(timeline) != 24:
@@ -33,12 +31,6 @@ class DayTimeline:
     def __len__(self):
         return 24
 
-    def set_hour(self, hour: int, value: bool) -> None:
-        """Меняет час (номер от 0 до 23) на value (True - занято, False - свободно)"""
-        if not isinstance(value, bool):
-            raise TypeError("value должно быть bool")
-        self.timeline[hour] = value
-
     def deconstruct(self) -> Tuple[str, Iterable[str], Dict[str, Any]]:
         """Функция деконструкции для сериализации"""
         name, args, kwargs = (
@@ -49,31 +41,32 @@ class DayTimeline:
 
         return name, args, kwargs
 
-    def get_form_initial(self) -> List[str]:
-        """Возвращает initial для DayTimelineFormField (список номеров часов)"""
-        busy_hours = list(
-            map(
-                lambda x: x[0],  # выдаёт номер часа
-                filter(lambda x: x[1], enumerate(self.timeline))
-            )
-        )
-        return busy_hours
+    def set_hour(self, hour: int, value: bool) -> None:
+        """Меняет час (номер от 0 до 23) на value (True - занято, False - свободно)"""
+        if not isinstance(value, bool):
+            raise TypeError("value должно быть bool")
+        self.timeline[hour] = value
 
     def is_busy(self, hour: int) -> bool:
         """Возвращает True, если час занят (часы от 0 до 23)"""
         return self.timeline[hour]
 
+    def get_form_initial(self) -> List[str]:
+        """Возвращает initial для DayTimelineFormField (список номеров занятых часов)"""
+        busy_hours = []
+        for i in range(24):
+            if self.is_busy(i):
+                busy_hours.append(i)
+        return busy_hours
+
     @classmethod
     def parse_timeline(cls, value: str) -> "DayTimeline":
         """
-        Обработка строкового представления расписания.
-
+        Обработка строкового представления расписания. 
         Параметры:
-        value -- строковое представление
-
+            value -- строковое представление
         Исключения:
-        TypeError -- если value не строка
-
+            TypeError -- если value не строка
         Возвращет соответствующий DayTimeline
         """
         if value:
@@ -87,10 +80,8 @@ class DayTimeline:
     def parse_formfield(cls, busy_hours: List[str]):
         """
         Обработка значений с формы.
-
         Параметры:
-        busy_hours -- список с занятыми часами (получается с DayTimelineFormField)
-
+            busy_hours -- список с занятыми часами (получается с DayTimelineFormField)
         Возвращает соответствующий DayTimeline
         """
         timeline = [False] * 24

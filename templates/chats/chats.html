@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Мой профиль{% endblock %}
+{% block scripts %}
+  <script src="{% static "/js/send_message.js" %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" type="text/css" href={% static "css/profile.css" %}>
+  <link rel="stylesheet" type="text/css" href={% static "css/chat.css" %}>{% endblock %}
+{% block content %}
+
+  <div class="chat">
+    <div class="widget widget-wrapper">
+      <div class="chat-header">
+        <div class="button-back-wrapper">
+          <a href="{% url "all_chats" %}" class="button-back"><i class="bi bi-caret-left"></i><span class="message-time">Назад</span></a>
+        </div>
+        <div class="interlocutor">
+          <span class="header-name">{{ interlocutor.first_name }} {{ interlocutor.last_name }}</span><br>
+          <span class="message-time">Был в сети вчера</span>
+        </div>
+
+        <div class="user">
+          <a href="{% url "user_detail" interlocutor.id %}">
+            <div class="img-wrapper">{{ interlocutor.photo_tmb }}</div>
+          </a>
+        </div>
+      </div>
+
+      <div class="messages-list-wrapper">
+
+        <div class="messages-list overflow-auto" id="messages-list">
+          {% for message in chat_messages %}
+
+            <div class="message">
+              <a href="{% url "user_detail" message.owner.id %}">
+                <div class="img-wrapper">{{ message.owner.photo_tmb }}</div>
+              </a>
+              <div class="message-text">
+
+                <div>
+                  <a href="{% url "user_detail" message.owner.id %}"><span
+                          class="friend_name">{{ message.owner.first_name }}</span></a>
+                  <span class="message-time">{{ message.time }}</span>
+                </div>
+
+                <div><span class="text-value">{{ message.text }}</span></div>
+              </div>
+
+            </div>
+          {% endfor %}
+        </div>
+        <form method="post" class="input-box">
+          {% csrf_token %}
+          <div class="input-wrap">
+            {{ form.text }}
+          </div>
+          <button class="send-button" type="submit" id="send-mess-btn"><i class="bi bi-send-fill"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

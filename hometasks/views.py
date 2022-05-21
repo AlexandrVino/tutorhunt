@@ -11,7 +11,7 @@ import mimetypes
 from django.contrib.auth import get_user_model
 
 from tutorhunt import settings
-from users.models import Follow
+from follow.models import Follow
 
 from .forms import HometaskForm, AssignmentForm, IsCompletedForm
 from .models import Hometask, Assignment

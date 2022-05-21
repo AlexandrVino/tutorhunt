@@ -3,40 +3,44 @@
 {% block title %}Домашнее задание{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" type="text/css" href={% static "css/profile.css" %}>{% endblock %}
+  <link rel="stylesheet" type="text/css" href={% static "css/profile.css" %}>
+  <link rel="stylesheet" type="text/css" href={% static "css/hometask.css" %}>{% endblock %}
 {% block content %}
 
-<div class="widget-row d-flex">
-  <div class="widget">
-    <h2>Название: {{ hometask.title }}</h2>
-    <h3>Учитель: {{ hometask.teacher }}</h3>
-    <h3>Описание: {{ hometask.description }}</h3>
-    <span>Файл: <a href="{% url 'hometask_download' hometask.get_file_name %}">{{ hometask.get_file_name }}</a></span>
+  <div class="widget hometask">
+    <h1 class="hometask-title">{{ hometask.title }} <span class="teacher"><a
+            href="{% url "user_detail" hometask.teacher.id %}">({{ hometask.teacher }})</a></span></h1>
+    <div class="hometask-content">
+      <p class="hometask-description">{{ hometask.description }}</p>
+      <span>Прекрипленный файл: <a
+              href="{% url 'hometask_download' hometask.get_file_name %}">{{ hometask.get_file_name }}</a></span>
+    </div>
   </div>
-</div>
 
+  {% if user.role == "Teacher" and bunches %}
+    <div class="widget hometask">
+      <h1 class="hometask-title">Назначить задание</h1>
+      <form method="post">
+        {% csrf_token %}
+        <select name="student-id">
 
-{% if user.role == "Teacher" and students %}
-<br>
-<h2>Назначить задание</h2>
-<form method="post">
-  {% csrf_token %}
-  {% for student in students %}
+          {% for student_id, student_name in bunches %}
+            <option value="{{ student_id }}">{{ student_name }}</option>
+          {% endfor %}
+        </select>
 
-  <input type="checkbox" name="choose" id="option{{student.user_from.id}}" value={{student.user_from.id}} />
-  <label for="option{{student.user_from.id}}"><b>{{student.user_from.first_name}}</b></label><br />
+        <button class="edit" type="submit">
+          Назначить
+        </button>
+      </form>
 
-  {% endfor %}
-  <button class="edit" type="submit">
-    Назначить
-  </button>
-</form>
+      {% if users %}
+        <h2>Ученики</h2>
+        {% for user in users %}
+          <span>{{ user.student.first_name }}: {% if user.is_completed %}{{ user.is_completed }}Выполнено{% else %}Не выполнено{% endif %}</span><br>
+        {% endfor %}
+      {% endif %}
+    </div>
+  {% endif %}
 
-{% if users %}
-<h2>Ученики</h2>
-{% for user in users %}
-<span><h3>{{user.student.first_name}}</h3>: {{user.is_completed}}</span>
-{% endfor %}
-{% endif %}
-{% endif %}
 {% endblock %}

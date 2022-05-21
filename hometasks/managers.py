@@ -1,13 +1,10 @@
-from django.contrib.auth.models import UserManager
-
 from core.managers import BaseManager
 
 
-class HometaskManager(BaseManager, UserManager):
+class HometaskManager(BaseManager):
     pass
 
 
-class AssignmentManager(BaseManager, UserManager):
+class AssignmentManager(BaseManager):
     def get_students(self, *args, **kwargs):
-        users = self.get_objects_with_filter(**kwargs)
-        return users
+        return self.get_objects_with_filter(**kwargs)

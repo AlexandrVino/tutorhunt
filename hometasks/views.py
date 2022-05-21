@@ -1,21 +1,18 @@
-import os
-from django.http import Http404, HttpResponse
-from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse
-from django.views.generic.edit import CreateView, FormView
-from django.views.generic import ListView
-from django.core.files import File
-from pathlib import Path
-from django.views.generic import DetailView
 import mimetypes
+import os
+
 from django.contrib.auth import get_user_model
+from django.http import Http404, HttpResponse
+from django.shortcuts import redirect
+from django.urls import reverse
+from django.views.generic import DetailView, ListView
+from django.views.generic.edit import CreateView, FormView
 
-from tutorhunt import settings
 from follow.models import Follow
-
-from .forms import HometaskForm, AssignmentForm, IsCompletedForm
-from .models import Hometask, Assignment
-
+from tutorhunt import settings
+from users.models import Role
+from .forms import AssignmentForm, HometaskForm, IsCompletedForm
+from .models import Assignment, Hometask
 
 HOMETASK_CREATE = "hometasks/hometask_create.html"
 HOMETASKS = "hometasks/hometasks.html"
@@ -31,11 +28,23 @@ class HometaskCreateView(CreateView):
     form_class = HometaskForm
     success_url = "hometasks"
 
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        if user.role != Role.TEACHER:
+            return redirect(reverse('user_detail', args=(user.id,)))
+
+        return super(HometaskCreateView, self).get(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         form = self.get_form_class()(request.POST, request.FILES)
+        user = request.user
+
+        if user.role != Role.TEACHER:
+            redirect(reverse('user_detail', args=(user.id, )))
+
         if form.is_valid():
             hometask, created = Hometask.manager.get_or_create(
-                **form.cleaned_data, teacher=request.user
+                **form.cleaned_data, teacher=user
             )
             hometask.save()
         return redirect(reverse("hometasks"))

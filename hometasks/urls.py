@@ -8,7 +8,6 @@ from .views import (
     HometaskStudentDetailView,
 )
 
-
 urlpatterns = [
     path("hometasks/", HometasksView.as_view(), name="hometasks"),
     path("hometask_create/", HometaskCreateView.as_view(), name="hometask_create"),
@@ -18,9 +17,7 @@ urlpatterns = [
         name="hometask_teacher_detail",
     ),
     path("hometask_download/<str:path>", hometask_download, name="hometask_download"),
-    path(
-        "hometask_student_detail/<int:pk>",
-        HometaskStudentDetailView.as_view(),
-        name="hometask_student_detail",
-    ),
+    path("hometask_student_detail/<int:pk>",
+         HometaskStudentDetailView.as_view(),
+         name="hometask_student_detail"),
 ]

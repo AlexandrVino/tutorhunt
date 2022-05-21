@@ -1,7 +1,8 @@
-from django.contrib.auth.models import UserManager
-
 from core.managers import BaseManager
 
 
-class BunchManager(BaseManager, UserManager):
+class BunchManager(BaseManager):
+    """
+    Класс менеджера для связей, пока что просто заглушка
+    """
     pass

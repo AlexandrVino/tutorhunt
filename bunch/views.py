@@ -18,6 +18,10 @@ User = get_user_model()
 
 @method_decorator(login_required, name="dispatch")
 class BunchView(TemplateView, ModelFormMixin):
+    """
+    ViewClass для создания запроса на связь (занятие)
+    """
+
     template_name = ADD_BUNCH_TEMPLATE
     context_object_name = "bunch"
     model = Bunch
@@ -25,30 +29,69 @@ class BunchView(TemplateView, ModelFormMixin):
     object = None
 
     def get_datetime(self) -> str:
+        """
+        :return: str
+        Метод, возвращающий время связи (занятия) в формате день:час
+        """
+
         return f'{self.kwargs.get("day")}:{self.kwargs.get("time")}'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get_context_data(self, **kwargs) -> dict:
+        """
 
+        :param kwargs: словарь контекста
+        :return: dict
+
+        Метод, получающий контекст для шаблонов
+
+        """
+
+        context = super().get_context_data(**kwargs)
         context["form"].fields["day"].initial = self.kwargs.get("day")
         context["form"].fields["time"].initial = self.kwargs.get("time")
 
         return context
 
+    def get_success_url(self) -> str:
+        """
+        :return: str
+        Метод, получающий url для успешной переадрисации
+        """
+
+        return reverse("user_detail", args=(self.kwargs.get("user_to")))
+
     def get(self, request, *args, **kwargs):
+        """
+
+        :param request: запрос
+        :param args: картеж контекста
+        :param kwargs: сдлварь контекста
+        :return:
+
+        Метод ответа на GET запрос клиента
+
+        """
+
         if not self.object:
             bunch = self.model.manager.filter(student=request.user, datetime=self.get_datetime())
             self.object = bunch[0] if bunch else None
 
         if self.object:
-            print(self.kwargs)
-            return redirect(reverse("user_detail", args=(self.kwargs.get("user_to"),)))
+            return redirect(self.get_success_url())
         return super().get(request, *args, **kwargs)
 
-    def get_success_url(self):
-        return reverse("users")
-
     def post(self, request, *args, **kwargs):
+        """
+
+        :param request: запрос
+        :param args: картеж контекста
+        :param kwargs: сдлварь контекста
+        :return:
+
+        Метод ответа на POST запрос клиента
+
+        """
+
         form = self.get_form()
         if form.is_valid():
 
@@ -74,13 +117,17 @@ class BunchView(TemplateView, ModelFormMixin):
                 bunch.save()
 
             if user_from.id:
-                return redirect(reverse("user_detail", args=(user_to.id,)))
+                return redirect(self.get_success_url())
 
         return self.get(request, *args, **kwargs)
 
 
 @method_decorator(login_required, name="dispatch")
 class EditBunchView(TemplateView, ModelFormMixin):
+    """
+    ViewClass для редактирования запроса на связь (занятие)
+    """
+
     template_name = EDIT_BUNCH_TEMPLATE
     context_object_name = "bunch"
     model = Bunch
@@ -88,9 +135,23 @@ class EditBunchView(TemplateView, ModelFormMixin):
     object = None
 
     def get_datetime(self) -> str:
+        """
+        :return: str
+        Метод, возвращающий время связи (занятия) в формате день:час
+        """
+
         return f'{self.kwargs.get("day")}:{self.kwargs.get("time")}'
 
     def get_context_data(self, **kwargs):
+        """
+
+        :param kwargs: словарь контекста
+        :return: dict
+
+        Метод, получающий контекст для шаблонов
+
+        """
+
         context = super().get_context_data(**kwargs)
 
         context["form"].fields["day"].initial = self.kwargs.get("day")
@@ -104,23 +165,47 @@ class EditBunchView(TemplateView, ModelFormMixin):
 
         return context
 
+    def get_success_url(self):
+        """
+        :return: str
+        Метод, получающий url для успешной переадрисации
+        """
+
+        return reverse("user_detail", args=(self.request.user.id,))
+
     def get(self, request, *args, **kwargs):
+        """
+
+        :param request: запрос
+        :param args: картеж контекста
+        :param kwargs: сдлварь контекста
+        :return:
+
+        Метод ответа на GET запрос клиента
+
+        """
 
         if not self.object:
             bunch = self.model.manager.filter(teacher=request.user, datetime=self.get_datetime())
             self.object = bunch[0] if bunch else None
 
-            print(self.object)
-
             if self.object is None:
-                return redirect(reverse("user_detail", args=(request.user.id,)))
+                return redirect(self.get_success_url())
 
         return super().get(request, *args, **kwargs)
 
-    def get_success_url(self):
-        return reverse("users")
-
     def post(self, request, *args, **kwargs):
+        """
+
+        :param request: запрос
+        :param args: картеж контекста
+        :param kwargs: сдлварь контекста
+        :return:
+
+        Метод ответа на POST запрос клиента
+
+        """
+
         form = self.get_form()
 
         if form.is_valid():
@@ -154,6 +239,6 @@ class EditBunchView(TemplateView, ModelFormMixin):
                     self.object.status = status
                     self.object.save()
 
-                return redirect(reverse("user_detail", args=(teacher.id,)))
+                return redirect(self.get_success_url())
 
         return self.get(request, *args, **kwargs)

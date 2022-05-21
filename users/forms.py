@@ -5,6 +5,10 @@ from users.models import Role, User
 
 
 class LoginForm(forms.ModelForm):
+    """
+    Форма входа
+    """
+
     email = forms.EmailField(
         widget=forms.EmailInput(
             attrs={
@@ -34,6 +38,10 @@ class LoginForm(forms.ModelForm):
 
 
 class RegisterForm(UserCreationForm):
+    """
+    Форма регистрации
+    """
+
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -126,6 +134,10 @@ class RegisterForm(UserCreationForm):
 
 
 class EditProfileForm(forms.ModelForm):
+    """
+    Форма редактироваия профиля
+    """
+
     # role = forms.ChoiceField(choices=Role.choices)
     first_name = forms.CharField(
         widget=forms.TextInput(

@@ -9,6 +9,10 @@ User = get_user_model()
 
 
 class ChatRoom(models.Model):
+    """
+    Класс модели комнаты чата
+    """
+
     first_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="first_user")
     second_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="second_user")
 
@@ -23,6 +27,9 @@ class ChatRoom(models.Model):
 
 
 class Message(models.Model):
+    """
+    Класс модели сообщения
+    """
 
     text = models.TextField()
     image = models.ImageField(blank=True, default=None)

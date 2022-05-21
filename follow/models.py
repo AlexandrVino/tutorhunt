@@ -7,6 +7,10 @@ User = get_user_model()
 
 
 class Follow(models.Model):
+    """
+    Класс модели подписок
+    """
+
     user_from = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="follow_from", verbose_name="Подписчик")
     user_to = models.ForeignKey(

@@ -12,7 +12,7 @@ User = get_user_model()
 
 @method_decorator(login_required, name="dispatch")
 class FollowersListView(DetailView):
-    """Возвращает страничку Списка пользователей"""
+    """Возвращает страничку Списка подписок пользователя"""
 
     template_name = USER_LIST_TEMPLATE
     model = User
@@ -30,6 +30,3 @@ class FollowersListView(DetailView):
                 "user_from__email", "user_from__role",
                 user_to=self.object))
         return context
-
-    def get(self, request, *args, **kwargs):
-        return super(FollowersListView, self).get(request, *args, **kwargs)

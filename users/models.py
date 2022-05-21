@@ -11,6 +11,10 @@ class Role(models.TextChoices):
 
 
 class User(AbstractUser):
+    """
+    Модель пользователя
+    """
+
     email = models.EmailField(blank=False)
     role = models.CharField(
         max_length=8,
@@ -26,15 +30,27 @@ class User(AbstractUser):
     manager = AppUserManager()
 
     def photo_tmb(self):
+        """
+        :return: Возвращает фото 50х50
+        """
+
         if self.photo:
             return mark_safe(f'<img src="{self.photo.url}" class="friend_photo" width="50">')
         return mark_safe('<img src="/media/uploads/users/user_default.png" class="friend_photo">')
 
     def get_photo(self):
+        """
+        :return: Возвращает фото размера без изменений
+        """
+
         if self.photo:
             return mark_safe(f'<img src="{self.photo.url}" class="avatar">')
         return mark_safe('<img src="/media/uploads/users/user_default.png" class="avatar">')
 
     def has_timeline(self):
+        """
+        :return: Проверяет наличие графика
+        """
+
         return hasattr(self, "timeline")
 

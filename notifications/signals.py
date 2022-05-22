@@ -4,6 +4,7 @@ from typing import Optional, Tuple
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 from bunch.models import Bunch, BunchStatus
 from chats.models import Message
@@ -30,11 +31,11 @@ def check_allowable_delta(allowable_delta: dt.timedelta,
         NotificationModel (последнее уведомление) или None (если такого нет)
     """
     last_notification: Optional[NotificationModel] = (
-        NotificationModel.objects.filter_by(**kwargs).first()
+        NotificationModel.objects.filter_by(**kwargs).order_by("last_modified").last()
     )
 
     if last_notification is not None:
-        delta: dt.timedelta = dt.datetime.now() - last_notification.last_modified.replace(tzinfo=None)
+        delta: dt.timedelta = timezone.now() - last_notification.last_modified
         return delta >= allowable_delta, last_notification
     return True, None
 
@@ -69,7 +70,7 @@ def notify_follow(sender, instance: Follow, **kwargs):
 
 @receiver(post_save, sender=Rating)
 def notify_rating(sender, instance: Rating, **kwargs):
-    if instance.star != "0":
+    if instance.star != 0:
         send_notification(
             recipient=instance.user_to,
             initiator=instance.user_from,

@@ -16,15 +16,22 @@ class HomepageView(TemplateView, FormView):
     form_class = SearchForm
     users = []
     messages = []
+    is_post = False
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["messages"] = self.messages
+        context["messages"] = self.messages if self.users else self.messages + (
+            ["По вашему запросу не нашлось учителя"] if self.is_post else [])
         context["objects"] = self.users
         return context
+    
+    def get(self, request, *args, **kwargs):
+        self.is_post = False
+        return super(HomepageView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
+        self.is_post = True
 
         if form.is_valid():
             value = form.cleaned_data["value"]

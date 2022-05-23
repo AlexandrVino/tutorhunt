@@ -3,47 +3,19 @@
 {% block title %}Домашняя страница{% endblock title %}
 
 {% block content %}
-<h1 class="text-center my-3">
+  <h1 class="text-center my-3">
     {% if request.user %}Добро пожаловать!{% else %}С возвращением!{% endif %}
-</h1>
+  </h1>
 
-<form action="{% url 'homepage' %}" class="d-flex">
-    <input class="form-control me-1" type="text" placeholder="Иван Иванович" aria-label="поиск">
-    <input id="search-btn" type="button" class="btn btn-primary" style="font-family: bootstrap-icons;" value="&#xF52A;">
-</form>
+  <form method="post" class="d-flex">
+    {% csrf_token %}
+      {{ form.value }}
+    <input id="search-btn" type="submit" class="btn btn-primary" style="font-family: bootstrap-icons;" value="&#xF52A;"></ш>
+  </form>
 
-<div>
-{% for user in objects %}
-    <div class="col col-card">
-        <a href="{% url "user_detail" user.id %}">
-        <div class="card shadow-sm">
-            <div class="card-body bg-dark text-white">
-                <div class="img-wrapper">{{ user.get_photo }}</div>
-                    <p class="card-text">
-                        Username:
-                        {% if user.username %}{{ user.username }}{% else %}Отсутствует{% endif %}
-                        <br>
-  
-                        Email:
-                        {% if user.email %}{{ user.email }}{% else %}Отсутствует{% endif %}
-                        <br>
-  
-                        Имя:
-                        {% if user.first_name %}{{ user.first_name }}{% else %}Отсутствует{% endif %}
-                        <br>
-  
-                        Фамилия:
-                        {% if user.last_name %}{{ user.last_name }}{% else %}Отсутствует{% endif %}
-                        <br>
-  
-                        Роль:
-                        {% if user.role %}{{ user.role }}{% else %}Отсутствует{% endif %}
-                        <br>
-                    </p>
-                </div>
-            </div>
-        </a>
-    </div>
-{% endfor %}
-</div>
+  <div>
+    {% for user in objects %}
+      {% include "includes/user_card.html" %}
+    {% endfor %}
+  </div>
 {% endblock content %}

@@ -86,6 +86,9 @@ a {
 }
 .card {
     border-radius: 10px;
+
+    max-height: 400px;
+    overflow: auto;
 }
 
 .card-body {

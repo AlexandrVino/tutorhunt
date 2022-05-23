@@ -80,7 +80,7 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = (
             "username", "email", "password1", "password2",
-            "role", "first_name", "last_name", "photo",
+            "role", "first_name", "last_name", "photo", "bio"
         )
 
 
@@ -117,4 +117,4 @@ class EditProfileForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "photo")
+        fields = ("first_name", "last_name", "photo", "bio")

@@ -34,6 +34,9 @@ class EmailAuthBackend:
         if User.objects.filter(email=email):
             raise EmailUniqueFailed()
 
+        if kwargs.get("bio"):
+            kwargs["bio"] = kwargs["bio"].lower()
+
         user = User(email=email, username=username, **kwargs)
         user.set_password(password1)
         user.is_active = False

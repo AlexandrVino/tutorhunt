@@ -12,7 +12,6 @@ class EmailAuthBackend:
     @staticmethod
     def authenticate(request, email=None, password=None, user=None):
         try:
-            print(locals())
             if user is None:
                 user = User.objects.get(email=email)
                 if user.check_password(password):

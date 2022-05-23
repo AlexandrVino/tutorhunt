@@ -68,6 +68,13 @@ class RegisterForm(UserCreationForm):
         "required": False,
         "type": "file"
     }), required=False)
+    bio = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "form-control input-field",
+        "type": "text",
+        "placeholder": "Расскажите о себе",
+        "id": "bio",
+        "required": False,
+    }), required=False)
 
     class Meta:
         model = User
@@ -98,6 +105,14 @@ class EditProfileForm(forms.ModelForm):
         "placeholder": "Фото",
         "required": False,
         "type": "file"
+    }), required=False)
+
+    bio = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "form-control input-field",
+        "type": "text",
+        "placeholder": "Расскажите о себе",
+        "id": "bio",
+        "required": False,
     }), required=False)
 
     class Meta:

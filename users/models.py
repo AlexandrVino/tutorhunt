@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from users.managers import AppUserManager
@@ -38,6 +39,9 @@ class User(AbstractUser):
         if self.photo:
             return mark_safe(f'<img src="{self.photo.url}" class="friend_photo" width="50">')
         return mark_safe('<img src="/media/uploads/users/user_default.png" class="friend_photo">')
+
+    def get_absolute_url(self):
+        return reverse("user_detail", kwargs={"user_id": self.pk})
 
     def get_photo(self):
         """

@@ -205,7 +205,7 @@ class SignupView(CreateView):
                 errors.append(err)
 
         errors += [err[0] for err in list(form.errors.values())]
-        return render(request, self.template_name, {"form": form, "chats": set(errors)})
+        return render(request, self.template_name, {"form": form, "messages": set(errors)})
 
 
 class ActivateView(View):

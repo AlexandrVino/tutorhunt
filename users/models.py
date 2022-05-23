@@ -26,6 +26,7 @@ class User(AbstractUser):
         upload_to="uploads/users/", verbose_name="Фото",
         default="uploads/users/user_default.png"
     )
+    bio = models.TextField(blank=True, verbose_name="Биография",)
 
     manager = AppUserManager()
 

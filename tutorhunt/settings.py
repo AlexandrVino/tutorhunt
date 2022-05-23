@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "hometasks.apps.HometasksConfig",
     "notifications.apps.NotificationsConfig",
     "chats.apps.ChatsConfig",
+    "homepage.apps.HomepageConfig",
     "bunch.apps.BunchConfig",
     "follow.apps.FollowConfig",
 

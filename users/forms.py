@@ -83,6 +83,7 @@ class RegisterForm(UserCreationForm):
         ),
     )
     role = forms.ChoiceField(choices=Role.choices)
+
     first_name = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -119,17 +120,19 @@ class RegisterForm(UserCreationForm):
         required=False,
     )
 
+    bio = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "form-control input-field",
+        "type": "text",
+        "placeholder": "Расскажите о себе",
+        "id": "bio",
+        "required": False,
+    }), required=False)
+
     class Meta:
         model = User
         fields = (
-            "username",
-            "email",
-            "password1",
-            "password2",
-            "role",
-            "first_name",
-            "last_name",
-            "photo",
+            "username", "email", "password1", "password2",
+            "role", "first_name", "last_name", "photo", "bio"
         )
 
 
@@ -139,6 +142,7 @@ class EditProfileForm(forms.ModelForm):
     """
 
     # role = forms.ChoiceField(choices=Role.choices)
+
     first_name = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -174,7 +178,14 @@ class EditProfileForm(forms.ModelForm):
         ),
         required=False,
     )
+    bio = forms.CharField(widget=forms.TextInput(attrs={
+        "class": "form-control input-field",
+        "type": "text",
+        "placeholder": "Расскажите о себе",
+        "id": "bio",
+        "required": False,
+    }), required=False)
 
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "photo")
+        fields = ("first_name", "last_name", "photo", "bio")

@@ -11,11 +11,6 @@
     font-size: 22px !important;
 }
 
-header {
-    height: 60px;
-    --bs-bg-opacity: .7 !important;
-}
-
 footer {
     height: 60px;
     --bs-bg-opacity: .7 !important;
@@ -91,6 +86,9 @@ a {
 }
 .card {
     border-radius: 10px;
+
+    max-height: 400px;
+    overflow: auto;
 }
 
 .card-body {
@@ -113,7 +111,6 @@ a {
 /* Header */
 
 header {
-    height: 70px;
     --bs-bg-opacity: .7 !important;
 }
 

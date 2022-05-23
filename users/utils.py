@@ -13,6 +13,8 @@ def edit_user_data(user: User, **kwargs) -> None:
 
     for key, value in kwargs.items():
         if value is not None:
+            if key == 'bio':
+                value = value.lower()
             user.__setattr__(key, value)
     user.save()
 

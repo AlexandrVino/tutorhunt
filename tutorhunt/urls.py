@@ -16,6 +16,7 @@ urlpatterns = [
     path("chats/", include("chats.urls")),
     path("bunches/", include("bunch.urls")),
     path("follows/", include("follow.urls")),
+    path("", include("homepage.urls"))
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Домашняя страница{% endblock title %}
+
+{% block content %}
+  <h1 class="text-center my-3">
+    {% if request.user %}Добро пожаловать!{% else %}С возвращением!{% endif %}
+  </h1>
+
+  <form method="post" class="d-flex">
+    {% csrf_token %}
+      {{ form.value }}
+    <input id="search-btn" type="submit" class="btn btn-primary" style="font-family: bootstrap-icons;" value="&#xF52A;"></ш>
+  </form>
+
+  <div>
+    {% for user in objects %}
+      {% include "includes/user_card.html" %}
+    {% endfor %}
+  </div>
+{% endblock content %}

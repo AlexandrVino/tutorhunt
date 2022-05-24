@@ -58,4 +58,3 @@ class User(AbstractUser):
         """
 
         return hasattr(self, "timeline")
-

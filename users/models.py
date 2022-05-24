@@ -1,5 +1,7 @@
+from typing import Optional, Iterable
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
@@ -12,10 +14,7 @@ class Role(models.TextChoices):
 
 
 class User(AbstractUser):
-    """
-    Модель пользователя
-    """
-
+    """Модель пользователя"""
     email = models.EmailField(blank=False)
     role = models.CharField(
         max_length=8,
@@ -58,3 +57,14 @@ class User(AbstractUser):
         """
 
         return hasattr(self, "timeline")
+
+    def full_clean(self, exclude: Optional[Iterable[str]] = None,
+                   *args, **kwargs) -> None:
+        super().full_clean(exclude, *args, **kwargs)
+
+        exclude = exclude or list()
+
+        if "first_name" not in exclude and not self.first_name:
+            raise ValidationError("Имя должно быть заполнено")
+        elif "last_name" not in exclude and not self.last_name:
+            raise ValidationError("Фамилия должна быть заполнено")

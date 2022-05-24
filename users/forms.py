@@ -85,10 +85,8 @@ class RegisterForm(UserCreationForm):
                 "type": "text",
                 "placeholder": "Имя",
                 "id": "first_name",
-                "required": False,
             }
         ),
-        required=False,
     )
     last_name = forms.CharField(
         widget=forms.TextInput(
@@ -97,10 +95,8 @@ class RegisterForm(UserCreationForm):
                 "type": "text",
                 "placeholder": "Фамилия",
                 "id": "last_name",
-                "required": False,
             }
         ),
-        required=False,
     )
     photo = forms.ImageField(
         widget=forms.FileInput(
@@ -141,10 +137,8 @@ class EditProfileForm(forms.ModelForm):
                 "type": "text",
                 "placeholder": "Имя",
                 "id": "first_name",
-                "required": False,
             }
         ),
-        required=False,
     )
     last_name = forms.CharField(
         widget=forms.TextInput(
@@ -153,10 +147,8 @@ class EditProfileForm(forms.ModelForm):
                 "type": "text",
                 "placeholder": "Фамилия",
                 "id": "last_name",
-                "required": False,
             }
         ),
-        required=False,
     )
     photo = forms.FileField(
         widget=forms.FileInput(

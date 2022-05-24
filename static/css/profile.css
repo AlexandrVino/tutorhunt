@@ -47,6 +47,10 @@
     width: 220px;
 }
 
+.avatar {
+    object-fit: contain;
+}
+
 .col-profile {
     max-width: 220px;
 }

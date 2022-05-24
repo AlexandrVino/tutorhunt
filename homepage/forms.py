@@ -5,7 +5,7 @@ from users.models import Role, User
 
 
 class SearchForm(forms.ModelForm):
-    value = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={
+    value = forms.CharField(widget=forms.PasswordInput(attrs={
         "class": "form-control form-control-dark me-1",
         "type": "text",
         "placeholder": "Ключевое слово/фраза",

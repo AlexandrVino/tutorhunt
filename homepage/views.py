@@ -32,8 +32,11 @@ class HomepageView(TemplateView, FormView):
         self.is_post = True
 
         if form.is_valid():
-            value = form.cleaned_data["value"]
-            self.users = User.manager.get_objects_with_filter(bio__contains=value.lower())
+            value: str = form.cleaned_data["value"]
+            queryset = User.manager.all()
+            for word in value.split():
+                queryset = queryset.filter(bio__icontains=word)
+            self.users = queryset
         else:
             self.messages.append(form.errors)
 

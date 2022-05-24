@@ -1,5 +1,3 @@
-from msilib.schema import ListView
-
 from django.contrib.auth import get_user_model
 from django.views.generic import FormView
 from django.views.generic.base import TemplateView
@@ -24,7 +22,7 @@ class HomepageView(TemplateView, FormView):
             ["По вашему запросу не нашлось учителя"] if self.is_post else [])
         context["objects"] = self.users
         return context
-    
+
     def get(self, request, *args, **kwargs):
         self.is_post = False
         return super(HomepageView, self).get(request, *args, **kwargs)

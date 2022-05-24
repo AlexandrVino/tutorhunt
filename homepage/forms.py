@@ -5,10 +5,10 @@ from users.models import Role, User
 
 
 class SearchForm(forms.ModelForm):
-    value = forms.CharField(strip=False, widget=forms.PasswordInput(attrs={
-        "class": "form-control me-1",
+    value = forms.CharField(widget=forms.PasswordInput(attrs={
+        "class": "form-control form-control-dark me-1",
         "type": "text",
-        "placeholder": "Ключивое слово/фраза",
+        "placeholder": "Ключевое слово/фраза",
         "id": "value",
     }), )
 

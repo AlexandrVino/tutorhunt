@@ -5,10 +5,7 @@ from users.models import Role, User
 
 
 class LoginForm(forms.ModelForm):
-    """
-    Форма входа
-    """
-
+    """Форма входа"""
     email = forms.EmailField(
         widget=forms.EmailInput(
             attrs={
@@ -38,10 +35,7 @@ class LoginForm(forms.ModelForm):
 
 
 class RegisterForm(UserCreationForm):
-    """
-    Форма регистрации
-    """
-
+    """Форма регистрации"""
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -91,10 +85,8 @@ class RegisterForm(UserCreationForm):
                 "type": "text",
                 "placeholder": "Имя",
                 "id": "first_name",
-                "required": False,
             }
         ),
-        required=False,
     )
     last_name = forms.CharField(
         widget=forms.TextInput(
@@ -103,10 +95,8 @@ class RegisterForm(UserCreationForm):
                 "type": "text",
                 "placeholder": "Фамилия",
                 "id": "last_name",
-                "required": False,
             }
         ),
-        required=False,
     )
     photo = forms.ImageField(
         widget=forms.FileInput(
@@ -137,10 +127,7 @@ class RegisterForm(UserCreationForm):
 
 
 class EditProfileForm(forms.ModelForm):
-    """
-    Форма редактироваия профиля
-    """
-
+    """Форма редактироваия профиля"""
     # role = forms.ChoiceField(choices=Role.choices)
 
     first_name = forms.CharField(
@@ -150,10 +137,8 @@ class EditProfileForm(forms.ModelForm):
                 "type": "text",
                 "placeholder": "Имя",
                 "id": "first_name",
-                "required": False,
             }
         ),
-        required=False,
     )
     last_name = forms.CharField(
         widget=forms.TextInput(
@@ -162,10 +147,8 @@ class EditProfileForm(forms.ModelForm):
                 "type": "text",
                 "placeholder": "Фамилия",
                 "id": "last_name",
-                "required": False,
             }
         ),
-        required=False,
     )
     photo = forms.FileField(
         widget=forms.FileInput(

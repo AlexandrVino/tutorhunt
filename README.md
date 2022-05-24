@@ -1,57 +1,38 @@
 # Tutorhunt
+    
+## Проделанная работа
 
-## Задачи
+Даны ссылки на ветки и конкретные приложения, в которых реализован нижеследующий функционал
 
-* Аутентификация ([А. В.](https://github.com/AlexandrVino/))
+* Аутентификация ([Александр Винокуров](https://github.com/AlexandrVino/))
 
   **Ветка**: [feat/apps/users](https://github.com/AlexandrVino/tutorhunt/tree/feat/apps/users)
 
-  ~~* Пользователи~~
-    
-    ~~Модель пользователя, роли учителя/ученика, регистрация по email.~~
-    
-    *Страницы*: ~~логининг (регистрация/логин/смена пароля и тд), профиль, список пользователей~~
+  * [Пользователи](https://github.com/AlexandrVino/tutorhunt/tree/develop/users)
+  * [Подписки](https://github.com/AlexandrVino/tutorhunt/tree/develop/follow)
+  * [Занятия](https://github.com/AlexandrVino/tutorhunt/tree/develop/bunch)
+
+* [Чаты](https://github.com/AlexandrVino/tutorhunt/tree/develop/chats) ([Александр Винокуров](https://github.com/AlexandrVino/))
   
-  ~~* Подписки~~
+  **Ветка**: [feat/apps/messages](https://github.com/AlexandrVino/tutorhunt/tree/feat/apps/messages)
 
-    ~~Модель подписок~~
-
-  * Сообщения
-
-    *(не знаю как ты это реализуешь)*
-    
-    *Страницы*: переписка, список чатов
-
-* ~~Графики~~ ([М. Л.](https://github.com/Leamich))
+* [Графики](https://github.com/AlexandrVino/tutorhunt/tree/develop/graphics) ([Михаил Леонтьев](https://github.com/Leamich))
   
   **Ветка**: [feat/time_graphics](https://github.com/AlexandrVino/tutorhunt/tree/feat/time_graphics)
-  
-  ~~Модель графика~~, ~~кастомное поле для дня~~, ~~совместное создание с юзером~~
-  
-  *Страницы*: ~~просмотр/редактирование графика~~
-  
-  *Виджеты*: ~~просмотр таблицы в профиле пользователя~~
 
-* ~~Уведомления~~ ([М. Л.](https://github.com/Leamich))
+* [Уведомления](https://github.com/AlexandrVino/tutorhunt/tree/develop/notifications) ([Михаил Леонтьев](https://github.com/Leamich))
   
   **Ветка**: [feat/notifications](https://github.com/AlexandrVino/tutorhunt/tree/feat/notifications)
-  
-  ~~Модель уведомлений~~, ~~создание уведомлений~~, ~~отображение в хэдере~~, ~~добавление сигналов~~
-  
-  *Страницы*: ~~просмотр уведомлений~~
 
-* Взаимодействие пользователей ([А. Б.](https://github.com/1Alekron1))
+* Взаимодействие пользователей ([Александр Бордрунов](https://github.com/1Alekron1))
   
   **Ветка**: [feat/rating](https://github.com/AlexandrVino/tutorhunt/tree/feat/rating)
 
-  * ~~Рейтинг~~
-  
-    Модель рейтинга, интерфейс выставления оценок
-    
-  * Домашние задания
-    
-    Модель домашних заданий, *возможность прикрепления файлов*, форма добавления задания
-    
-    *Страницы*: добавление, просмотр заданий
-  
-![Немного неактуальная UML](https://user-images.githubusercontent.com/74912440/167897808-b8a4de25-5dac-49d8-ac5b-6f031d279f7e.png)
+  * [Рейтинг](https://github.com/AlexandrVino/tutorhunt/tree/develop/rating)
+      
+  * [Домашние задания](https://github.com/AlexandrVino/tutorhunt/tree/develop/hometasks)
+
+* [Поиск](https://github.com/AlexandrVino/tutorhunt/tree/develop/homepage) ([Александр Винокуров](https://github.com/AlexandrVino/) & 
+[Михаил Леонтьев](https://github.com/Leamich))
+
+  **Ветка**: [feat/finding](https://github.com/AlexandrVino/tutorhunt/tree/feat/finding/)

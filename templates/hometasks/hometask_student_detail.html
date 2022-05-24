@@ -12,8 +12,10 @@
             href="{% url "user_detail" hometask.teacher.id %}">({{ hometask.teacher }})</a></span></h1>
     <div class="hometask-content">
       <p class="hometask-description">{{ hometask.description }}</p>
+      {% if hometask.files %}
       <span>Прекрипленный файл: <a
               href="{% url 'hometask_download' hometask.get_file_name %}">{{ hometask.get_file_name }}</a></span>
+      {% endif %}
     </div>
 
     <form method="post">

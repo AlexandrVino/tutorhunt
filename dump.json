@@ -1,0 +1,1356 @@
+[
+{
+  "model": "sessions.session",
+  "pk": "5shawzp6p6que43a5d2cxcl5yuu3366q",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSE8BIpL934DmWEGqRqalHZl_HfbpAvd3nPueYsE61LT2nlOI4mL0OL0uyHkJ7cd0APafZJ5ass8otwVedAubxPx63q4f4EKvW5vDFgYWYE3g8mqGGecUjwo7beI4RyiP5cYqZAN1oJyBJbQEIDOHr34fAH6iDim:1ntTuO:PEB9yNO6lKgfy_wSuFVVWOMfs0goRkb2QHBu0p5fAHY",
+    "expire_date": "2022-06-07T12:45:08.137Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "qa5q8eeqxayuickjegb18nc64wmz84zm",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQAP-FsyGyyMuj935DA-yuVA0kpT0Z_92Q9KDXmcm8xRz3rcx7p3VeUFwFiNMvSzE_qQ6Bj1jvTeZWt3VJciTysF1ODel1O9q_QYm9jK3lwBSUQvCgEI1hdfYAxhrrmcixMwyesgsISoEGbdn64JyneElafL7JyDcK:1ntUH1:wUGNwMyortMWgm0PuGsJPw7N_zUMq6ZOkVhNj-Lv_Q8",
+    "expire_date": "2022-06-07T13:08:31.163Z"
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$NSHvwYOlo7pkRuFy4MQQG5$5FMwl7gZ0wj3BWiS+UrQ32E3EeALM7oRE+68UYkyaZo=",
+    "last_login": "2022-05-24T12:45:07.932Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2022-05-24T12:10:26.334Z",
+    "email": "admin@tutotrhunt.co",
+    "role": "Student",
+    "photo": "uploads/users/user_default.png",
+    "bio": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$rj48xXK606kl3uGkbQSlqX$WTfkJDVwrJWmGkAptDeuXpYS4UaXjp872E9SkgAaePE=",
+    "last_login": "2022-05-24T13:08:30.802Z",
+    "is_superuser": false,
+    "username": "marie-curi",
+    "first_name": "Мария",
+    "last_name": "Складовская-Кюри",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-05-24T12:14:44Z",
+    "email": "marie.curi@non.co",
+    "role": "Teacher",
+    "photo": "uploads/users/389px-Curie-nobel-portrait-2-600.jpg",
+    "bio": "люблю химию, радиоактивная учёная #физика #химия",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$x4voHk8usfVBmyZAUTMJXK$BnA2885rvdB//hRYc5t5IwDL3SQGKTAu8JhRgMlfg50=",
+    "last_login": "2022-05-24T12:51:01.467Z",
+    "is_superuser": false,
+    "username": "alber-einstein",
+    "first_name": "Альберт",
+    "last_name": "Эйнштейн",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-05-24T12:17:27.592Z",
+    "email": "albert-einstein@non.co",
+    "role": "Teacher",
+    "photo": "uploads/users/411px-Einstein_1921_by_F_Schmutzer_-_restoration.jpg",
+    "bio": "#физика немецкий физик. я сама относительность",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$I8CvJolL0obPg9APZB2O5L$dJrmDyew+wE+/2XekPculepP3EvBoMragMRj3VaWtkw=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "fyodor-tyutchev",
+    "first_name": "Фёдор",
+    "last_name": "Тютчев",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-05-24T12:19:32.167Z",
+    "email": "fyodor-tyutchev@non.co",
+    "role": "Teacher",
+    "photo": "uploads/users/Fyodor_Tyutchev.jpg",
+    "bio": "ах, #литература, на кого ты нас оставила",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$APYTE2PrsJ3Q2yoY0W8hXl$NIO5RkzQkKbGGL6HvUUkzEaHSaHEvVqCNErh3wYWqfQ=",
+    "last_login": "2022-05-24T12:54:50.062Z",
+    "is_superuser": false,
+    "username": "osip-mandelstam",
+    "first_name": "Осип",
+    "last_name": "Мандельштам",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-05-24T12:22:07.275Z",
+    "email": "osip-mandelstam@non.co",
+    "role": "Teacher",
+    "photo": "uploads/users/Портрет_Мандельштама._Лев_Бруни_1916.jpg",
+    "bio": "#литература \"мы живём, под собою не чуя страны\"",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$kmCgzM2vAZ7hDUQiStQDUx$/XzHe5kJcgzIFAimoyRF4wnd9SVTGu23bfxOJUSLsKE=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "sergey-uvarov",
+    "first_name": "Сергей",
+    "last_name": "Уваров",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-05-24T12:26:04.961Z",
+    "email": "sergey-uvarov@non.co",
+    "role": "Teacher",
+    "photo": "uploads/users/330px-Uvarov_the_elder.jpg",
+    "bio": "помогу написать идеологию под ключ #история #обществознание",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$oLQMqgYVY6vs6j2m3W3H4A$oWNMjMkHjnYBtSjBVnWx8YxmowVpO8u9HQz/ypRY0Fg=",
+    "last_login": "2022-05-24T12:56:18.588Z",
+    "is_superuser": false,
+    "username": "turgenev-ivan",
+    "first_name": "Иван",
+    "last_name": "Тургенев",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-05-24T12:29:13.627Z",
+    "email": "turgenev-ivan@non.co",
+    "role": "Teacher",
+    "photo": "uploads/users/330px-Turgenev_1871.jpg",
+    "bio": "дружу с левитаном #литература #русский #язык",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$gXWRxH7si0m5pELwyyM6N1$K0LKtMDCT+sppGM6usv5+EKGVW07isijhyISaMOxUWU=",
+    "last_login": "2022-05-24T12:58:28.212Z",
+    "is_superuser": false,
+    "username": "isaac-levitan",
+    "first_name": "Исаак",
+    "last_name": "Левитан",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-05-24T12:30:37.670Z",
+    "email": "isaac-levitan@non.co",
+    "role": "Teacher",
+    "photo": "uploads/users/345px-Isaac_Levitan_selfportrait1880.jpg",
+    "bio": "#искусство #рисование",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$ZFpMP3yr4iJdBpwfomFAPV$iasBQrTYobJUFawFSb+0eu6XMOKHl0SGCu1szgmYM58=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "pierre-huyghe",
+    "first_name": "Пьер",
+    "last_name": "Юиг",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-05-24T12:37:38.846Z",
+    "email": "pierre-huyghe@non.co",
+    "role": "Student",
+    "photo": "uploads/users/huyghe.jpg.webp",
+    "bio": "реляционная эстетика",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$ZGsgSViaaa4fLjpknIlWTi$/RNA2TVCQm1MhtcUorFPd0zdmszQh3pq8dVFoWNVpz0=",
+    "last_login": "2022-05-24T12:53:32.564Z",
+    "is_superuser": false,
+    "username": "aj-vejvej",
+    "first_name": "Ай",
+    "last_name": "Вэйвэй",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-05-24T12:39:43.876Z",
+    "email": "aj-vejvej@non.co",
+    "role": "Student",
+    "photo": "uploads/users/ai_weiwei_fubiz_435.jpg.webp",
+    "bio": "law of the journey",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$ysaWEhu8q1I2l45RRCMWXp$ndqA76dgmDmxNd7J05L+krxUHZF/x2FlhZjNWJPyA+Q=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "wolfgang-tilmans",
+    "first_name": "Вольфганг",
+    "last_name": "Тильманс",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-05-24T12:41:55.085Z",
+    "email": "wolfgang-tilmans@non.co",
+    "role": "Student",
+    "photo": "",
+    "bio": "кто получил turner prize? я получил!",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$1neRKMbDJM0T3COxIsSMvC$zp02C/XAqXdpgr6jR7Csql7Pt7NYqYkXrF9awu5IISc=",
+    "last_login": "2022-05-24T12:59:20.446Z",
+    "is_superuser": false,
+    "username": "jr",
+    "first_name": "Жан",
+    "last_name": "Рене",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-05-24T12:43:31.538Z",
+    "email": "jr@non.co",
+    "role": "Student",
+    "photo": "uploads/users/JR-3.jpg.webp",
+    "bio": "всего лишь уличный худоджник",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$PWZPNDTpQVHGlzm4wMYJAA$655j5yNKPLEOkULz5c7T0lUwHjqElIYBhE6SEp0KFgg=",
+    "last_login": "2022-05-24T12:48:36.334Z",
+    "is_superuser": false,
+    "username": "barbara-kruger",
+    "first_name": "Барбара",
+    "last_name": "Крюгер",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-05-24T12:44:55.196Z",
+    "email": "barbara-kruger@non.co",
+    "role": "Student",
+    "photo": "uploads/users/barbara-kruger-4.jpg.webp",
+    "bio": "forever",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "graphics.timelinemodel",
+  "pk": 1,
+  "fields": {
+    "monday": "111100000000000000011111",
+    "tuesday": "111100000000000000011111",
+    "wednesday": "111100000000000000011111",
+    "thursday": "111110000000000000011111",
+    "friday": "111110000000000000011111",
+    "saturday": "111110000000000000011111",
+    "sunday": "111110000000000000001111",
+    "user": [
+      "marie-curi"
+    ]
+  }
+},
+{
+  "model": "graphics.timelinemodel",
+  "pk": 2,
+  "fields": {
+    "monday": "000000000000000000000000",
+    "tuesday": "000000000000000000000000",
+    "wednesday": "000000000000000000000000",
+    "thursday": "000000000000000000000000",
+    "friday": "000000000000000000000000",
+    "saturday": "000000000000000000000000",
+    "sunday": "000000000000000000000000",
+    "user": [
+      "alber-einstein"
+    ]
+  }
+},
+{
+  "model": "graphics.timelinemodel",
+  "pk": 3,
+  "fields": {
+    "monday": "000000000000000000000000",
+    "tuesday": "000000000000000000000000",
+    "wednesday": "000000000000000000000000",
+    "thursday": "000000000000000000000000",
+    "friday": "000000000000000000000000",
+    "saturday": "000000000000000000000000",
+    "sunday": "000000000000000000000000",
+    "user": [
+      "fyodor-tyutchev"
+    ]
+  }
+},
+{
+  "model": "graphics.timelinemodel",
+  "pk": 4,
+  "fields": {
+    "monday": "000000000000000000000000",
+    "tuesday": "000000000000000000000000",
+    "wednesday": "000000000000000000000000",
+    "thursday": "000000000000000000000000",
+    "friday": "000000000000000000000000",
+    "saturday": "000000000000000000000000",
+    "sunday": "000000000000000000000000",
+    "user": [
+      "osip-mandelstam"
+    ]
+  }
+},
+{
+  "model": "graphics.timelinemodel",
+  "pk": 5,
+  "fields": {
+    "monday": "000000000000000000000000",
+    "tuesday": "000000000000000000000000",
+    "wednesday": "000000000000000000000000",
+    "thursday": "000000000000000000000000",
+    "friday": "000000000000000000000000",
+    "saturday": "000000000000000000000000",
+    "sunday": "000000000000000000000000",
+    "user": [
+      "sergey-uvarov"
+    ]
+  }
+},
+{
+  "model": "graphics.timelinemodel",
+  "pk": 6,
+  "fields": {
+    "monday": "000000000000000000000000",
+    "tuesday": "000000000000000000000000",
+    "wednesday": "000000000000000000000000",
+    "thursday": "000000000000000000000000",
+    "friday": "000000000000000000000000",
+    "saturday": "000000000000000000000000",
+    "sunday": "000000000000000000000000",
+    "user": [
+      "turgenev-ivan"
+    ]
+  }
+},
+{
+  "model": "graphics.timelinemodel",
+  "pk": 7,
+  "fields": {
+    "monday": "000000000000000000000000",
+    "tuesday": "000000000000000000000000",
+    "wednesday": "000000000000000000001000",
+    "thursday": "000000000000000000000000",
+    "friday": "000000000000000000000000",
+    "saturday": "000000000000000000000000",
+    "sunday": "000000000000000000000000",
+    "user": [
+      "isaac-levitan"
+    ]
+  }
+},
+{
+  "model": "rating.rating",
+  "pk": 1,
+  "fields": {
+    "star": "1",
+    "user_to": [
+      "barbara-kruger"
+    ],
+    "user_from": [
+      "alber-einstein"
+    ]
+  }
+},
+{
+  "model": "rating.rating",
+  "pk": 2,
+  "fields": {
+    "star": "5",
+    "user_to": [
+      "isaac-levitan"
+    ],
+    "user_from": [
+      "jr"
+    ]
+  }
+},
+{
+  "model": "hometasks.hometask",
+  "pk": 1,
+  "fields": {
+    "title": "Теория относительности",
+    "teacher": [
+      "alber-einstein"
+    ],
+    "description": "ВЫУЧИТЬ СРОЧНО",
+    "files": ""
+  }
+},
+{
+  "model": "hometasks.assignment",
+  "pk": 1,
+  "fields": {
+    "student": [
+      "barbara-kruger"
+    ],
+    "hometask": 1,
+    "is_completed": false
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 1,
+  "fields": {
+    "category": "подписки",
+    "message": "На вас подписался barbara-kruger",
+    "read": true,
+    "recipient": [
+      "alber-einstein"
+    ],
+    "initiator": [
+      "barbara-kruger"
+    ],
+    "creation": "2022-05-24T12:49:25.377Z",
+    "last_modified": "2022-05-24T12:49:25.377Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 2,
+  "fields": {
+    "category": "чаты",
+    "message": "Вам отправлено сообщение(я) от barbara-kruger",
+    "read": true,
+    "recipient": [
+      "alber-einstein"
+    ],
+    "initiator": [
+      "barbara-kruger"
+    ],
+    "creation": "2022-05-24T12:49:40.944Z",
+    "last_modified": "2022-05-24T12:49:40.944Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 3,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от barbara-kruger",
+    "read": true,
+    "recipient": [
+      "alber-einstein"
+    ],
+    "initiator": [
+      "barbara-kruger"
+    ],
+    "creation": "2022-05-24T12:50:08.002Z",
+    "last_modified": "2022-05-24T12:50:08.002Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 4,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от barbara-kruger",
+    "read": true,
+    "recipient": [
+      "alber-einstein"
+    ],
+    "initiator": [
+      "barbara-kruger"
+    ],
+    "creation": "2022-05-24T12:50:08.435Z",
+    "last_modified": "2022-05-24T12:50:08.435Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 5,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от barbara-kruger",
+    "read": true,
+    "recipient": [
+      "alber-einstein"
+    ],
+    "initiator": [
+      "barbara-kruger"
+    ],
+    "creation": "2022-05-24T12:50:18.800Z",
+    "last_modified": "2022-05-24T12:50:18.800Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 6,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от barbara-kruger",
+    "read": true,
+    "recipient": [
+      "alber-einstein"
+    ],
+    "initiator": [
+      "barbara-kruger"
+    ],
+    "creation": "2022-05-24T12:50:19.177Z",
+    "last_modified": "2022-05-24T12:50:19.177Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 7,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от barbara-kruger",
+    "read": true,
+    "recipient": [
+      "alber-einstein"
+    ],
+    "initiator": [
+      "barbara-kruger"
+    ],
+    "creation": "2022-05-24T12:50:25.463Z",
+    "last_modified": "2022-05-24T12:50:25.463Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 8,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от barbara-kruger",
+    "read": true,
+    "recipient": [
+      "alber-einstein"
+    ],
+    "initiator": [
+      "barbara-kruger"
+    ],
+    "creation": "2022-05-24T12:50:25.871Z",
+    "last_modified": "2022-05-24T12:50:25.871Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 9,
+  "fields": {
+    "category": "подписки",
+    "message": "На вас подписался alber-einstein",
+    "read": false,
+    "recipient": [
+      "barbara-kruger"
+    ],
+    "initiator": [
+      "alber-einstein"
+    ],
+    "creation": "2022-05-24T12:51:38.550Z",
+    "last_modified": "2022-05-24T12:51:38.550Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 10,
+  "fields": {
+    "category": "рейтинг",
+    "message": "Вам выставлена оценка: 1",
+    "read": false,
+    "recipient": [
+      "barbara-kruger"
+    ],
+    "initiator": [
+      "alber-einstein"
+    ],
+    "creation": "2022-05-24T12:51:56.914Z",
+    "last_modified": "2022-05-24T12:51:56.914Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 11,
+  "fields": {
+    "category": "чаты",
+    "message": "Вам отправлено сообщение(я) от aj-vejvej",
+    "read": true,
+    "recipient": [
+      "osip-mandelstam"
+    ],
+    "initiator": [
+      "aj-vejvej"
+    ],
+    "creation": "2022-05-24T12:54:26.635Z",
+    "last_modified": "2022-05-24T12:54:26.635Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 12,
+  "fields": {
+    "category": "чаты",
+    "message": "Вам отправлено сообщение(я) от osip-mandelstam",
+    "read": false,
+    "recipient": [
+      "aj-vejvej"
+    ],
+    "initiator": [
+      "osip-mandelstam"
+    ],
+    "creation": "2022-05-24T12:55:10.357Z",
+    "last_modified": "2022-05-24T12:55:10.357Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 13,
+  "fields": {
+    "category": "чаты",
+    "message": "Вам отправлено сообщение(я) от osip-mandelstam",
+    "read": true,
+    "recipient": [
+      "turgenev-ivan"
+    ],
+    "initiator": [
+      "osip-mandelstam"
+    ],
+    "creation": "2022-05-24T12:55:49.183Z",
+    "last_modified": "2022-05-24T12:55:49.183Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 14,
+  "fields": {
+    "category": "чаты",
+    "message": "Вам отправлено сообщение(я) от turgenev-ivan",
+    "read": false,
+    "recipient": [
+      "osip-mandelstam"
+    ],
+    "initiator": [
+      "turgenev-ivan"
+    ],
+    "creation": "2022-05-24T12:56:35.593Z",
+    "last_modified": "2022-05-24T12:56:35.593Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 15,
+  "fields": {
+    "category": "подписки",
+    "message": "На вас подписался jr",
+    "read": false,
+    "recipient": [
+      "isaac-levitan"
+    ],
+    "initiator": [
+      "jr"
+    ],
+    "creation": "2022-05-24T12:57:18.028Z",
+    "last_modified": "2022-05-24T12:57:18.028Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 16,
+  "fields": {
+    "category": "рейтинг",
+    "message": "Вам выставлена оценка: 5",
+    "read": false,
+    "recipient": [
+      "isaac-levitan"
+    ],
+    "initiator": [
+      "jr"
+    ],
+    "creation": "2022-05-24T12:57:23.335Z",
+    "last_modified": "2022-05-24T12:57:23.335Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 17,
+  "fields": {
+    "category": "чаты",
+    "message": "Вам отправлено сообщение(я) от jr",
+    "read": false,
+    "recipient": [
+      "isaac-levitan"
+    ],
+    "initiator": [
+      "jr"
+    ],
+    "creation": "2022-05-24T12:57:32.563Z",
+    "last_modified": "2022-05-24T12:57:32.563Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 18,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от jr",
+    "read": false,
+    "recipient": [
+      "isaac-levitan"
+    ],
+    "initiator": [
+      "jr"
+    ],
+    "creation": "2022-05-24T12:57:53.686Z",
+    "last_modified": "2022-05-24T12:57:53.686Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 19,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от jr",
+    "read": false,
+    "recipient": [
+      "isaac-levitan"
+    ],
+    "initiator": [
+      "jr"
+    ],
+    "creation": "2022-05-24T12:57:54.091Z",
+    "last_modified": "2022-05-24T12:57:54.092Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 20,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от jr",
+    "read": false,
+    "recipient": [
+      "isaac-levitan"
+    ],
+    "initiator": [
+      "jr"
+    ],
+    "creation": "2022-05-24T12:57:58.912Z",
+    "last_modified": "2022-05-24T12:57:58.912Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 21,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от jr",
+    "read": false,
+    "recipient": [
+      "isaac-levitan"
+    ],
+    "initiator": [
+      "jr"
+    ],
+    "creation": "2022-05-24T12:57:59.283Z",
+    "last_modified": "2022-05-24T12:57:59.283Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 22,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от jr",
+    "read": false,
+    "recipient": [
+      "isaac-levitan"
+    ],
+    "initiator": [
+      "jr"
+    ],
+    "creation": "2022-05-24T12:58:04.105Z",
+    "last_modified": "2022-05-24T12:58:04.105Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 23,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от jr",
+    "read": false,
+    "recipient": [
+      "isaac-levitan"
+    ],
+    "initiator": [
+      "jr"
+    ],
+    "creation": "2022-05-24T12:58:04.407Z",
+    "last_modified": "2022-05-24T12:58:04.407Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 24,
+  "fields": {
+    "category": "уроки",
+    "message": "Ваша заявка для isaac-levitan принята",
+    "read": true,
+    "recipient": [
+      "jr"
+    ],
+    "initiator": [
+      "isaac-levitan"
+    ],
+    "creation": "2022-05-24T12:58:37.641Z",
+    "last_modified": "2022-05-24T12:58:37.641Z"
+  }
+},
+{
+  "model": "chats.chatroom",
+  "pk": 1,
+  "fields": {
+    "first_user": [
+      "barbara-kruger"
+    ],
+    "second_user": [
+      "alber-einstein"
+    ]
+  }
+},
+{
+  "model": "chats.chatroom",
+  "pk": 2,
+  "fields": {
+    "first_user": [
+      "aj-vejvej"
+    ],
+    "second_user": [
+      "osip-mandelstam"
+    ]
+  }
+},
+{
+  "model": "chats.chatroom",
+  "pk": 3,
+  "fields": {
+    "first_user": [
+      "osip-mandelstam"
+    ],
+    "second_user": [
+      "turgenev-ivan"
+    ]
+  }
+},
+{
+  "model": "chats.chatroom",
+  "pk": 4,
+  "fields": {
+    "first_user": [
+      "jr"
+    ],
+    "second_user": [
+      "isaac-levitan"
+    ]
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 1,
+  "fields": {
+    "text": "FOREVER",
+    "image": "",
+    "owner": [
+      "barbara-kruger"
+    ],
+    "time": "16:49:40.696",
+    "chat_room": 1
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 2,
+  "fields": {
+    "text": "ХА, ты сел",
+    "image": "",
+    "owner": [
+      "aj-vejvej"
+    ],
+    "time": "16:54:26.454",
+    "chat_room": 2
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 3,
+  "fields": {
+    "text": "с кем не бывает",
+    "image": "",
+    "owner": [
+      "osip-mandelstam"
+    ],
+    "time": "16:55:10.137",
+    "chat_room": 2
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 4,
+  "fields": {
+    "text": "кто виноват",
+    "image": "",
+    "owner": [
+      "osip-mandelstam"
+    ],
+    "time": "16:55:48.868",
+    "chat_room": 3
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 5,
+  "fields": {
+    "text": "и что делать",
+    "image": "",
+    "owner": [
+      "osip-mandelstam"
+    ],
+    "time": "16:55:54.548",
+    "chat_room": 3
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 6,
+  "fields": {
+    "text": "да не я это написал",
+    "image": "",
+    "owner": [
+      "turgenev-ivan"
+    ],
+    "time": "16:56:35.346",
+    "chat_room": 3
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 7,
+  "fields": {
+    "text": "научи меня рисовать",
+    "image": "",
+    "owner": [
+      "jr"
+    ],
+    "time": "16:57:32.308",
+    "chat_room": 4
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 8,
+  "fields": {
+    "text": "я даже 5 заранее поставил",
+    "image": "",
+    "owner": [
+      "jr"
+    ],
+    "time": "16:57:41.324",
+    "chat_room": 4
+  }
+},
+{
+  "model": "bunch.bunch",
+  "pk": 1,
+  "fields": {
+    "teacher": [
+      "alber-einstein"
+    ],
+    "student": [
+      "barbara-kruger"
+    ],
+    "status": "Waiting",
+    "datetime": "2:8"
+  }
+},
+{
+  "model": "bunch.bunch",
+  "pk": 2,
+  "fields": {
+    "teacher": [
+      "alber-einstein"
+    ],
+    "student": [
+      "barbara-kruger"
+    ],
+    "status": "Waiting",
+    "datetime": "5:16"
+  }
+},
+{
+  "model": "bunch.bunch",
+  "pk": 3,
+  "fields": {
+    "teacher": [
+      "alber-einstein"
+    ],
+    "student": [
+      "barbara-kruger"
+    ],
+    "status": "Waiting",
+    "datetime": "5:7"
+  }
+},
+{
+  "model": "bunch.bunch",
+  "pk": 4,
+  "fields": {
+    "teacher": [
+      "isaac-levitan"
+    ],
+    "student": [
+      "jr"
+    ],
+    "status": "Accepted",
+    "datetime": "3:20"
+  }
+},
+{
+  "model": "bunch.bunch",
+  "pk": 5,
+  "fields": {
+    "teacher": [
+      "isaac-levitan"
+    ],
+    "student": [
+      "jr"
+    ],
+    "status": "Finished",
+    "datetime": "4:17"
+  }
+},
+{
+  "model": "bunch.bunch",
+  "pk": 6,
+  "fields": {
+    "teacher": [
+      "isaac-levitan"
+    ],
+    "student": [
+      "jr"
+    ],
+    "status": "Finished",
+    "datetime": "5:20"
+  }
+},
+{
+  "model": "follow.follow",
+  "pk": 1,
+  "fields": {
+    "user_from": [
+      "barbara-kruger"
+    ],
+    "user_to": [
+      "alber-einstein"
+    ],
+    "active": true
+  }
+},
+{
+  "model": "follow.follow",
+  "pk": 2,
+  "fields": {
+    "user_from": [
+      "alber-einstein"
+    ],
+    "user_to": [
+      "barbara-kruger"
+    ],
+    "active": true
+  }
+},
+{
+  "model": "follow.follow",
+  "pk": 3,
+  "fields": {
+    "user_from": [
+      "jr"
+    ],
+    "user_to": [
+      "isaac-levitan"
+    ],
+    "active": true
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2022-05-24T12:31:18.720Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "8",
+    "object_repr": "isaac-levitan",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2022-05-24T12:31:19.114Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "7",
+    "object_repr": "turgenev-ivan",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2022-05-24T12:31:19.529Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "6",
+    "object_repr": "sergey-uvarov",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2022-05-24T12:31:20.239Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "5",
+    "object_repr": "osip-mandelstam",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2022-05-24T12:31:20.718Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "4",
+    "object_repr": "fyodor-tyutchev",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2022-05-24T12:31:21.303Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "3",
+    "object_repr": "alber-einstein",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2022-05-24T12:31:21.756Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "2",
+    "object_repr": "marie-curi",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2022-05-24T12:45:31.838Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "13",
+    "object_repr": "barbara-kruger",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2022-05-24T12:45:32.203Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "12",
+    "object_repr": "jr",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2022-05-24T12:45:32.623Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "11",
+    "object_repr": "wolfgang-tilmans",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2022-05-24T12:45:33.195Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "10",
+    "object_repr": "aj-vejvej",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2022-05-24T12:45:33.708Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "9",
+    "object_repr": "pierre-huyghe",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2022-05-24T12:47:47.459Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "2",
+    "object_repr": "marie-curi",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Last name\"]}}]"
+  }
+}
+]

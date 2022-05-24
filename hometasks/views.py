@@ -32,7 +32,7 @@ class HometaskCreateView(CreateView):
     def get(self, request, *args, **kwargs):
         user = request.user
         if user.role != Role.TEACHER:
-            return redirect(reverse('user_detail', args=(user.id,)))
+            return redirect(reverse("user_detail", args=(user.id,)))
 
         return super(HometaskCreateView, self).get(request, *args, **kwargs)
 
@@ -41,13 +41,15 @@ class HometaskCreateView(CreateView):
         user = request.user
 
         if user.role != Role.TEACHER:
-            redirect(reverse('user_detail', args=(user.id,)))
+            redirect(reverse("user_detail", args=(user.id,)))
 
         if form.is_valid():
             hometask, created = Hometask.manager.get_or_create(
                 **form.cleaned_data, teacher=user
             )
             hometask.save()
+        else:
+            return super().get(request, *args, **kwargs)
         return redirect(reverse("hometasks"))
 
 
@@ -55,7 +57,6 @@ class HometasksView(ListView):
     model = Hometask
     template_name = HOMETASKS
     context_object_name = "hometasks"
-    paginate_by = 5
     current_user = None
 
     def dispatch(self, request, *args, **kwargs):
@@ -89,9 +90,15 @@ class HometaskTeacherDetailView(DetailView, FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["users"] = Assignment.manager.get_students(hometask=self.object)
-        context["bunches"] = set(map(lambda x: (x.student.id, x.student.first_name), Bunch.manager.get_teacher_students(
-            self.current_user, "student__first_name",
-        )))
+        context["bunches"] = set(
+            map(
+                lambda x: (x.student.id, x.student.first_name),
+                Bunch.manager.get_teacher_students(
+                    self.current_user,
+                    "student__first_name",
+                ),
+            )
+        )
 
         context["user"] = self.current_user
         return context
@@ -102,7 +109,7 @@ class HometaskTeacherDetailView(DetailView, FormView):
 
     def post(self, request, *args, **kwargs):
         hometask = self.get_object()
-        student_id = request.POST.get('student-id')
+        student_id = request.POST.get("student-id")
 
         if student_id:
             assign, is_created = Assignment.manager.get_or_create(
@@ -149,6 +156,7 @@ class HometaskStudentDetailView(DetailView):
         assign.is_completed = True
         assign.save()
         return redirect(reverse("hometasks"))
+
 
 # def mark_as_solved(request, pk):
 #     task = get_object_or_404(Hometask, pk=pk)

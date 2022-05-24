@@ -1,6 +1,7 @@
 from django import forms
 
 from .models import Assignment, Hometask
+from .validators import file_size
 
 
 class HometaskForm(forms.ModelForm):
@@ -33,6 +34,7 @@ class HometaskForm(forms.ModelForm):
             }
         ),
         required=False,
+        validators=[file_size],
     )
 
     class Meta:

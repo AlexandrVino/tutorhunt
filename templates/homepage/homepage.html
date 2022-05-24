@@ -8,14 +8,17 @@
   </h1>
 
   <form method="post" class="d-flex">
-    {% csrf_token %}
+      {% csrf_token %}
       {{ form.value }}
-    <input id="search-btn" type="submit" class="btn btn-primary" style="font-family: bootstrap-icons;" value="&#xF52A;"></ш>
+      <input id="search-btn" type="submit" class="btn btn-primary" style="font-family: bootstrap-icons;" value="&#xF52A;">
   </form>
 
-  <div>
-    {% for user in objects %}
-      {% include "includes/user_card.html" %}
-    {% endfor %}
+  <div class="container-lg">
+    <div class="row card-row">
+      {% for user in objects %}
+        {% include "includes/user_card.html" %}
+
+      {% endfor %}
+    </div>  
   </div>
 {% endblock content %}

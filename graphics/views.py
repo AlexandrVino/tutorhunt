@@ -42,6 +42,9 @@ class EditTimelineView(UpdateView):
     model = TimelineModel
     form_class = TimelineForm
 
+    def get_success_url(self) -> str:
+        return self.get_object().user.get_absolute_url()
+
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_staff or request.user.id == self.get_object().user.id:
             return super().dispatch(request, *args, **kwargs)
@@ -60,6 +63,10 @@ class EditTimelineView(UpdateView):
         kwargs = super().get_form_kwargs()
         kwargs["label_suffix"] = ""
         return kwargs
+
+    def get_object(self, *args, **kwargs) -> TimelineModel:
+        self.kwargs.setdefault("pk", self.request.user.timeline.pk)
+        return TimelineModel.objects.get(pk=self.kwargs["pk"])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

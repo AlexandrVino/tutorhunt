@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Мой профиль{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" type="text/css" href={% static "css/base_form.css" %}>
+  <link rel="stylesheet" type="text/css" href={% static "css/profile.css" %}>{% endblock %}
+{% block scripts %}
+  <script src="{% static "js/edit_bunch.js" %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+
+  <div class="form-wrapper profile-form">
+
+    <form method="post" class="widget">
+      {% csrf_token %}
+
+      <div class="form-floating ">
+        {{ form.user_to.as_hidden }}
+      </div>
+
+      <div class="form-floating ">
+        {{ form.day }}
+      </div>
+
+      <div class="form-floating">
+        {{ form.time }}
+      </div>
+
+      <div class="form-floating">
+        {{ form.status }}
+      </div>
+
+      {#      <div class="form-floating ">#}
+      {#        {{ form.role }}#}
+      {#      </div>#}
+
+      <button class="w-100 btn btn-lg btn-primary margin-top" type="submit">
+        Обновить
+      </button>
+    </form>
+  </div>
+
+{% endblock %}

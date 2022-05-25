@@ -1,0 +1,36 @@
+.hometask {
+    margin-top: 10px;
+}
+
+.button-wrapper {
+    margin: 0 auto;
+    width: 200px;
+}
+
+.hometask-title {
+    text-align: center;
+    position: relative;
+}
+
+.hometask-content {
+    margin: 20px 0;
+}
+
+.hometask-description {
+    margin: 0;
+}
+
+.teacher {
+    position: absolute;
+    right: 0;
+    top: 30%;
+    font-size: 16px;
+}
+
+.teacher a {
+    color: #999999;
+}
+
+.teacher:hover a {
+    color: #fff;
+}

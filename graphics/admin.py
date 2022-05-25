@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import TimelineModel
 
-# Register your models here.
+
+@admin.register(TimelineModel)
+class TimelineAdmin(admin.ModelAdmin):
+    pass

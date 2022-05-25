@@ -1,0 +1,36 @@
+<div class="col col-card">
+  <a href="{% url "user_detail" user.id %}">
+    <div class="card shadow-sm">
+      <div class="card-body bg-dark text-white">
+        <div class="img-wrapper">{{ user.get_photo }}</div>
+        <p class="card-text">
+          Username:
+          {% if user.username %}{{ user.username }}{% else %}Отсутствует{% endif %}
+          <br>
+
+          Email:
+          {% if user.email %}{{ user.email }}{% else %}Отсутствует{% endif %}
+          <br>
+
+          Имя:
+          {% if user.first_name %}{{ user.first_name }}{% else %}Отсутствует{% endif %}
+          <br>
+
+          Фамилия:
+          {% if user.last_name %}{{ user.last_name }}{% else %}Отсутствует{% endif %}
+          <br>
+
+          Роль:
+          {% if user.role %}{{ user.role }}{% else %}Отсутствует{% endif %}
+          <br>
+
+          О пользователе:
+          {% if user.bio %}{{ user.bio }}{% else %}Отсутствует{% endif %}
+          <br>
+
+        </p>
+
+      </div>
+    </div>
+  </a>
+</div>

@@ -1,0 +1,55 @@
+{% load static %}
+
+<header class="bg-dark text-white p-3">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <i class="bi bi-house-heart-fill" title="Домой"></i>
+      </a>
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a class="nav-link px-2 text-white" href="{% url "users" %}">Пользователи</a></li>
+
+        {% if user.is_authenticated %}
+          <li><a class="nav-link px-2 text-white" href="{% url "user_detail" user.id %}">Профиль</a></li>
+          <li><a class="nav-link px-2 text-white" href="{% url "all_chats" %}">Сообщения</a></li>
+          <li><a class="nav-link px-2 text-white" href="{% url "user_detail_follows" user.id %}">Подписчики</a></li>
+          <li><a class="nav-link px-2 text-white" href="{% url "hometasks" %}">Домашние задания</a></li>
+          {% if user.role == "Teacher" %}
+          <li><a class="nav-link px-2 text-white" href="{% url "hometask_create" %}">Создать</a></li>
+          {% endif %}
+        {% endif %}
+
+        {% if request.user.is_superuser %}
+          <li><a href="{% url "admin:index" %}" class="nav-link px-2 text-white ">Админка</a></li>
+        {% endif %}
+      </ul>
+
+      {% if user.is_authenticated %}
+        <a class="position-relative text-white bell" href="{% url 'notifications' %}">
+          <i class="fs-6 bi bi-bell"></i>
+
+          {% if has_unread_notifications %}
+            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle">
+                        <span class="visually-hidden">Новые уведомления</span>
+                    </span>
+          {% endif %}
+        </a>
+      {% endif %}
+
+      <form method="post" action="{% url 'homepage' %}" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        {% csrf_token %}
+        {{ search_form.value }}
+      </form>
+      
+
+      <div class="text-end">
+        {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}" class="btn btn-outline-danger me-2">Выход</a>
+        {% else %}
+          <a href="{% url "login" %}" class="btn btn-outline-light me-2">Вход</a>
+          <a href="{% url "signup" %}" class="btn btn-warning">Регистрация</a>
+        {% endif %}
+      </div>
+    </div>
+</header>

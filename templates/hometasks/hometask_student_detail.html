@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Домашнее задание{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" type="text/css" href={% static "css/profile.css" %}>
+  <link rel="stylesheet" type="text/css" href={% static "css/hometask.css" %}>{% endblock %}
+{% block content %}
+
+  <div class="widget hometask">
+    <h1 class="hometask-title">{{ hometask.title }} <span class="teacher"><a
+            href="{% url "user_detail" hometask.teacher.id %}">({{ hometask.teacher }})</a></span></h1>
+    <div class="hometask-content">
+      <p class="hometask-description">{{ hometask.description }}</p>
+      {% if hometask.files %}
+      <span>Прекрипленный файл: <a
+              href="{% url 'hometask_download' hometask.get_file_name %}">{{ hometask.get_file_name }}</a></span>
+      {% endif %}
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="button-wrapper">
+        <button class="edit" type="submit">
+          Отметить
+        </button>
+      </div>
+    </form>
+
+  </div>
+
+
+{% endblock %}

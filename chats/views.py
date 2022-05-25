@@ -95,7 +95,7 @@ class ChatsListView(ListView):
     context_object_name = "chats"
 
     def get_queryset(self):
-        user_id = self.request.user
+        user_id = self.request.user.id
 
         return set(chain(
             map(lambda x: (x, get_interlocutor_with_id(x, user_id)),

@@ -1,4 +1,5 @@
 from typing import Any, Dict, Iterable, List, Tuple, Union
+
 from django.db import models
 
 
@@ -62,11 +63,11 @@ class DayTimeline:
     @classmethod
     def parse_timeline(cls, value: str) -> "DayTimeline":
         """
-        Обработка строкового представления расписания. 
+        Обработка строкового представления расписания.
         Параметры:
-            value -- строковое представление
+            value: строковое представление
         Исключения:
-            TypeError -- если value не строка
+            TypeError: если value не строка
         Возвращет соответствующий DayTimeline
         """
         if value:
@@ -81,7 +82,7 @@ class DayTimeline:
         """
         Обработка значений с формы.
         Параметры:
-            busy_hours -- список с занятыми часами (получается с DayTimelineFormField)
+            busy_hours: список с занятыми часами (получается с DayTimelineFormField)
         Возвращает соответствующий DayTimeline
         """
         timeline = [False] * 24

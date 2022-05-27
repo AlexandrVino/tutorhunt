@@ -34,8 +34,10 @@ class ChatsView(DetailView, FormView):
         context["message"] = self.messages
         context["interlocutor"] = get_interlocutor_with_id(self.object, self.current_user.id)
         context["chat_messages"] = Message.manager.join_owners(
-            "owner__username", "owner__first_name", "owner__last_name", "owner__role", "owner__email", "owner__photo",
-            "text", "time", chat_room=self.object)
+            "owner__username", "owner__first_name", "owner__last_name",
+            "owner__role", "owner__email", "owner__photo",
+            "text", "time", chat_room=self.object
+        )
 
         return context
 
@@ -49,17 +51,24 @@ class ChatsView(DetailView, FormView):
         args = ("username", "first_name", "last_name", "role", "email", "photo")
 
         try:
-            chats = (self.model.manager.join_owners(
-                *args, id=self.kwargs.get("chat_id")) or self.model.manager.join_owners(
-                *args, first_user_id__in=(user_id, curr_user_id), second_user_id__in=(curr_user_id, user_id)))
+            chats = (
+                self.model.manager.join_owners(
+                    *args, id=self.kwargs.get("chat_id"))
+                or self.model.manager.join_owners(
+                    *args, first_user_id__in=(user_id, curr_user_id),
+                    second_user_id__in=(curr_user_id, user_id))
+            )
             chat = chats and chats[0]
 
             assert chat
             return chat
-
         except AssertionError:
-            return (self.model.manager.create(first_user=self.current_user, second_user_id=self.kwargs.get("user_id"))
-                    if self.kwargs.get("user_id") else None)
+            return (
+                self.model.manager.create(
+                    first_user=self.current_user,
+                    second_user_id=self.kwargs.get("user_id")
+                ) if self.kwargs.get("user_id") else None
+            )
 
     def get(self, request, *args, **kwargs):
         self.current_user = request.user
@@ -83,14 +92,15 @@ class ChatsView(DetailView, FormView):
             form.clean()
 
         else:
-            self.messages.extend([err["text"] if type(err) is dict else err for err in form.errors])
+            self.messages.extend(
+                [err["text"] if type(err) is dict else err for err in form.errors]
+            )
 
         return super(ChatsView, self).get(request, *args, **kwargs)
 
 
 class ChatsListView(ListView):
     """Возвращает страничку Списка пользователей"""
-
     template_name = CHATS_TEMPLATE
     context_object_name = "chats"
 
@@ -99,9 +109,11 @@ class ChatsListView(ListView):
 
         return set(chain(
             map(lambda x: (x, get_interlocutor_with_id(x, user_id)),
-                ChatRoom.manager.join_owners("username", "first_name", "last_name", "role", "email", "photo",
+                ChatRoom.manager.join_owners("username", "first_name",
+                                             "last_name", "role", "email", "photo",
                                              first_user_id=user_id)),
             map(lambda x: (x, get_interlocutor_with_id(x, user_id)),
-                ChatRoom.manager.join_owners("username", "first_name", "last_name", "role", "email", "photo",
+                ChatRoom.manager.join_owners("username", "first_name", "last_name",
+                                             "role", "email", "photo",
                                              second_user_id=user_id))
         ))

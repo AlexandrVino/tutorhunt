@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
@@ -18,10 +19,7 @@ User = get_user_model()
 
 @method_decorator(login_required, name="dispatch")
 class BunchView(TemplateView, ModelFormMixin):
-    """
-    ViewClass для создания запроса на связь (занятие)
-    """
-
+    """ViewClass для создания запроса на связь (занятие)"""
     template_name = ADD_BUNCH_TEMPLATE
     context_object_name = "bunch"
     model = Bunch
@@ -29,23 +27,15 @@ class BunchView(TemplateView, ModelFormMixin):
     object = None
 
     def get_datetime(self) -> str:
+        """Метод, возвращающий время связи (занятия) в формате день:час"""
+        return "{}:{}".format(self.kwargs.get("day"), self.kwargs.get("time"))
+
+    def get_context_data(self, **kwargs) -> Dict[str, Any]:
         """
-        :return: str
-        Метод, возвращающий время связи (занятия) в формате день:час
-        """
-
-        return f'{self.kwargs.get("day")}:{self.kwargs.get("time")}'
-
-    def get_context_data(self, **kwargs) -> dict:
-        """
-
-        :param kwargs: словарь контекста
-        :return: dict
-
         Метод, получающий контекст для шаблонов
-
+        Параметры:
+            kwargs: словарь контекста
         """
-
         context = super().get_context_data(**kwargs)
         context["form"].fields["day"].initial = self.kwargs.get("day")
         context["form"].fields["time"].initial = self.kwargs.get("time")
@@ -53,25 +43,17 @@ class BunchView(TemplateView, ModelFormMixin):
         return context
 
     def get_success_url(self) -> str:
-        """
-        :return: str
-        Метод, получающий url для успешной переадрисации
-        """
-
+        """Метод, получающий url для успешной переадресации"""
         return reverse("user_detail", args=(self.kwargs.get("user_to"), ))
 
     def get(self, request, *args, **kwargs):
         """
-
-        :param request: запрос
-        :param args: картеж контекста
-        :param kwargs: сдлварь контекста
-        :return:
-
         Метод ответа на GET запрос клиента
-
+        Параметры:
+            request: запрос
+            args: кортеж контекста
+            kwargs: словарь контекста
         """
-
         if not self.object:
             bunch = self.model.manager.filter(student=request.user, datetime=self.get_datetime())
             self.object = bunch[0] if bunch else None
@@ -82,16 +64,12 @@ class BunchView(TemplateView, ModelFormMixin):
 
     def post(self, request, *args, **kwargs):
         """
-
-        :param request: запрос
-        :param args: картеж контекста
-        :param kwargs: сдлварь контекста
-        :return:
-
         Метод ответа на POST запрос клиента
-
+        Параметры:
+            request: запрос
+            args: кортеж контекста
+            kwargs: словарь контекста
         """
-
         form = self.get_form()
         if form.is_valid():
 
@@ -110,7 +88,11 @@ class BunchView(TemplateView, ModelFormMixin):
             day = form.cleaned_data["day"]
             time = form.cleaned_data["time"]
 
-            bunch, is_created = Bunch.manager.get_or_create(student=student, teacher=teacher, datetime=f"{day}:{time}")
+            bunch, is_created = Bunch.manager.get_or_create(
+                student=student,
+                teacher=teacher,
+                datetime=f"{day}:{time}"
+            )
 
             if is_created:
                 bunch.status = BunchStatus.WAITING
@@ -124,10 +106,7 @@ class BunchView(TemplateView, ModelFormMixin):
 
 @method_decorator(login_required, name="dispatch")
 class EditBunchView(TemplateView, ModelFormMixin):
-    """
-    ViewClass для редактирования запроса на связь (занятие)
-    """
-
+    """ViewClass для редактирования запроса на связь (занятие)"""
     template_name = EDIT_BUNCH_TEMPLATE
     context_object_name = "bunch"
     model = Bunch
@@ -135,23 +114,15 @@ class EditBunchView(TemplateView, ModelFormMixin):
     object = None
 
     def get_datetime(self) -> str:
+        """Метод, возвращающий время связи (занятия) в формате день:час"""
+        return "{}:{}".format(self.kwargs.get("day"), self.kwargs.get("time"))
+
+    def get_context_data(self, **kwargs) -> Dict[str, Any]:
         """
-        :return: str
-        Метод, возвращающий время связи (занятия) в формате день:час
-        """
-
-        return f'{self.kwargs.get("day")}:{self.kwargs.get("time")}'
-
-    def get_context_data(self, **kwargs):
-        """
-
-        :param kwargs: словарь контекста
-        :return: dict
-
         Метод, получающий контекст для шаблонов
-
+        Параметры:
+            kwargs: словарь контекста
         """
-
         context = super().get_context_data(**kwargs)
 
         context["form"].fields["day"].initial = self.kwargs.get("day")
@@ -165,26 +136,18 @@ class EditBunchView(TemplateView, ModelFormMixin):
 
         return context
 
-    def get_success_url(self):
-        """
-        :return: str
-        Метод, получающий url для успешной переадрисации
-        """
-
+    def get_success_url(self) -> str:
+        """Метод, получающий url для успешной переадресации"""
         return reverse("user_detail", args=(self.request.user.id,))
 
     def get(self, request, *args, **kwargs):
         """
-
-        :param request: запрос
-        :param args: картеж контекста
-        :param kwargs: сдлварь контекста
-        :return:
-
         Метод ответа на GET запрос клиента
-
+        Параметры:
+            request: запрос
+            args: кортеж контекста
+            kwargs: словарь контекста
         """
-
         if not self.object:
             bunch = self.model.manager.filter(teacher=request.user, datetime=self.get_datetime())
             self.object = bunch[0] if bunch else None
@@ -196,16 +159,12 @@ class EditBunchView(TemplateView, ModelFormMixin):
 
     def post(self, request, *args, **kwargs):
         """
-
-        :param request: запрос
-        :param args: картеж контекста
-        :param kwargs: сдлварь контекста
-        :return:
-
         Метод ответа на POST запрос клиента
-
+        Параметры:
+            request: запрос
+            args: кортеж контекста
+            kwargs: словарь контекста
         """
-
         form = self.get_form()
 
         if form.is_valid():
@@ -221,10 +180,17 @@ class EditBunchView(TemplateView, ModelFormMixin):
                 datetime = f"{day}:{time}"
 
                 if not self.object:
-                    bunch = self.model.manager.filter(teacher=request.user, datetime=self.get_datetime())
+                    bunch = self.model.manager.filter(
+                        teacher=request.user,
+                        datetime=self.get_datetime()
+                    )
                     self.object = bunch[0] if bunch else None
 
-                new_bunch = Bunch.manager.filter(teacher__id=teacher.id, datetime=datetime, status=BunchStatus.ACCEPTED)
+                new_bunch = Bunch.manager.filter(
+                    teacher__id=teacher.id,
+                    datetime=datetime,
+                    status=BunchStatus.ACCEPTED
+                )
 
                 if new_bunch and not (new_bunch[0] == self.object):
                     return self.get(request, *args, **kwargs)

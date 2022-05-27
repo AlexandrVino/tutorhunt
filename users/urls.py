@@ -7,7 +7,6 @@ from django.urls import path
 from users.views import ActivateView, LoginWithEmailView, ProfileView, SignupView, UserDetailView, UserListView
 
 urlpatterns = [
-
     path("login/", LoginWithEmailView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(template_name="users/logout.html"), name="logout"),
     path("signup/", SignupView.as_view(), name="signup"),

@@ -3,11 +3,7 @@ from bunch.models import Bunch, BunchStatus
 
 
 class AddBunchForm(forms.ModelForm):
-
-    """
-    Форма для планирования (создания) связи (занятия)
-    """
-
+    """Форма для планирования (создания) связи (занятия)"""
     day = forms.ChoiceField(choices=(
         (1, "Понедельник"),
         (2, "Вторник"),
@@ -40,11 +36,7 @@ class AddBunchForm(forms.ModelForm):
 
 
 class EditBunchForm(forms.ModelForm):
-
-    """
-    Форма, чтобы учитель мог подтвердить/отредактировать связь (занятие)
-    """
-
+    """Форма, чтобы учитель мог подтвердить/отредактировать связь (занятие)"""
     status = forms.ChoiceField(choices=BunchStatus.choices)
 
     day = forms.ChoiceField(choices=(

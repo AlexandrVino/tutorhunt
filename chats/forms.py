@@ -4,11 +4,7 @@ from chats.models import Message
 
 
 class AddMessage(forms.ModelForm):
-    """
-    Класс формы отправки сообщений
-    """
-
-    # role = forms.ChoiceField(choices=Role.choices)
+    """Класс формы отправки сообщений"""
     text = forms.CharField(widget=forms.TextInput(attrs={
         "class": "form-control input-field send-mess",
         "type": "text",
@@ -16,12 +12,6 @@ class AddMessage(forms.ModelForm):
         "id": "input_message",
         "required": True,
     }), required=True)
-    # images = forms.FileField(widget=forms.FileInput(attrs={
-    #     "class": "form-control input-field input-file",
-    #     "placeholder": "Фото",
-    #     "required": False,
-    #     "type": "file"
-    # }), required=False)
 
     class Meta:
         model = Message

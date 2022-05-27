@@ -4,7 +4,6 @@ from django.db.models import UniqueConstraint
 
 from .managers import RatingManager
 
-
 User = get_user_model()
 
 

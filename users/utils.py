@@ -6,14 +6,13 @@ User = get_user_model()
 
 def edit_user_data(user: User, **kwargs) -> None:
     """
-    :param user: User экземпляр модели пользователя
-    :param kwargs: словарь измененных полей
-    :return: None
+    Параметры:
+        user: экземпляр модели пользователя
+        kwargs: словарь измененных полей
     """
-
     for key, value in kwargs.items():
         if value is not None:
-            if key == 'bio':
+            if key == "bio":
                 value = value.lower()
             user.__setattr__(key, value)
     user.save()
@@ -21,13 +20,12 @@ def edit_user_data(user: User, **kwargs) -> None:
 
 def update_user_timeline(user: User, day: int, time: int, value: bool) -> None:
     """
-    :param user: User экземпляр модели пользователя
-    :param day: int число от 1 до 7, номер дня недели
-    :param time: int число от 0 до 23, номер часа в сутках
-    :param value: освоболился или стал занятым час в графике
-    :return: None
+    Параметры:
+        user: экземпляр модели пользователя
+        day: число от 1 до 7, номер дня недели
+        time: число от 0 до 23, номер часа в сутках
+        value: освоболился или стал занятым час в графике
     """
-
     if user.has_timeline():
         user.timeline.get_days_fields()[day].set_hour(time, value)
         user.timeline.save()
@@ -35,12 +33,11 @@ def update_user_timeline(user: User, day: int, time: int, value: bool) -> None:
 
 def add_busy_hours(user: User, bunch: Bunch, value: bool) -> None:
     """
-    :param user: User экземпляр модели пользователя
-    :param bunch: Bunch экземпляр модели связи (занятия)
-    :param value: освоболился или стал занятым час в графике
-    :return: None
+    Параметры:
+        user: экземпляр модели пользователя
+        bunch: экземпляр модели связи (занятия)
+        value: освоболился или стал занятым час в графике
     """
-
     if bunch:
         day, time = map(int, bunch.datetime.split(":"))
         update_user_timeline(user, day - 1, time, value)

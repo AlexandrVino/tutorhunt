@@ -5,10 +5,12 @@ from django.db import models
 User = get_user_model()
 
 # будет дополняться (придумаю чем)
-CATEGORY_CHOICES = (("подписки", "подписки"),
-                    ("рейтинг", "рейтинг"),
-                    ("уроки", "уроки"),
-                    ("чаты", "чаты"))
+CATEGORY_CHOICES = (
+    ("подписки", "подписки"),
+    ("рейтинг", "рейтинг"),
+    ("уроки", "уроки"),
+    ("чаты", "чаты"),
+)
 
 
 class NotificationQueryset(models.QuerySet):
@@ -24,8 +26,13 @@ class NotificationQueryset(models.QuerySet):
         """Сортирует quryset по отправителю"""
         return self.filter(initiator=initiator)
 
-    def filter_by(self, category: str = None, initiator: User = None, recipient: User = None):
-        """Сортирует уведомления по категории, отправителю и получателю (ни один аргумент необязателен)"""
+    def filter_by(
+        self, category: str = None, initiator: User = None, recipient: User = None
+    ):
+        """
+        Сортирует уведомления по категории, отправителю и получателю
+        (ни один аргумент необязателен)
+        """
         result = self.all()
 
         if category is not None:
@@ -58,10 +65,21 @@ class NotificationModel(models.Model):
     category = models.CharField("категория", max_length=20, choices=CATEGORY_CHOICES)
     message = models.TextField("сообщение")
     read = models.BooleanField("прочитано", default=False)
-    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received_notifications",
-                                  verbose_name="получатель")
-    initiator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="caused_notifications",
-                                  blank=True, null=True, default=None, verbose_name="отправитель")
+    recipient = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="received_notifications",
+        verbose_name="получатель",
+    )
+    initiator = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="caused_notifications",
+        blank=True,
+        null=True,
+        default=None,
+        verbose_name="отправитель",
+    )
     creation = models.DateTimeField("дата получения", auto_now_add=True)
     last_modified = models.DateTimeField("дата обновления", auto_now=True)
 
@@ -72,30 +90,33 @@ class NotificationModel(models.Model):
         verbose_name_plural = "уведомления"
 
 
-def send_notification(recipient: User, category: str,
-                      message: str, initiator: Optional[User] = None) -> NotificationModel:
+def send_notification(
+    recipient: User, category: str, message: str, initiator: Optional[User] = None
+) -> NotificationModel:
     """
     Создаёт уведомление (в т. ч. в db) и возвращает созданный объект
     Параметры:
-    recipient -- получатель
-    category -- категория уведомления
-    message -- сообщение
-    initiator (необязательно) -- отправитель
-
+        recipient: получатель
+        category: категория уведомления
+        message: сообщение
+        initiator (необязательно): отправитель
     Исключения:
-    TypeError -- несоответствие типам, упомянутым в сигнатуре
+        TypeError: несоответствие типам, упомянутым в сигнатуре
     """
-    for name, obj, cls in zip(("recipient", "category", "message"),
-                              (recipient, category, message),
-                              (User, str, str)):
+    for name, obj, cls in zip(
+        ("recipient", "category", "message"),
+        (recipient, category, message),
+        (User, str, str),
+    ):
         if not isinstance(obj, cls):
             raise TypeError(f"{name} должен иметь тип {cls.__name__}")
 
     if initiator is not None and not isinstance(initiator, User):
         raise TypeError("initiator должен иметь тип User")
 
-    obj = NotificationModel(recipient=recipient, category=category,
-                            message=message, initiator=initiator)
+    obj = NotificationModel(
+        recipient=recipient, category=category, message=message, initiator=initiator
+    )
     obj.save()
 
     return obj

@@ -1,11 +1,8 @@
-from tabnanny import verbose
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models import UniqueConstraint
 
-
 from .managers import HometaskManager, AssignmentManager
-
 
 User = get_user_model()
 
@@ -31,7 +28,7 @@ class Hometask(models.Model):
 
     def get_file_name(self):
         temp = str(self.files)
-        return temp[temp.rfind("/") + 1 :]
+        return temp[temp.rfind("/") + 1:]
 
     class Meta:
         verbose_name = "Домашнее задание"

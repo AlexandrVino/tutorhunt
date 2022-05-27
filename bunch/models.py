@@ -7,20 +7,14 @@ User = get_user_model()
 
 
 class BunchStatus(models.TextChoices):
-    """
-    Класс для хранения чойсов для связи (занятия)
-    """
-
+    """Класс для хранения чойсов для связи (занятия)"""
     WAITING = "Waiting"
     ACCEPTED = "Accepted"
     FINISHED = "Finished"
 
 
 class Bunch(models.Model):
-    """
-    Класс модели связи (занятия)
-    """
-
+    """Класс модели связи (занятия)"""
     teacher = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="bunch_teacher", verbose_name="Учитель"
     )
@@ -42,7 +36,9 @@ class Bunch(models.Model):
         if type(other) is not type(self):
             return False
         return (
-                self.teacher == other.teacher and self.student == other.student and self.datetime == other.datetime
+            self.teacher == other.teacher
+            and self.student == other.student
+            and self.datetime == other.datetime
         )
 
     class Meta:

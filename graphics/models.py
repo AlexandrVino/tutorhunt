@@ -16,7 +16,9 @@ User = get_user_model()
 class TimelineModel(models.Model):
     """Модель расписания"""
     monday, tuesday, wednesday, thursday, friday, saturday, sunday = [
-        DayTimelineField(weekday, default=DayTimeline([False] * 24)) for weekday in CONST.WEEKDAYS_RUS]
+        DayTimelineField(weekday, default=DayTimeline([False] * 24))
+        for weekday in CONST.WEEKDAYS_RUS
+    ]
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="timeline")
 
     def __str__(self) -> str:
@@ -53,7 +55,10 @@ class TimelineModel(models.Model):
             for bunch in indexes:
                 curr_line_bunches[int(bunch.datetime.split(":")[-1])] = bunch
 
-            data.append({"caption": caption, "weekday": zip(field.timeline, CONST.HOURS, curr_line_bunches)})
+            data.append({
+                "caption": caption,
+                "weekday": zip(field.timeline, CONST.HOURS, curr_line_bunches)
+            })
 
         return {"hours": CONST.HOURS, "data": data}
 

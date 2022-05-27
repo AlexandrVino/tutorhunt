@@ -13,7 +13,6 @@ User = get_user_model()
 @method_decorator(login_required, name="dispatch")
 class FollowersListView(DetailView):
     """Возвращает страничку Списка подписок пользователя"""
-
     template_name = USER_LIST_TEMPLATE
     model = User
     pk_url_kwarg = "user_to"

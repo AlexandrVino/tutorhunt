@@ -7,8 +7,8 @@ from django.urls import reverse
 
 from bunch.models import Bunch
 from users.models import Role
-from .fields import DayTimeline, DayTimelineField
-from .utils import CONST
+from .fields import DayTimelineField
+from .utils import CONST, DayTimeline
 
 User = get_user_model()
 

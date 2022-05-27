@@ -12,7 +12,7 @@
   <script>
       {% for message in messages %}
           new Toast({
-              title: 'Ошибка!!!',
+              title: {% if success %}"Сообщение"{% else %}"Ошибка!!!"{% endif %},
               text: "{{ message }}",
               theme: 'dark',
               autohide: true,

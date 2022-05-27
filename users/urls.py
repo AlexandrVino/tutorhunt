@@ -11,7 +11,7 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(template_name="users/logout.html"), name="logout"),
     path("signup/", SignupView.as_view(), name="signup"),
 
-    re_path(r"activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/",
+    re_path(r"activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]+)/",
             ActivateView.as_view(), name="activate"),
 
     path("password_change/", PasswordChangeView.as_view(template_name="users/password_change_form.html"),

@@ -187,7 +187,11 @@ class SignupView(CreateView):
                 )
 
                 EmailMessage(mail_subject, message, to=[new_user.email]).send()
-                return HttpResponse("Подтвердите почту")
+                return render(
+                    request,
+                    self.template_name,
+                    {"form": form, "messages": ["Подтвердите почту"], "success": True}
+                )
 
             except (IntegrityError, ValidationError, EmailUniqueFailed) as err:
 

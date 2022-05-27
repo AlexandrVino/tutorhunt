@@ -7,14 +7,12 @@ User = get_user_model()
 
 
 class Follow(models.Model):
-    """
-    Класс модели подписок
-    """
-
+    """Класс модели подписок"""
     user_from = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="follow_from", verbose_name="Подписчик")
     user_to = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="follow_to", verbose_name="Человек, на которого подписываются")
+        User, on_delete=models.CASCADE, related_name="follow_to",
+        verbose_name="Человек, на которого подписываются")
     active = models.BooleanField(default=True)
 
     manager = FollowManager()
@@ -23,4 +21,7 @@ class Follow(models.Model):
         verbose_name = "Подписка"
         verbose_name_plural = "Подписки"
 
-        constraints = [models.UniqueConstraint(fields=["user_to", "user_from"], name="unique_follow")]
+        constraints = [
+            models.UniqueConstraint(fields=["user_to", "user_from"],
+                                    name="unique_follow")
+        ]

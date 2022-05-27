@@ -12,5 +12,8 @@ def add_notifications(request: HttpRequest) -> Dict[str, Any]:
     if not request.user.is_authenticated:
         return {}
 
-    notifications: NotificationQueryset = NotificationModel.objects.by_recipient(request.user)
-    return {"notifications": notifications, "has_unread_notifications": bool(notifications.get_unread())}
+    notifications = NotificationModel.objects.by_recipient(request.user)
+    return {
+        "notifications": notifications,
+        "has_unread_notifications": bool(notifications.get_unread())
+    }

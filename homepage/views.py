@@ -41,7 +41,3 @@ class HomepageView(TemplateView, FormView):
             self.messages.append(form.errors)
 
         return super().get(request, *args, **kwargs)
-
-
-# class FindView(ListView):
-#     template_name = FIND_TEMPLATE

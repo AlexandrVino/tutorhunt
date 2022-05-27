@@ -31,31 +31,22 @@ class User(AbstractUser):
     manager = AppUserManager()
 
     def photo_tmb(self):
-        """
-        :return: Возвращает фото 50х50
-        """
-
+        """Возвращает фото 50х50"""
         if self.photo:
-            return mark_safe(f'<img src="{self.photo.url}" class="friend_photo" width="50">')
-        return mark_safe('<img src="/media/uploads/users/user_default.png" class="friend_photo">')
+            return mark_safe(f"<img src=\"{self.photo.url}\" class=\"friend_photo\" width=\"50\">")
+        return mark_safe("<img src=\"/media/uploads/users/user_default.png\" class=\"friend_photo\">")
 
     def get_absolute_url(self):
         return reverse("user_detail", kwargs={"user_id": self.pk})
 
     def get_photo(self):
-        """
-        :return: Возвращает фото размера без изменений
-        """
-
+        """Возвращает фото размера без изменений"""
         if self.photo:
-            return mark_safe(f'<img src="{self.photo.url}" class="avatar">')
-        return mark_safe('<img src="/media/uploads/users/user_default.png" class="avatar">')
+            return mark_safe(f"<img src=\"{self.photo.url}\" class=\"avatar\">")
+        return mark_safe("<img src=\"/media/uploads/users/user_default.png\" class=\"avatar\">")
 
     def has_timeline(self):
-        """
-        :return: Проверяет наличие графика
-        """
-
+        """Проверяет наличие графика"""
         return hasattr(self, "timeline")
 
     def full_clean(self, exclude: Optional[Iterable[str]] = None,

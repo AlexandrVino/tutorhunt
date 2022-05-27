@@ -11,15 +11,15 @@ class FollowAdmin(admin.ModelAdmin):
 
     def get_form(self, request, obj=None, change=False, **kwargs):
         """
-
-        :param request: запрос
-        :param obj:
-        :param change:
-        :param kwargs:
-        :return:
-
-        метод получения формулы в админке
+        Метод получения формы в админке
+        Параметры:
+            request: запрос
+            obj:
+            change:
+            kwargs:
         """
-        form = super(FollowAdmin, self).get_form(request, obj=None, change=False, **kwargs)
+        form = super(FollowAdmin, self).get_form(
+            request, obj=None, change=False, **kwargs
+        )
         form.is_valid = follow_form_validation
         return form

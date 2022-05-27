@@ -9,10 +9,7 @@ class EmailUniqueFailed(BaseException):
 
 
 class EmailAuthBackend:
-    """
-    Класс для ауфентикации через email
-    """
-
+    """Класс для ауфентикации через email"""
     @staticmethod
     def authenticate(request, email=None, password=None, user=None):
         try:
@@ -31,7 +28,6 @@ class EmailAuthBackend:
     @staticmethod
     def create_user(email=None, username=None, password1=None, password2=None, **kwargs):
         """Create a new user profile"""
-
         if not email:
             raise ValueError("User must have an email address")
 

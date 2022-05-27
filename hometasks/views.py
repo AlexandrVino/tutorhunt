@@ -9,7 +9,6 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, FormView
 
 from bunch.models import Bunch
-from follow.models import Follow
 from tutorhunt import settings
 from users.models import Role
 from .forms import AssignmentForm, HometaskForm, IsCompletedForm
@@ -64,7 +63,7 @@ class HometasksView(ListView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self, *args, **kwargs):
-        if self.current_user.role == "Teacher":
+        if self.current_user.role == Role.TEACHER:
             return Hometask.manager.get_objects_with_filter(teacher=self.current_user)
         else:
             return Assignment.manager.get_objects_with_filter(
@@ -83,8 +82,7 @@ class HometaskTeacherDetailView(DetailView, FormView):
     def get_object(self, queryset=None):
         if self.object:
             return self.object
-        obj = self.model.manager.get_teachers(id=self.kwargs.get("pk"))
-        self.object = obj and obj[0]
+        self.object = self.model.manager.get_teachers(id=self.kwargs.get("pk")).get()
         return self.object
 
     def get_context_data(self, **kwargs):
@@ -156,11 +154,3 @@ class HometaskStudentDetailView(DetailView):
         assign.is_completed = True
         assign.save()
         return redirect(reverse("hometasks"))
-
-
-# def mark_as_solved(request, pk):
-#     task = get_object_or_404(Hometask, pk=pk)
-
-#     if request.method == "POST":
-#         task.delete()
-#         return redirect(reverse("hometasks"))

@@ -8,7 +8,7 @@ from django.views.generic.edit import UpdateView
 
 from graphics.utils import CONST
 
-from .fields import DayTimeline
+from .utils import DayTimeline
 from .forms import TimelineForm
 from .models import TimelineModel
 

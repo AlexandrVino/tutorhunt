@@ -36,7 +36,6 @@ EDIT_PROFILE_TEMPLATE = "users/edit_profile.html"
 
 class UserListView(ListView):
     """Возвращает страничку Списка пользователей"""
-
     template_name = USER_LIST_TEMPLATE
     queryset = User.manager.get_objects_with_filter("username", "first_name", "last_name", "role", "email", "photo")
     context_object_name = "users"
@@ -44,7 +43,6 @@ class UserListView(ListView):
 
 class UserDetailView(DetailView, FormView):
     """Возвращает страничку конкретного пользователя"""
-
     template_name = CUR_USER_TEMPLATE
     model = User
     context_object_name = "user_detail"
@@ -59,8 +57,10 @@ class UserDetailView(DetailView, FormView):
 
         context["follows"] = Follow.manager.get_followers(
             None, "user_from__first_name", "user_from__photo", user_to=self.object)
-        context["already_follow"] = any(
-            [follow.user_from.id == self.current_user and follow.active for follow in context["follows"]])
+        context["already_follow"] = any([
+            follow.user_from.id == self.current_user and follow.active
+            for follow in context["follows"]
+        ])
 
         context["rating_form"] = RatingForm()
         try:
@@ -118,7 +118,6 @@ class UserDetailView(DetailView, FormView):
 
 class LoginWithEmailView(FormView):
     """Возвращает страничку регистрации пользователя"""
-
     form_class = LoginForm
     template_name = LOGIN_WITH_EMAIL_TEMPLATE
     messages = []
@@ -155,7 +154,6 @@ class LoginWithEmailView(FormView):
 
 class SignupView(CreateView):
     """Регистрация"""
-
     template_name = SIGNUP_TEMPLATE
     model = User
     form_class = RegisterForm
@@ -231,7 +229,6 @@ class ActivateView(View):
 @method_decorator(login_required, name="dispatch")
 class ProfileView(TemplateView, ModelFormMixin):
     """Возвращает страничку профиля пользователя"""
-
     template_name = EDIT_PROFILE_TEMPLATE
     context_object_name = "user"
     model = User

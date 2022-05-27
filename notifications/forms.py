@@ -28,7 +28,7 @@ class AdminFilterNotificationsForm(ModelForm):
 
 class FilterNotificationsForm(ModelForm):
     category = ChoiceField(
-        choices=CATEGORY_CHOICES,
+        choices=CATEGORY_CHOICES + ((None, "--------"), ),
         widget=Select(attrs={"class": "form-control"}),
         required=False,
         label="Категория"

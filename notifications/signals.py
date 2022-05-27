@@ -19,13 +19,14 @@ ALLOWABLE_DELTA_FOR_CHATS = dt.timedelta(hours=2)
 ALLOWABLE_DELTA_FOR_FOLLOW = dt.timedelta(days=1)
 
 
-def check_allowable_delta(allowable_delta: dt.timedelta,
-                          **kwargs) -> Tuple[bool, Optional[NotificationModel]]:
+def check_allowable_delta(
+    allowable_delta: dt.timedelta, **kwargs
+) -> Tuple[bool, Optional[NotificationModel]]:
     """
     Проверяет, необходимо ли добавить новое уведомление
     Параметры:
-        allowable_delta -- минимальное время между уведомлениями
-        **kwargs -- параметры для NotificationModel.objects.filter_by
+        allowable_delta: минимальное время между уведомлениями
+        **kwargs: параметры для NotificationModel.objects.filter_by
     Возвращает:
         bool (прошло ли необходимое время)
         NotificationModel (последнее уведомление) или None (если такого нет)
@@ -53,19 +54,14 @@ def notify_follow(sender, instance: Follow, **kwargs):
         message = f"От вас отписался {instance.user_from}"
 
     need_send, last_notification = check_allowable_delta(
-        ALLOWABLE_DELTA_FOR_FOLLOW,
-        **notification_kwargs
+        ALLOWABLE_DELTA_FOR_FOLLOW, **notification_kwargs
     )
 
     if not need_send:
         last_notification.message = message
         last_notification.save()
-        return
-
-    send_notification(
-        message=message,
-        **notification_kwargs
-    )
+    else:
+        send_notification(message=message, **notification_kwargs)
 
 
 @receiver(post_save, sender=Rating)
@@ -75,7 +71,7 @@ def notify_rating(sender, instance: Rating, **kwargs):
             recipient=instance.user_to,
             initiator=instance.user_from,
             category="рейтинг",
-            message="Вам выставлена оценка: %s" % instance.star
+            message="Вам выставлена оценка: %s" % instance.star,
         )
 
 
@@ -87,14 +83,14 @@ def notify_bunch(sender, instance: Bunch, **kwargs):
                 "message": "Ваша заявка для %s принята" % instance.teacher,
                 "category": "уроки",
                 "initiator": instance.teacher,
-                "recipient": instance.student
+                "recipient": instance.student,
             },
             BunchStatus.WAITING: {
                 "message": "Вам пришла заявка на урок от %s" % instance.student,
                 "category": "уроки",
                 "initiator": instance.student,
-                "recipient": instance.teacher
-            }
+                "recipient": instance.teacher,
+            },
         }[instance.status]
 
         send_notification(**notification_kwargs)
@@ -111,13 +107,10 @@ def notify_message(sender, instance: Message, created: bool, **kwargs):
         "category": "чаты",
     }
 
-    need_send = check_allowable_delta(
-        ALLOWABLE_DELTA_FOR_CHATS,
-        **notification_kwargs
-    )[0]
+    need_send = check_allowable_delta(ALLOWABLE_DELTA_FOR_CHATS, **notification_kwargs)[0]
 
     if need_send:
         send_notification(
             message="Вам отправлено сообщение(я) от %s" % instance.owner,
-            **notification_kwargs
+            **notification_kwargs,
         )

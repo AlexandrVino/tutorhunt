@@ -4,10 +4,7 @@ from follow.models import Follow
 
 
 class FollowForm(forms.ModelForm):
-    """
-    Класс формы подписки
-    """
-
+    """Класс формы подписки"""
     follow = forms.BooleanField()
 
     class Meta:

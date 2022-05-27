@@ -2,7 +2,7 @@ from django.contrib.auth.views import (
     LogoutView, PasswordChangeDoneView, PasswordChangeView, PasswordResetCompleteView,
     PasswordResetConfirmView, PasswordResetDoneView, PasswordResetView
 )
-from django.urls import path
+from django.urls import path, re_path
 
 from users.views import ActivateView, LoginWithEmailView, ProfileView, SignupView, UserDetailView, UserListView
 
@@ -11,8 +11,8 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(template_name="users/logout.html"), name="logout"),
     path("signup/", SignupView.as_view(), name="signup"),
 
-    path(r"activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/",
-         ActivateView.as_view(), name="activate"),
+    re_path(r"activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/",
+            ActivateView.as_view(), name="activate"),
 
     path("password_change/", PasswordChangeView.as_view(template_name="users/password_change_form.html"),
          name="password_change"),

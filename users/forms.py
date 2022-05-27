@@ -128,8 +128,6 @@ class RegisterForm(UserCreationForm):
 
 class EditProfileForm(forms.ModelForm):
     """Форма редактироваия профиля"""
-    # role = forms.ChoiceField(choices=Role.choices)
-
     first_name = forms.CharField(
         widget=forms.TextInput(
             attrs={

@@ -9,6 +9,7 @@ from django.views.generic.edit import ModelFormMixin
 
 from bunch.forms import AddBunchForm, EditBunchForm
 from bunch.models import Bunch, BunchStatus
+from users.models import Role
 from users.utils import add_busy_hours
 
 ADD_BUNCH_TEMPLATE = "users/add_bunch.html"
@@ -79,7 +80,7 @@ class BunchView(TemplateView, ModelFormMixin):
                 return self.get(request, *args, **kwargs)
 
             user_to = User.manager.get(pk=self.kwargs.get("user_to"))
-            teacher = user_from if user_from.role == "teacher" else user_to
+            teacher = user_from if user_from.role == Role.TEACHER else user_to
             student = user_from if user_from is not teacher else user_to
 
             if student == teacher:

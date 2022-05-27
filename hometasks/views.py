@@ -63,7 +63,7 @@ class HometasksView(ListView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self, *args, **kwargs):
-        if self.current_user.role == "Teacher":
+        if self.current_user.role == Role.TEACHER:
             return Hometask.manager.get_objects_with_filter(teacher=self.current_user)
         else:
             return Assignment.manager.get_objects_with_filter(

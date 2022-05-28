@@ -20,12 +20,12 @@ class CONST:
         "суббота",
         "воскресенье"
     )
-    WEEKDAYS_RUS_CHOICES: Tuple[int, str] = (
+    WEEKDAYS_RUS_CHOICES: Tuple[int, str] = tuple([
         (i + 1, weekday.capitalize())
         for i, weekday in enumerate(WEEKDAYS_RUS)
-    )
+    ])
     """Выборы дня недели для форм"""
-    HOURS = ("%02d:00" % i for i in range(24))
+    HOURS = tuple(["%02d:00" % i for i in range(24)])
 
 
 class DayTimeline:

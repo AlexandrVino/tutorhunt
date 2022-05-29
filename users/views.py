@@ -23,7 +23,7 @@ from rating.forms import RatingForm
 from rating.models import Rating
 from .backends import EmailAuthBackend, EmailUniqueFailed
 from .forms import EditProfileForm, LoginForm, RegisterForm
-from .models import User
+from .models import Role, User
 from .utils import edit_user_data
 
 SIGNUP_TEMPLATE = "users/signup.html"
@@ -237,6 +237,11 @@ class ProfileView(TemplateView, ModelFormMixin):
     context_object_name = "user"
     model = User
     form_class = EditProfileForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["is_teacher"] = self.object.role == Role.TEACHER
+        return context
 
     def get(self, request, *args, **kwargs):
         self.object = request.user

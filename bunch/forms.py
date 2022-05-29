@@ -34,7 +34,7 @@ class EditBunchForm(forms.ModelForm):
 
     day = forms.ChoiceField(choices=TIMELINE_CONST.WEEKDAYS_RUS_CHOICES)
 
-    time = forms.ChoiceField(choices=TIMELINE_CONST.HOURS)
+    time = forms.ChoiceField(choices=TIMELINE_CONST.HOURS_CHOICES)
 
     user_to = forms.IntegerField(widget=forms.FileInput(attrs={
         "class": "form-control input-field input-file",

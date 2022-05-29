@@ -1,10 +1,10 @@
 [
 {
   "model": "sessions.session",
-  "pk": "5shawzp6p6que43a5d2cxcl5yuu3366q",
+  "pk": "b5nsauk2xiuq6w1xp4mjc7kgjn7tv7pt",
   "fields": {
-    "session_data": ".eJxVjMsOwiAQRf-FtSE8BIpL934DmWEGqRqalHZl_HfbpAvd3nPueYsE61LT2nlOI4mL0OL0uyHkJ7cd0APafZJ5ass8otwVedAubxPx63q4f4EKvW5vDFgYWYE3g8mqGGecUjwo7beI4RyiP5cYqZAN1oJyBJbQEIDOHr34fAH6iDim:1ntTuO:PEB9yNO6lKgfy_wSuFVVWOMfs0goRkb2QHBu0p5fAHY",
-    "expire_date": "2022-06-07T12:45:08.137Z"
+    "session_data": ".eJxVjMsOwiAQAP-FsyGyyMuj935DA-yuVA0kpT0Z_92Q9KDXmcm8xRz3rcx7p3VeUFwFiNMvSzE_qQ6Bj1jvTeZWt3VJciTysF1ODel1O9q_QYm9jK3lwBSUQvCgEI1hdfYAxhrrmcixMwyesgsISoEGbdn64JyneElafL7JyDcK:1nv2jR:Gl5X6k1MomhOoxqz-6HXv1zNz4z0T-LF83PS07zS6_0",
+    "expire_date": "2022-06-11T20:08:17.781Z"
   }
 },
 {
@@ -16,10 +16,18 @@
   }
 },
 {
+  "model": "sessions.session",
+  "pk": "ujmtci8t1xr7c6tlel7z5cbnmttrxfc6",
+  "fields": {
+    "session_data": ".eJxVjDEOwjAMRe-SGUXBThuXkZ0zRHZiSAGlUtNOiLtDpQ6w_vfef5nI61Li2nSOYzYng-bwuwmnh9YN5DvX22TTVJd5FLspdqfNXqasz_Pu_h0UbuVbi3ZCeYAAiG5gcuSdd5SQOYFXYQYm32NPhAgsJImOcO2SBnBB2Lw_0WA3jg:1nv3NF:DrbbcyEyjnpEdq1o5oJtE0Dp8Z0-vOudCWw0HPa8Qn0",
+    "expire_date": "2022-06-11T20:49:25.378Z"
+  }
+},
+{
   "model": "users.user",
   "fields": {
     "password": "pbkdf2_sha256$260000$NSHvwYOlo7pkRuFy4MQQG5$5FMwl7gZ0wj3BWiS+UrQ32E3EeALM7oRE+68UYkyaZo=",
-    "last_login": "2022-05-24T12:45:07.932Z",
+    "last_login": "2022-05-28T20:47:12.910Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
@@ -39,7 +47,7 @@
   "model": "users.user",
   "fields": {
     "password": "pbkdf2_sha256$260000$rj48xXK606kl3uGkbQSlqX$WTfkJDVwrJWmGkAptDeuXpYS4UaXjp872E9SkgAaePE=",
-    "last_login": "2022-05-24T13:08:30.802Z",
+    "last_login": "2022-05-28T20:08:17.564Z",
     "is_superuser": false,
     "username": "marie-curi",
     "first_name": "Мария",
@@ -59,7 +67,7 @@
   "model": "users.user",
   "fields": {
     "password": "pbkdf2_sha256$260000$x4voHk8usfVBmyZAUTMJXK$BnA2885rvdB//hRYc5t5IwDL3SQGKTAu8JhRgMlfg50=",
-    "last_login": "2022-05-24T12:51:01.467Z",
+    "last_login": "2022-05-28T20:49:25.202Z",
     "is_superuser": false,
     "username": "alber-einstein",
     "first_name": "Альберт",
@@ -139,7 +147,7 @@
   "model": "users.user",
   "fields": {
     "password": "pbkdf2_sha256$260000$oLQMqgYVY6vs6j2m3W3H4A$oWNMjMkHjnYBtSjBVnWx8YxmowVpO8u9HQz/ypRY0Fg=",
-    "last_login": "2022-05-24T12:56:18.588Z",
+    "last_login": "2022-05-27T11:48:02.861Z",
     "is_superuser": false,
     "username": "turgenev-ivan",
     "first_name": "Иван",
@@ -159,7 +167,7 @@
   "model": "users.user",
   "fields": {
     "password": "pbkdf2_sha256$260000$gXWRxH7si0m5pELwyyM6N1$K0LKtMDCT+sppGM6usv5+EKGVW07isijhyISaMOxUWU=",
-    "last_login": "2022-05-24T12:58:28.212Z",
+    "last_login": "2022-05-28T20:05:35.706Z",
     "is_superuser": false,
     "username": "isaac-levitan",
     "first_name": "Исаак",
@@ -239,7 +247,7 @@
   "model": "users.user",
   "fields": {
     "password": "pbkdf2_sha256$260000$1neRKMbDJM0T3COxIsSMvC$zp02C/XAqXdpgr6jR7Csql7Pt7NYqYkXrF9awu5IISc=",
-    "last_login": "2022-05-24T12:59:20.446Z",
+    "last_login": "2022-05-28T20:48:49.019Z",
     "is_superuser": false,
     "username": "jr",
     "first_name": "Жан",
@@ -259,7 +267,7 @@
   "model": "users.user",
   "fields": {
     "password": "pbkdf2_sha256$260000$PWZPNDTpQVHGlzm4wMYJAA$655j5yNKPLEOkULz5c7T0lUwHjqElIYBhE6SEp0KFgg=",
-    "last_login": "2022-05-24T12:48:36.334Z",
+    "last_login": "2022-05-28T19:44:10.555Z",
     "is_superuser": false,
     "username": "barbara-kruger",
     "first_name": "Барбара",
@@ -271,6 +279,46 @@
     "role": "Student",
     "photo": "uploads/users/barbara-kruger-4.jpg.webp",
     "bio": "forever",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$W0PCV3ZPT9C7GGnLACiFPQ$2pXB8fzi9TOYQfcucvMAqus+WXyeDY+eVXRWx3ZJS0k=",
+    "last_login": "2022-05-28T20:01:06.019Z",
+    "is_superuser": false,
+    "username": "theo-van-gogh",
+    "first_name": "Тео",
+    "last_name": "Ван-Гог",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-05-28T19:55:34.021Z",
+    "email": "theo-van-gogh@non.co",
+    "role": "Student",
+    "photo": "uploads/users/Theo_van_Gogh_the_brother_of_Vincent_3.jpg",
+    "bio": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "fields": {
+    "password": "pbkdf2_sha256$260000$f0lEwgM4OTF0VevQZ8yJW0$2DJr5yrKMkhM7qF8x46KaYTx8MjF6BiwFEgFgk8HYRE=",
+    "last_login": "2022-05-28T20:09:38.562Z",
+    "is_superuser": false,
+    "username": "vincent-van-gogh",
+    "first_name": "Винсент",
+    "last_name": "Ван-Гог",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-05-28T19:57:15.295Z",
+    "email": "vincent-van-gogh@non.co",
+    "role": "Student",
+    "photo": "uploads/users/scale_1200.webp",
+    "bio": "",
     "groups": [],
     "user_permissions": []
   }
@@ -359,13 +407,13 @@
   "model": "graphics.timelinemodel",
   "pk": 6,
   "fields": {
-    "monday": "000000000000000000000000",
-    "tuesday": "000000000000000000000000",
-    "wednesday": "000000000000000000000000",
-    "thursday": "000000000000000000000000",
-    "friday": "000000000000000000000000",
-    "saturday": "000000000000000000000000",
-    "sunday": "000000000000000000000000",
+    "monday": "111100000011111111000001",
+    "tuesday": "111111111100000011111111",
+    "wednesday": "111111000000001111000000",
+    "thursday": "111000000000000000000000",
+    "friday": "111000000000000000000000",
+    "saturday": "111100000000000000000000",
+    "sunday": "111100000000000000000000",
     "user": [
       "turgenev-ivan"
     ]
@@ -414,6 +462,19 @@
   }
 },
 {
+  "model": "rating.rating",
+  "pk": 3,
+  "fields": {
+    "star": "5",
+    "user_to": [
+      "turgenev-ivan"
+    ],
+    "user_from": [
+      "isaac-levitan"
+    ]
+  }
+},
+{
   "model": "hometasks.hometask",
   "pk": 1,
   "fields": {
@@ -437,6 +498,17 @@
   }
 },
 {
+  "model": "hometasks.assignment",
+  "pk": 2,
+  "fields": {
+    "student": [
+      "jr"
+    ],
+    "hometask": 1,
+    "is_completed": true
+  }
+},
+{
   "model": "notifications.notificationmodel",
   "pk": 1,
   "fields": {
@@ -450,7 +522,7 @@
       "barbara-kruger"
     ],
     "creation": "2022-05-24T12:49:25.377Z",
-    "last_modified": "2022-05-24T12:49:25.377Z"
+    "last_modified": "2022-05-24T13:33:06.077Z"
   }
 },
 {
@@ -586,7 +658,7 @@
       "alber-einstein"
     ],
     "creation": "2022-05-24T12:51:38.550Z",
-    "last_modified": "2022-05-24T12:51:38.550Z"
+    "last_modified": "2022-05-24T13:33:06.077Z"
   }
 },
 {
@@ -688,7 +760,7 @@
       "jr"
     ],
     "creation": "2022-05-24T12:57:18.028Z",
-    "last_modified": "2022-05-24T12:57:18.028Z"
+    "last_modified": "2022-05-24T13:33:06.093Z"
   }
 },
 {
@@ -845,6 +917,329 @@
   }
 },
 {
+  "model": "notifications.notificationmodel",
+  "pk": 25,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от barbara-kruger",
+    "read": true,
+    "recipient": [
+      "alber-einstein"
+    ],
+    "initiator": [
+      "barbara-kruger"
+    ],
+    "creation": "2022-05-24T13:33:06.047Z",
+    "last_modified": "2022-05-24T13:33:06.047Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 26,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от barbara-kruger",
+    "read": true,
+    "recipient": [
+      "alber-einstein"
+    ],
+    "initiator": [
+      "barbara-kruger"
+    ],
+    "creation": "2022-05-24T13:33:06.063Z",
+    "last_modified": "2022-05-24T13:33:06.063Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 27,
+  "fields": {
+    "category": "уроки",
+    "message": "Вам пришла заявка на урок от barbara-kruger",
+    "read": true,
+    "recipient": [
+      "alber-einstein"
+    ],
+    "initiator": [
+      "barbara-kruger"
+    ],
+    "creation": "2022-05-24T13:33:06.063Z",
+    "last_modified": "2022-05-24T13:33:06.063Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 28,
+  "fields": {
+    "category": "уроки",
+    "message": "Ваша заявка для isaac-levitan принята",
+    "read": false,
+    "recipient": [
+      "jr"
+    ],
+    "initiator": [
+      "isaac-levitan"
+    ],
+    "creation": "2022-05-24T13:33:06.063Z",
+    "last_modified": "2022-05-24T13:33:06.063Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 29,
+  "fields": {
+    "category": "подписки",
+    "message": "На вас подписался isaac-levitan",
+    "read": false,
+    "recipient": [
+      "turgenev-ivan"
+    ],
+    "initiator": [
+      "isaac-levitan"
+    ],
+    "creation": "2022-05-25T07:17:41.392Z",
+    "last_modified": "2022-05-25T07:17:41.392Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 30,
+  "fields": {
+    "category": "рейтинг",
+    "message": "Вам выставлена оценка: 5",
+    "read": false,
+    "recipient": [
+      "turgenev-ivan"
+    ],
+    "initiator": [
+      "isaac-levitan"
+    ],
+    "creation": "2022-05-25T07:17:48.418Z",
+    "last_modified": "2022-05-25T07:17:48.418Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 31,
+  "fields": {
+    "category": "чаты",
+    "message": "Вам отправлено сообщение(я) от isaac-levitan",
+    "read": false,
+    "recipient": [
+      "turgenev-ivan"
+    ],
+    "initiator": [
+      "isaac-levitan"
+    ],
+    "creation": "2022-05-25T07:18:19.644Z",
+    "last_modified": "2022-05-25T07:18:19.644Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 32,
+  "fields": {
+    "category": "чаты",
+    "message": "Вам отправлено сообщение(я) от isaac-levitan",
+    "read": false,
+    "recipient": [
+      "jr"
+    ],
+    "initiator": [
+      "isaac-levitan"
+    ],
+    "creation": "2022-05-25T07:25:46.935Z",
+    "last_modified": "2022-05-25T07:25:46.935Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 33,
+  "fields": {
+    "category": "чаты",
+    "message": "Вам отправлено сообщение(я) от vincent-van-gogh",
+    "read": true,
+    "recipient": [
+      "theo-van-gogh"
+    ],
+    "initiator": [
+      "vincent-van-gogh"
+    ],
+    "creation": "2022-05-28T20:01:41.552Z",
+    "last_modified": "2022-05-28T20:01:41.552Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 34,
+  "fields": {
+    "category": "чаты",
+    "message": "Вам отправлено сообщение(я) от theo-van-gogh",
+    "read": true,
+    "recipient": [
+      "vincent-van-gogh"
+    ],
+    "initiator": [
+      "theo-van-gogh"
+    ],
+    "creation": "2022-05-28T20:02:22.233Z",
+    "last_modified": "2022-05-28T20:02:22.233Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 35,
+  "fields": {
+    "category": "чаты",
+    "message": "Вам отправлено сообщение(я) от marie-curi",
+    "read": true,
+    "recipient": [
+      "vincent-van-gogh"
+    ],
+    "initiator": [
+      "marie-curi"
+    ],
+    "creation": "2022-05-28T20:05:07.166Z",
+    "last_modified": "2022-05-28T20:05:07.166Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 36,
+  "fields": {
+    "category": "чаты",
+    "message": "Вам отправлено сообщение(я) от isaac-levitan",
+    "read": true,
+    "recipient": [
+      "vincent-van-gogh"
+    ],
+    "initiator": [
+      "isaac-levitan"
+    ],
+    "creation": "2022-05-28T20:06:03.781Z",
+    "last_modified": "2022-05-28T20:06:03.781Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 37,
+  "fields": {
+    "category": "подписки",
+    "message": "На вас подписался isaac-levitan",
+    "read": true,
+    "recipient": [
+      "vincent-van-gogh"
+    ],
+    "initiator": [
+      "isaac-levitan"
+    ],
+    "creation": "2022-05-28T20:07:51.213Z",
+    "last_modified": "2022-05-28T20:07:51.213Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 38,
+  "fields": {
+    "category": "подписки",
+    "message": "На вас подписался marie-curi",
+    "read": true,
+    "recipient": [
+      "vincent-van-gogh"
+    ],
+    "initiator": [
+      "marie-curi"
+    ],
+    "creation": "2022-05-28T20:08:26.171Z",
+    "last_modified": "2022-05-28T20:08:26.171Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 39,
+  "fields": {
+    "category": "подписки",
+    "message": "На вас подписался alber-einstein",
+    "read": true,
+    "recipient": [
+      "vincent-van-gogh"
+    ],
+    "initiator": [
+      "alber-einstein"
+    ],
+    "creation": "2022-05-28T20:08:57.672Z",
+    "last_modified": "2022-05-28T20:08:57.672Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 40,
+  "fields": {
+    "category": "подписки",
+    "message": "На вас подписался osip-mandelstam",
+    "read": true,
+    "recipient": [
+      "vincent-van-gogh"
+    ],
+    "initiator": [
+      "osip-mandelstam"
+    ],
+    "creation": "2022-05-28T20:09:12.356Z",
+    "last_modified": "2022-05-28T20:09:12.356Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 41,
+  "fields": {
+    "category": "подписки",
+    "message": "На вас подписался alber-einstein",
+    "read": false,
+    "recipient": [
+      "jr"
+    ],
+    "initiator": [
+      "alber-einstein"
+    ],
+    "creation": "2022-05-28T20:26:04.445Z",
+    "last_modified": "2022-05-28T20:26:04.445Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 42,
+  "fields": {
+    "category": "подписки",
+    "message": "На вас подписался jr",
+    "read": true,
+    "recipient": [
+      "alber-einstein"
+    ],
+    "initiator": [
+      "jr"
+    ],
+    "creation": "2022-05-28T20:26:43.088Z",
+    "last_modified": "2022-05-28T20:26:43.088Z"
+  }
+},
+{
+  "model": "notifications.notificationmodel",
+  "pk": 43,
+  "fields": {
+    "category": "уроки",
+    "message": "Ваша заявка для alber-einstein принята",
+    "read": false,
+    "recipient": [
+      "jr"
+    ],
+    "initiator": [
+      "alber-einstein"
+    ],
+    "creation": "2022-05-28T20:47:44.798Z",
+    "last_modified": "2022-05-28T20:47:44.798Z"
+  }
+},
+{
   "model": "chats.chatroom",
   "pk": 1,
   "fields": {
@@ -889,6 +1284,54 @@
     ],
     "second_user": [
       "isaac-levitan"
+    ]
+  }
+},
+{
+  "model": "chats.chatroom",
+  "pk": 5,
+  "fields": {
+    "first_user": [
+      "isaac-levitan"
+    ],
+    "second_user": [
+      "turgenev-ivan"
+    ]
+  }
+},
+{
+  "model": "chats.chatroom",
+  "pk": 6,
+  "fields": {
+    "first_user": [
+      "vincent-van-gogh"
+    ],
+    "second_user": [
+      "theo-van-gogh"
+    ]
+  }
+},
+{
+  "model": "chats.chatroom",
+  "pk": 7,
+  "fields": {
+    "first_user": [
+      "marie-curi"
+    ],
+    "second_user": [
+      "vincent-van-gogh"
+    ]
+  }
+},
+{
+  "model": "chats.chatroom",
+  "pk": 8,
+  "fields": {
+    "first_user": [
+      "isaac-levitan"
+    ],
+    "second_user": [
+      "vincent-van-gogh"
     ]
   }
 },
@@ -997,6 +1440,149 @@
   }
 },
 {
+  "model": "chats.message",
+  "pk": 9,
+  "fields": {
+    "text": "кинь нюдсы",
+    "image": "",
+    "owner": [
+      "isaac-levitan"
+    ],
+    "time": "11:18:19.258",
+    "chat_room": 5
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 10,
+  "fields": {
+    "text": "кул",
+    "image": "",
+    "owner": [
+      "isaac-levitan"
+    ],
+    "time": "11:25:46.708",
+    "chat_room": 4
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 11,
+  "fields": {
+    "text": "The Hague, 29 September 1872.",
+    "image": "",
+    "owner": [
+      "vincent-van-gogh"
+    ],
+    "time": "00:01:41.341",
+    "chat_room": 6
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 12,
+  "fields": {
+    "text": "My dear Theo,",
+    "image": "",
+    "owner": [
+      "vincent-van-gogh"
+    ],
+    "time": "00:01:49.454",
+    "chat_room": 6
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 13,
+  "fields": {
+    "text": "Thanks for your letter, I was glad to hear that you got back safely. I missed you the first few days, and it was strange for me not to find you when I came home in the afternoon.",
+    "image": "",
+    "owner": [
+      "vincent-van-gogh"
+    ],
+    "time": "00:01:56.432",
+    "chat_room": 6
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 14,
+  "fields": {
+    "text": "We spent some pleasant days together, and actually did go for some walks and see a thing or two whenever we had the chance.",
+    "image": "",
+    "owner": [
+      "vincent-van-gogh"
+    ],
+    "time": "00:02:03.281",
+    "chat_room": 6
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 15,
+  "fields": {
+    "text": "аааа",
+    "image": "",
+    "owner": [
+      "theo-van-gogh"
+    ],
+    "time": "00:02:21.945",
+    "chat_room": 6
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 16,
+  "fields": {
+    "text": "я просто брат",
+    "image": "",
+    "owner": [
+      "theo-van-gogh"
+    ],
+    "time": "00:02:28.499",
+    "chat_room": 6
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 17,
+  "fields": {
+    "text": "мои письма никто не хранит ((",
+    "image": "",
+    "owner": [
+      "theo-van-gogh"
+    ],
+    "time": "00:02:44.606",
+    "chat_room": 6
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 18,
+  "fields": {
+    "text": "кинь нюдсы",
+    "image": "",
+    "owner": [
+      "marie-curi"
+    ],
+    "time": "00:05:06.864",
+    "chat_room": 7
+  }
+},
+{
+  "model": "chats.message",
+  "pk": 19,
+  "fields": {
+    "text": "подсолнухи фигня",
+    "image": "",
+    "owner": [
+      "isaac-levitan"
+    ],
+    "time": "00:06:03.481",
+    "chat_room": 8
+  }
+},
+{
   "model": "bunch.bunch",
   "pk": 1,
   "fields": {
@@ -1081,6 +1667,20 @@
   }
 },
 {
+  "model": "bunch.bunch",
+  "pk": 7,
+  "fields": {
+    "teacher": [
+      "alber-einstein"
+    ],
+    "student": [
+      "jr"
+    ],
+    "status": "Accepted",
+    "datetime": "1"
+  }
+},
+{
   "model": "follow.follow",
   "pk": 1,
   "fields": {
@@ -1115,6 +1715,97 @@
     ],
     "user_to": [
       "isaac-levitan"
+    ],
+    "active": true
+  }
+},
+{
+  "model": "follow.follow",
+  "pk": 4,
+  "fields": {
+    "user_from": [
+      "isaac-levitan"
+    ],
+    "user_to": [
+      "turgenev-ivan"
+    ],
+    "active": true
+  }
+},
+{
+  "model": "follow.follow",
+  "pk": 5,
+  "fields": {
+    "user_from": [
+      "isaac-levitan"
+    ],
+    "user_to": [
+      "vincent-van-gogh"
+    ],
+    "active": true
+  }
+},
+{
+  "model": "follow.follow",
+  "pk": 6,
+  "fields": {
+    "user_from": [
+      "marie-curi"
+    ],
+    "user_to": [
+      "vincent-van-gogh"
+    ],
+    "active": true
+  }
+},
+{
+  "model": "follow.follow",
+  "pk": 7,
+  "fields": {
+    "user_from": [
+      "alber-einstein"
+    ],
+    "user_to": [
+      "vincent-van-gogh"
+    ],
+    "active": true
+  }
+},
+{
+  "model": "follow.follow",
+  "pk": 8,
+  "fields": {
+    "user_from": [
+      "osip-mandelstam"
+    ],
+    "user_to": [
+      "vincent-van-gogh"
+    ],
+    "active": true
+  }
+},
+{
+  "model": "follow.follow",
+  "pk": 9,
+  "fields": {
+    "user_from": [
+      "alber-einstein"
+    ],
+    "user_to": [
+      "jr"
+    ],
+    "active": true
+  }
+},
+{
+  "model": "follow.follow",
+  "pk": 10,
+  "fields": {
+    "user_from": [
+      "jr"
+    ],
+    "user_to": [
+      "alber-einstein"
     ],
     "active": true
   }
@@ -1351,6 +2042,96 @@
     "object_repr": "marie-curi",
     "action_flag": 2,
     "change_message": "[{\"changed\": {\"fields\": [\"Last name\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2022-05-28T19:59:05.992Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "15",
+    "object_repr": "vincent-van-gogh",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 15,
+  "fields": {
+    "action_time": "2022-05-28T19:59:06.419Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "users",
+      "user"
+    ],
+    "object_id": "14",
+    "object_repr": "theo-van-gogh",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 16,
+  "fields": {
+    "action_time": "2022-05-28T20:08:57.770Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "follow",
+      "follow"
+    ],
+    "object_id": "7",
+    "object_repr": "Follow object (7)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 17,
+  "fields": {
+    "action_time": "2022-05-28T20:09:12.425Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "follow",
+      "follow"
+    ],
+    "object_id": "8",
+    "object_repr": "Follow object (8)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 18,
+  "fields": {
+    "action_time": "2022-05-28T20:47:44.874Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "bunch",
+      "bunch"
+    ],
+    "object_id": "7",
+    "object_repr": "Bunch object (7)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
   }
 }
 ]

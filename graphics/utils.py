@@ -26,6 +26,7 @@ class CONST:
     ])
     """Выборы дня недели для форм"""
     HOURS = tuple(["%02d:00" % i for i in range(24)])
+    HOURS_CHOICES = tuple([(i, "%02d:00" % i) for i in range(24)])
 
 
 class DayTimeline:

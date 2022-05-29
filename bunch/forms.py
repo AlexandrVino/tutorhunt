@@ -7,7 +7,7 @@ class AddBunchForm(forms.ModelForm):
     """Форма для планирования (создания) связи (занятия)"""
     day = forms.ChoiceField(choices=TIMELINE_CONST.WEEKDAYS_RUS_CHOICES)
 
-    time = forms.ChoiceField(choices=TIMELINE_CONST.HOURS)
+    time = forms.ChoiceField(choices=TIMELINE_CONST.HOURS_CHOICES)
 
     user_from = forms.IntegerField(widget=forms.FileInput(attrs={
         "class": "form-control input-field input-file",
